@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/Reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>CD103G3 日食餐廳</title>
+    
+</head>
+<body>
+    <div class="frontPage clearfix">
+        <div class="logo">
+            <div class="pic">
+                <img src="images/guidePage-06.png" alt="logo">
+            </div>
+        </div>
+        <div class="grid-12 grid-md-6 choice choice1" id="frontP">
+            <div class="chickG chickFront chick1">
+                <div class="chickPic chick1">
+                </div>
+            </div>
+            <div class="chickG chickFront chick2">
+                <div class="chickPic chick2">
+                </div>
+            </div>
+            <div class="chickG chickFront chick3">
+                <div class="chickPic chick3">
+                </div>
+            </div>
+            <div class="pic plate">
+                <img src="images/guidePage-03.png" alt="">
+            </div>
+            <div class="menuBoard">
+                <a class="menu menu1"></a>
+            </div>
+        </div>
+        <div class="grid-12 grid-md-6 choice choice2" id="backP">
+                <div class="chickG chickBack chick1">
+                    <div class="chickPic chick1">
+                    </div>
+                </div>
+                <div class="chickG chickBack chick2">
+                    <div class="chickPic chick2">
+                    </div>
+                </div>
+                <div class="chickG chickBack chick3">
+                    <div class="chickPic chick3">
+                    </div>
+                </div>
+            <div class="pic plate plate2">
+                <img src="images/guidePage-03.png" alt="">
+            </div>
+            <div class="menuBoard">
+                <a class="menu menu2"></a>
+            </div>
+        </div>
+    </div>
+     
+</body>
+<script>
+    function $id(id) {
+        return document.getElementById(id);
+    }
+    $id('frontP').onclick = function() {
+        location.href = 'index_front.php';
+    }
+    $id('backP').onclick = function() {
+        location.href = 'Backstage/Backstage.php';
+    }
+
+</script>
+</html>

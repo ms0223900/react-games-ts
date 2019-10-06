@@ -1,0 +1,289 @@
+@charset "UTF-8";
+@font-face {
+  font-family: 'Mamelon';
+  src: url(../font/Mamelon.otf) format("opentype"); }
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, label, table, tr, th, td, footer, header, section, ol, ul, textarea {
+  font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif"; }
+
+input[type="text"] {
+  -webkit-appearance: none;
+  /* Safari 和 Chrome，常用於iOS下移除內建樣式 */
+  -moz-appearance: none;
+  /* FireFox */
+  appearance: none;
+  font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif"; }
+  input[type="text"]::-webkit-input-placeholder {
+    font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif"; }
+
+button, input[type="button"] {
+  -webkit-appearance: none;
+  /* Safari 和 Chrome，常用於iOS下移除內建樣式 */
+  -moz-appearance: none;
+  /* FireFox */
+  appearance: none;
+  font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif";
+  cursor: pointer; }
+
+.swal-content {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0; }
+  .swal-content__a {
+    color: #FF5000;
+    text-decoration: none; }
+
+.swal-text {
+  vertical-align: middle; }
+
+.swal-modal {
+  border-radius: 10px;
+  border: 20px solid #FCF2CA; }
+
+.swal-footer {
+  text-align: center; }
+
+.swal-button {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif";
+  cursor: pointer;
+  font-weight: 600;
+  color: #76391B;
+  background-color: #FCE444;
+  box-shadow: 0px 4px 0px #76391B;
+  border-radius: 100px;
+  transition: .2s;
+  margin: auto;
+  font-size: 20px;
+  max-width: 150px;
+  transition: .2s;
+  line-height: 25px; }
+  .swal-button:hover {
+    opacity: .7;
+    transition: .2s; }
+  .swal-button:active {
+    top: 2px; }
+
+.swal-button-container {
+  margin: auto; }
+
+.swal-button:not([disabled]):hover {
+  background-color: #FCE444; }
+
+.swal-button:active {
+  background-color: #FCE444;
+  top: 2px;
+  box-shadow: 0px 2px 0px #76391B; }
+
+.swal-button:focus {
+  outline: none;
+  box-shadow: 0px 4px 0px #76391B; }
+
+.out {
+  padding: 30px 50px;
+  font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif"; }
+  .out * {
+    font-size: 16px;
+    text-align: center; }
+    .out * .modal .modal-dialog .modal-content {
+      border-radius: 10px;
+      top: 140px; }
+      .out * .modal .modal-dialog .modal-content .modal-img {
+        width: 30%;
+        position: absolute;
+        top: -134px;
+        right: 35%;
+        left: 35%; }
+        .out * .modal .modal-dialog .modal-content .modal-img img {
+          width: 100%; }
+      .out * .modal .modal-dialog .modal-content .modal-body {
+        padding-bottom: 0px; }
+      .out * .modal .modal-dialog .modal-content .modal-footer .mainBTN {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif";
+        cursor: pointer;
+        font-weight: 600;
+        color: #76391B;
+        background-color: #FCE444;
+        box-shadow: 0px 4px 0px #76391B;
+        border-radius: 100px;
+        transition: .2s;
+        max-width: 30%;
+        margin-right: 30px; }
+        .out * .modal .modal-dialog .modal-content .modal-footer .mainBTN:hover {
+          opacity: .7;
+          transition: .2s; }
+        .out * .modal .modal-dialog .modal-content .modal-footer .mainBTN:active {
+          top: 2px; }
+      .out * .modal .modal-dialog .modal-content .modal-footer .subBTN {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif";
+        cursor: pointer;
+        color: #fff;
+        background-color: #76391B;
+        box-shadow: 0px 4px 0px #FED44F;
+        border-radius: 100px;
+        transition: .2s;
+        max-width: 30%;
+        margin-left: 30px; }
+        .out * .modal .modal-dialog .modal-content .modal-footer .subBTN:hover {
+          opacity: .7;
+          transition: .2s; }
+        .out * .modal .modal-dialog .modal-content .modal-footer .subBTN:active {
+          top: 2px; }
+      .out * .modal .modal-dialog .modal-content .modal-footer .mainBTN, .out * .modal .modal-dialog .modal-content .modal-footer .subBTN {
+        height: auto;
+        padding: 0 10px;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        font-weight: bold;
+        font-size: 20px; }
+    .out * .form-group input, .out * .form-group textarea {
+      text-align: left; }
+    .out * .title-width {
+      width: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0; }
+  .out a {
+    text-decoration: none;
+    color: #76391B; }
+  .out i {
+    color: #76391B; }
+  .out .focus-color {
+    background-color: #FCE444; }
+  .out .d-flex {
+    height: 100%; }
+    .out .d-flex .col-xl-2 {
+      width: 300px;
+      position: fixed; }
+    .out .d-flex .col-xl-10 {
+      margin-left: 300px; }
+    .out .d-flex .container .back-nav .back-logo {
+      padding-top: 30px;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-bottom: none;
+      border-radius: 10px 10px 0 0; }
+    .out .d-flex .container .back-nav .back-signout {
+      padding: 50px 0;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      font-size: 24px;
+      font-weight: bold; }
+      .out .d-flex .container .back-nav .back-signout span {
+        padding: 20px;
+        font-size: 24px;
+        color: #76391B; }
+      .out .d-flex .container .back-nav .back-signout form {
+        display: inline-block; }
+      .out .d-flex .container .back-nav .back-signout .mainBTN {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif";
+        cursor: pointer;
+        font-weight: 600;
+        color: #76391B;
+        background-color: #FCE444;
+        box-shadow: 0px 4px 0px #76391B;
+        border-radius: 100px;
+        transition: .2s;
+        margin: auto;
+        font-size: 20px;
+        max-width: 100px;
+        transition: .2s; }
+        .out .d-flex .container .back-nav .back-signout .mainBTN:hover {
+          opacity: .7;
+          transition: .2s; }
+        .out .d-flex .container .back-nav .back-signout .mainBTN:active {
+          top: 2px; }
+      .out .d-flex .container .back-nav .back-signout .mainBTN {
+        padding: 0 15px;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        font-size: 16px; }
+    .out .d-flex .container .back-nav .back-change {
+      border-radius: 10px; }
+      .out .d-flex .container .back-nav .back-change:hover {
+        background-color: #FCF2CA; }
+    .out .d-flex .container .back-text {
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-radius: 10px; }
+      .out .d-flex .container .back-text .banner {
+        width: 100%;
+        height: 25vh;
+        padding-top: 20px;
+        border-radius: 10px;
+        background-image: url("../images/客服G8稜(改)-01.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-size: 30px;
+        position: relative; }
+        .out .d-flex .container .back-text .banner .mainBTN {
+          position: relative;
+          display: inline-block;
+          width: 100%;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+          font-family: 微軟正黑體, arial, "LiHei-Pro", "sans serif";
+          cursor: pointer;
+          font-weight: 600;
+          color: #76391B;
+          background-color: #FCE444;
+          box-shadow: 0px 4px 0px #76391B;
+          border-radius: 100px;
+          transition: .2s;
+          margin: auto;
+          font-size: 20px;
+          max-width: 80px;
+          transition: .2s; }
+          .out .d-flex .container .back-text .banner .mainBTN:hover {
+            opacity: .7;
+            transition: .2s; }
+          .out .d-flex .container .back-text .banner .mainBTN:active {
+            top: 2px; }
+        .out .d-flex .container .back-text .banner .mainBTN {
+          margin: 0 20px 20px 93%;
+          border: 1px solid rgba(0, 0, 0, 0.125);
+          position: absolute;
+          right: 0;
+          bottom: 0; }
+          .out .d-flex .container .back-text .banner .mainBTN:active {
+            top: auto; }
+      .out .d-flex .container .back-text .table thead tr th, .out .d-flex .container .back-text .table thead tr td, .out .d-flex .container .back-text .table tbody tr th, .out .d-flex .container .back-text .table tbody tr td {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        vertical-align: middle; }
+      .out .d-flex .container .back-text .table tbody tr td {
+        padding: 3px; }
+        .out .d-flex .container .back-text .table tbody tr td .one-size {
+          height: 50px; }
+        .out .d-flex .container .back-text .table tbody tr td i {
+          cursor: pointer; }
+  .out .toTop-arrow {
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    right: 15px;
+    bottom: 15px; }
+    .out .toTop-arrow i {
+      color: #FCE444;
+      font-size: 36px; }

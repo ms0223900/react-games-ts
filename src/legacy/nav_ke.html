@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" >
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<header>
+		<input type="checkbox" id="navctrl">
+		<div class="phone-nav">
+			<div id="view1"></div>
+			<div class="nav-left">
+				<label class="hb" for="navctrl">
+					<span class="line"></span>
+				</label>
+			</div>
+			<div class="logo">
+				<a href="javascript:void(0)">
+					<img src="image/logo.png" alt="logo">
+				</a>
+			</div>
+			<div class="nav-right">			
+				<span class="seach-button" id="control_search">
+					<img src="image/icon/search.svg" width="25" alt="seach">
+					搜尋
+				</span>
+			</div>
+		</div>
+		<nav>
+			<ul>
+				<li class="logo">
+					<div id="view4"></div>
+					<a href="javascript:void(0)">
+						<img src="image/logo.png" alt="logo">
+					</a>
+				</li>
+				<li class="member" id="control_login">
+					<div id="view6"></div>
+					<div class="before-login">
+						<a href="javascript:void(0)">註冊</a>
+						<a href="javascript:void(0)">登入</a>
+					</div>
+					<div class="after-login">
+						<div>
+							<img src="image/icon/user.svg" alt="member-Pic" class="member-Pic">
+						</div>
+						<div>
+							<span><img src="image/icon/riceball.svg" width="30" alt="achievement-Pic" class="achievement-Pic">300積分</span><br>
+							<span>Sara. always</span>
+						</div>
+					</div>
+				</li>
+				<li class="meals">
+						<div id="view5"></div>
+					<a href="javascript:void(0)">日食餐點</a>
+				</li>
+				<li class="initiate">			
+					<div id="view2"></div>
+					<a href="javascript:void(0)">發起飯糰</a>
+				</li>
+				<li class="participate">
+					<div id="view3"></div>
+					<a href="javascript:void(0)">參加飯糰</a>
+				</li>
+				<li class="table-hidden"><a href="javascript:void(0)">會員中心</a></li>
+				<li class="table-hidden"><a href="javascript:void(0)" id="control_chatBot">客服雞器人</a></li>
+			</ul>
+		</nav>
+		<input type="checkbox" id="white-Point-control">
+		<label class="white-Point floaty" for="white-Point-control">
+			<ul>
+				<div id="view7"></div>
+				<li>
+					<a href="javascript:void(0)">
+						<img src="image/icon/cart.svg" alt="cart"><br>
+						購物車
+						<span>3</span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0)">
+						<img src="image/icon/qrcode.svg" alt="qrcode"><br>
+						快速取餐
+						<span>2</span>
+					</a>
+				</li>
+				<li class="table-hidden">
+					<a href="javascript:void(0)">
+						<img src="image/icon/game.svg" alt="game"><br>
+						想吃什麼？
+					</a>
+				</li>
+				<li class="table-hidden">
+					<a href="javascript:void(0)">
+						<img src="image/icon/if_General_-_Office_54_1471106.svg" alt="mc"><br>
+						我的收藏
+					</a>
+				</li>
+				<li class="table-hidden">
+					<a href="javascript:void(0)">
+						<img src="image/icon/riceball.svg" alt="riceball"><br>
+						我的飯團
+					</a>
+				</li>		
+			</ul>
+		</label>
+	</header
+	>
+	<div class="space"></div>
+	<input type="checkbox" name="close_chatBot" id="close_chatBot">
+	<div id="chatBot" class="clearfix">
+		<div class="chatBot_contenier_wrap">
+			<h3>日食客服機器人</h3>
+			<label for="close_chatBot" class="close_chatBot"></label>
+			<div id="chatBot_content" class="clearfix">
+				<p class="chatBot_content_A">HI! 很高興為您服務，您可以點擊下方關鍵字或是直接輸入詢問內容!</p>
+				<div style="clear: both"></div>
+				<p class="chatBot_content_Q">請問營業時間?</p>
+				<div style="clear: both"></div>
+				<p class="chatBot_content_A">我們從週一到週五二十四小時不休息唷!</p>
+				<div style="clear: both"></div>
+				<p class="chatBot_content_A">我們從週一到週五二十四小時不休息唷!</p>
+				<div style="clear: both"></div>
+				<p class="chatBot_content_A">我們從週一到週五二十四小時不休息唷!</p>
+				<div style="clear: both"></div>
+			</div>
+			<ul class="chatBot_keyword clearfix">
+				<li>營業時間</li>
+				<li>參加飯團</li>
+				<li>發起飯團</li>
+				<li>發起飯團</li>
+				<li>發起飯團</li>
+				<li>發起飯團</li>
+			</ul>
+			<form action="" method="POST" class="chatBot_text_Wrap">
+				<button type="submit" id="chatBot_search">送出</button>
+				<input type="text" class="chatBot_text">
+			</form>
+		</div>
+		<label for="close_chatBot" class="close_chatBot_pic">
+			<img src="images/chatBot.svg" alt="日食客服機器人"  class="chatBot_pic">			
+		</label>
+
+	</div>
+	<input type="checkbox" id="close_login" checked>
+	<div id="login_wrap" class="login_wrap">
+		<label for="close_login" class="close_login btn_cup"></label>
+		<div class="login_heard clearfix"></div>
+		<input type="radio" name="cover_item" id="to_sigin" checked>
+		<input type="radio" name="cover_item" id="to_get_Psw">
+		<input type="radio" name="cover_item" id="to_sigup">
+		<div class="login_mark clearfix">
+			<label for="to_sigin" class="sig_in btn_cup">登入</label>
+			<label for="to_sigup" class="sig_up btn_cup">註冊</label>	
+		</div>
+
+		<!-- 登入 -->
+		<div class="login_mark_cetentier to_sigin clearfix">
+			<form action="" method="POST">
+				<div class="input_wrap longing_input">
+					<input type="text" id="sigin_member_Id" class="input_mem" required>
+					<label for="sigin_member_Id" class="input_pl">帳號</label>
+					<label for="sigin_member_Id"><img src="images/user.svg"></label>
+				</div>
+				<div class="input_wrap longing_input">
+					<input type="password" id="sigin_member_Psw" class="input_mem" required>
+					<label for="sigin_member_Psw" class="input_pl">密碼</label>
+					<label for="sigin_member_Psw"><img src="images/lock.svg"></label>
+					<img src="images/eye_n.png" class="eye"></div>
+				<div class="cover_run_wrap">
+					<button type="submit" class="btn_cup">登入</button>
+				</div>
+			</form>
+			<label for="to_get_Psw" class="cover_run to_Psw btn_cup">忘記密碼?</label>
+		</div>
+		<!-- 註冊 -->
+		<div class="login_mark_cetentier to_sigup clearfix">
+			<form action="" method="POST" id="check_form" onsubmit="return checkSubmit(1)">
+				<div class="input_wrap longing_input">
+					<input type="text" id="sigup_member_Id" class="input_mem need_check need_check_id"required>
+					<label for="sigup_member_Id" class="input_pl" maxlength="40">帳號</label>
+					<label for="sigup_member_Id"><img src="images/user.svg"></label>
+					<img src="images/checkN.svg" class="check"></div>
+				<div class="input_wrap longing_input">
+					<input type="password" id="sigup_member_Psw" class="input_mem need_check need_check_psw" maxlength="6" required>
+					<label for="sigup_member_Psw" class="input_pl">密碼</label>
+					<label for="sigup_member_Psw"><img src="images/lock.svg"></label>
+					<img src="images/eye_n.png" class="eye"><img src="images/checkN.svg" class="check"></div>
+				<div class="input_wrap longing_input">
+					<input type="text" id="sigup_member_Nick" class="input_mem need_check need_check_nick" maxlength="10" required>
+					<label for="sigup_member_Nick" class="input_pl">暱稱</label>
+					<label for="sigup_member_Nick"><img src="images/lock.svg"></label><img src="images/checkN.svg" class="check"></div>
+				<div class="input_wrap longing_input">
+					<input type="text" id="sigup_email" class="input_mem need_check need_check_email" required>
+					<label for="sigup_email" class="input_pl">email</label>
+					<label for="sigup_email" ><img src="images/email.svg"></label>
+					<img src="images/checkN.svg" class="check"></div>
+				<div class="cover_run_wrap">
+					<button type="submit" class="btn_cup" >註冊</button>
+				</div>
+			</form>
+		</div>
+		<!-- 忘記密碼 -->
+		<div class="login_mark_cetentier to_get_Psw clearfix">
+			<form action="" method="POST" onsubmit="return checkSubmit(0)">
+				<div class="input_wrap longing_input">
+					<input type="text" id="get_Psw_member_Id" class="input_mem" required>
+					<label for="get_Psw_member_Id" ><img src="images/user.svg"></label>
+					<label for="get_Psw_member_Id" class="input_pl">帳號</label>
+				</div>
+				<div class="input_wrap longing_input">
+					<input type="text" id="get_Psw_member_Psw" class="input_mem need_check need_check_email" required>
+					<label for="get_Psw_emailmember_Psw" class="input_pl">email</label>
+					<label for="get_Psw_emailmember_Psw"><img src="images/lock.svg"></label>
+					<img src="images/checkN.svg" class="check"></div>
+				<div class="cover_run_wrap"> 
+					<button type="submit" class="btn_cup">重設密碼</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<input type="checkbox" id="close_search" checked>
+	<div class="wrap search_wrap">
+		<label for="close_search" class="close_search"></label>
+		<form action="" class="search_bg">
+			<!-- 輸入區 -->
+			<div class="input_wrap">
+				<input type="text" id="input_search" maxlength="30" required>
+				<label for="input_search" class="input_pl">餐點關鍵字</label>
+				<button type="submit" id="start_search">搜尋<span class="search_img"></span></button>
+			</div>
+			<!-- 頁籤區 -->
+			<div class="bookmark">
+				<!-- 頁籤頭 -->
+				<input type="radio" name="bookmark" id="bookmark_meal" checked>
+				<input type="radio" name="bookmark" id="bookmark_groupon">
+				<!-- <svg id="bok" xmlns="http://www.w3.org/2000/svg" version="1.1">
+					<defs>
+					<filter id="goo">
+						<feGaussianBlur in="SourceGraphic" stdDeviation="60" result="blur" />
+						<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+						<feBlend in="SourceGraphic" in2="goo" />
+						</filter>
+					</defs>
+				</svg> -->
+				<div class="bookmark_animation">
+					<label for="bookmark_meal" id="bookmark_animation_meal">餐點</label>
+					<div class="bookmark_animation_middle">
+						<div class="container1">
+							<div class="ball"></div>
+						</div>
+						<div class="container2">
+							<div class="ball"></div>
+						</div>
+						<div class="container3">
+							<div class="ball"></div>
+						</div>
+						<div class="container4">
+							<div class="ball"></div>
+						</div>
+						<div class="container5">
+							<div class="ball"></div>
+						</div>
+						<div class="container6">
+							<div class="ball"></div>
+						</div>
+						<div class="container7">
+							<div class="ball"></div>
+						</div>
+						<div class="container8">
+							<div class="ball"></div>
+						</div>
+						<div class="container9">
+							<div class="ball"></div>
+						</div>
+					</div>
+					<label for="bookmark_groupon" id="bookmark_animation_groupon">飯糰</label>
+				</div>
+				<div class="chickenMaster_wrap">
+					<img src="images/chickenMaster.png" alt="" class="chickenMaster">
+				</div>				  
+				<!-- 頁籤內容 -->
+				<div class="bookmark_cetentier bookmark_meal">
+					<div class="bookmark_cetentier_item bookmark_meal_item clearfix">
+						<span>餐點類別</span>
+						<div>
+							<input type="checkbox" name="mealGenre_No" id="mealGenre_No1">
+							<input type="checkbox" name="mealGenre_No" id="mealGenre_No2">
+							<input type="checkbox" name="mealGenre_No" id="mealGenre_No3">
+							<input type="checkbox" name="mealGenre_No" id="mealGenre_No4">
+							<input type="checkbox" name="mealGenre_No" id="mealGenre_No5">
+							<input type="checkbox" name="mealGenre_No" id="mealGenre_No6">
+
+							<label for="mealGenre_No1" class="mealGenre_No">丼飯</label>
+							<label for="mealGenre_No2" class="mealGenre_No">便當</label>
+							<label for="mealGenre_No3" class="mealGenre_No">拉麵</label>
+							<label for="mealGenre_No4" class="mealGenre_No">定食</label>
+							<label for="mealGenre_No5" class="mealGenre_No">素食</label>
+							<label for="mealGenre_No6" class="mealGenre_No">鍋物</label>
+						</div>
+
+					</div>
+
+					<div class="bookmark_cetentier_item bookmark_meal_item clearfix">
+						<span>卡路里</span>
+						<div>
+							<input type="checkbox" name="meal_Cal" id="meal_Cal1">
+							<input type="checkbox" name="meal_Cal" id="meal_Cal2">
+							<input type="checkbox" name="meal_Cal" id="meal_Cal3">
+							<input type="checkbox" name="meal_Cal" id="meal_Cal4">
+
+							<label for="meal_Cal1" class="meal_Cal">100-300</label>
+							<label for="meal_Cal2" class="meal_Cal">301-600</label>
+							<label for="meal_Cal3" class="meal_Cal">601-900</label>
+							<label for="meal_Cal4" class="meal_Cal">901up</label>
+						</div>
+
+					</div>
+					<div class="bookmark_cetentier_item bookmark_meal_item clearfix">
+						<span>價格</span>
+						<input type="text" name="meal_Price" class="meal_Price" id="meal_Price1">
+						~
+						<input type="text" name="meal_Price" id="meal_Price2">
+					</div>
+				</div>
+				<div class="bookmark_cetentier bookmark_groupon">
+					<div class="bookmark_cetentier_item bookmark_groupon_item clearfix">
+						<span>飯糰TAG</span>
+						<div>
+							<input type="radio" name="groupon_TagName" id="groupon_TagNo1">
+							<input type="radio" name="groupon_TagName" id="groupon_TagNo2">
+							<input type="radio" name="groupon_TagName" id="groupon_TagNo3">
+							<input type="radio" name="groupon_TagName" id="groupon_TagNo4">
+							<input type="radio" name="groupon_TagName" id="groupon_TagNo5">
+							<input type="radio" name="groupon_TagName" id="groupon_TagNo6">
+							<input type="radio" name="groupon_TagName" id="groupon_TagNo7">
+							<input type="radio" name="groupon_TagName" id="groupon_TagNo8">
+
+							<label for="groupon_TagNo1" class="groupon_TagName">#健康</label>
+							<label for="groupon_TagNo2" class="groupon_TagName">#素食</label>
+							<label for="groupon_TagNo3" class="groupon_TagName">#肥</label>
+							<label for="groupon_TagNo4" class="groupon_TagName">#痛風</label>
+							<label for="groupon_TagNo5" class="groupon_TagName">#挑戰</label>
+							<label for="groupon_TagNo6" class="groupon_TagName">#豪華</label>
+							<label for="groupon_TagNo7" class="groupon_TagName">#湯麵</label>
+							<label for="groupon_TagNo8" class="groupon_TagName">#飯</label>
+						</div>
+					</div>
+
+					<div class="bookmark_cetentier_item bookmark_groupon_item clearfix">
+						<span>飯團餐數</span>
+						<div>
+							<input type="checkbox" name="grouponList_No" id="grouponList_No1">
+							<input type="checkbox" name="grouponList_No" id="grouponList_No2">
+							<input type="checkbox" name="grouponList_No" id="grouponList_No3">
+
+							<label for="grouponList_No1" class="grouponList_No">1~3餐</label>
+							<label for="grouponList_No2" class="grouponList_No">4~7餐</label>
+							<label for="grouponList_No3" class="grouponList_No">7餐以上</label>
+						</div>
+					</div>
+					<div class="bookmark_cetentier_item bookmark_groupon_item clearfix">
+						<span>平均價格</span>
+						<div>
+							<input type="checkbox" name="groupon_avg" id="groupon_avg1">
+							<input type="checkbox" name="groupon_avg" id="groupon_avg2">
+							<input type="checkbox" name="groupon_avg" id="groupon_avg3">
+							<input type="checkbox" name="groupon_avg" id="groupon_avg4">
+							<input type="checkbox" name="groupon_avg" id="groupon_avg5">
+
+							<label for="groupon_avg1" class="groupon_avg">1~70元</label>
+							<label for="groupon_avg2" class="groupon_avg">71~100元</label>
+							<label for="groupon_avg3" class="groupon_avg">101~200元</label>
+							<label for="groupon_avg4" class="groupon_avg">201~300元</label>
+							<label for="groupon_avg5" class="groupon_avg">301元以上</label>							
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+	<!-- <script src="js/floaty.js"></script> -->
+
+	<script>
+
+		for (var i = 1; i <= 7; i++) {
+		
+			var view = document.querySelector("#view" +　i);
+
+			struct1 = document.createElement("div");     
+			struct1.className = "slice s" + 3;
+		
+			for (var j = 2; j > 0; j--) {
+		
+				struct2 = document.createElement("div");     
+				struct2.className = "slice s" + j;
+		
+				struct2.appendChild(struct1);
+	
+				struct1 = struct2;
+			}
+		
+			view.appendChild(struct2);
+			
+		}
+
+	</script>
+	<script src="js/ke.js"></script>
+</body>
+</html>

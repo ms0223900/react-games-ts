@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="css/backstage.css">
+    <title>餐點資料後台</title>
+</head>
+<body>
+    <div class="d-flex out">
+        <div class="container col-xl-2">
+            <div class="list-group back-nav">
+                <div class="back-logo"><img src="images/logo3.png" alt="logo"></div>
+                <div class="back-signout"><a href="#">登出</a></div>
+                <a href="backstage-meal.html" class="list-group-item list-group-item-action back-change-btn">餐點資訊</a>
+                <a href="backstage-groupon.html" class="list-group-item list-group-item-action back-change-btn">飯團管理</a>
+                <a href="backstage-message.html" class="list-group-item list-group-item-action back-change-btn">留言審核</a>
+                <a href="backstage-chatBot.html" class="list-group-item list-group-item-action back-change-btn">客服機器人</a>
+                <a href="backstage-achievement.html" class="list-group-item list-group-item-action back-change-btn">勳章管理</a>
+                <a href="backstage-memberOrder.html" class="list-group-item list-group-item-action back-change-btn">訂單管理</a>
+                <a href="backstage-manager.html" class="list-group-item list-group-item-action back-change-btn">管理員帳號</a>
+            </div>
+        </div>
+    
+        <div class="container col-xl-10">
+            <div class="back-text meal-text">
+                <div class="banner"><button type="button" class="mainBTN" tabindex="-1" data-toggle="modal" data-target="#add-meal" >新增</button></div>
+                <div class="modal fade" id="add-meal" tabindex="-1" role="dialog" aria-labelledby="add-meal-title" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="add-meal-title">新增餐點資料</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">餐點類別</label>
+                                        <select class="form-control" id="exampleFormControlSelect1">
+                                            <option>拉麵</option>
+                                            <option>丼飯</option>
+                                            <option>鍋物</option>
+                                            <option>定食</option>
+                                            <option>便當</option>
+                                            <option>素食</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">餐點名稱</label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">餐點單價</label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">餐點介紹</label>
+                                        <textarea class="form-control" id="message-text"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">餐點卡路里</label>
+                                        <input type="text" class="form-control" id="recipient-name">
+                                    </div>
+                                    <div class="form-group">
+                                            <label for="exampleFormControlSelect1">餐點狀態</label>
+                                            <select class="form-control" id="exampleFormControlSelect1">
+                                                <option>未上架</option>
+                                                <option>上架</option>
+                                                <option>下架</option>
+                                            </select>
+                                        </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlFile1">上傳餐點照片</label>
+                                        <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">存檔</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">餐點編號</th>
+                            <th scope="col">餐點名稱</th>
+                            <th scope="col">餐點圖片</th>
+                            <th scope="col">餐點單價</th>
+                            <th scope="col">餐點類別</th>
+                            <th scope="col">餐點狀態</th>
+                            <th scope="col">詳情</th>
+                            <th scope="col">修改</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>(生)特級海鮮丼</td>
+                            <td><img src="images/丼1.png" alt=""></td>
+                            <td>680</td>
+                            <td>丼飯</td>
+                            <td>上架</td>
+                            <td><a href="#"><i class="fas fa-book"></i></a></td>
+                            <td><a href="#"><i class="fas fa-pencil-alt"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            <!-- 切換分頁 -->
+                <ul class="pagination justify-content-center back-page">
+                    <li><a href="#">&laquo;</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li class="disabled"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>   
+    
+</body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</html>

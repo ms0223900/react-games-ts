@@ -1,0 +1,10 @@
+node_modules/*
+
+libs 
+gulpfile.js 
+.bowerrc 
+bower.json 
+package.json
+package-lock.json
+node_modules
+*.zip

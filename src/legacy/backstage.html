@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="css/backstage.css">
+    <title>Backstage</title>
+</head>
+<body>
+<div class="d-flex out">
+
+    <div class="container col-xl-2">
+        <div class="list-group back-nav">
+            <div class="back-logo"><img src="images/logo3.png" alt="logo"></div>
+            <div class="back-signout"><a href="#">登出</a></div>
+            <label for="meal-radio" class="list-group-item list-group-item-action back-change-btn">餐點資訊</label>
+            <label for="groupon-radio" class="list-group-item list-group-item-action back-change-btn">飯團管理</label>
+            <label for="message-radio" class="list-group-item list-group-item-action back-change-btn">留言審核</label>
+            <label for="chatBot-radio" class="list-group-item list-group-item-action back-change-btn">客服機器人</label>
+            <label for="achievement-radio" class="list-group-item list-group-item-action back-change-btn">勳章管理</label>
+            <label for="memberOrder-radio" class="list-group-item list-group-item-action back-change-btn">訂單管理</label>
+            <label for="manager-radio" class="list-group-item list-group-item-action back-change-btn">管理員帳號</label>
+        </div>
+    </div>
+
+    <div class="container col-xl-10">
+        <input type="radio" name="catch-radio" id="meal-radio" checked>
+        <div class="back-text meal-text">
+            <div class="banner">餐點資料</div>
+            <!-- <div class="add-field"><a href="#">新增</a></div> -->
+            <button type="button" class="btn btn-primary add-field" data-toggle="modal" data-target="#add-meal" data-whatever="@mdo">新增</button>
+
+            <div class="modal fade" id="add-meal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Recipient:</label>  抬頭
+                                    <input type="text" class="form-control" id="recipient-name">           輸入格
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Message:</label>      抬頭
+                                    <textarea class="form-control" id="message-text"></textarea>           輸入格
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Example select</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Example textarea</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlFile1">Example file input</label>
+                                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Send message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">餐點編號</th>
+                        <th scope="col">餐點名稱</th>
+                        <th scope="col">餐點圖片</th>
+                        <th scope="col">餐點單價</th>
+                        <th scope="col">餐點類別</th>
+                        <th scope="col">餐點狀態</th>
+                        <th scope="col">詳情</th>
+                        <th scope="col">修改</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>(生)特級海鮮丼</td>
+                        <td><img src="images/丼1.png" alt=""></td>
+                        <td>680</td>
+                        <td>丼飯</td>
+                        <td>上架</td>
+                        <td><a href="#"><i class="fas fa-book"></i></a></td>
+                        <td><a href="#"><i class="fas fa-pencil-alt"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        <!-- 切換分頁 -->
+            <ul class="pagination justify-content-center back-page">
+                <li><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li class="disabled"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+
+        <input type="radio" name="catch-radio" id="groupon-radio">
+        <div class="back-text groupon-text">
+            <div class="banner">飯團管理</div>
+            <div class="add-field"><a href="#">新增</a></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">飯團編號</th>
+                        <th scope="col">飯團名稱</th>
+                        <th scope="col">標籤編號</th>
+                        <th scope="col">開始日期</th>
+                        <th scope="col">截止日期</th>
+                        <th scope="col">贈購物金</th>
+                        <th scope="col">人數門檻</th>
+                        <th scope="col">總價折數</th>
+                        <th scope="col">飯團狀態</th>
+                        <th scope="col">詳情</th>
+                        <th scope="col">修改</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">G1</th>
+                        <td>好好吃</td>
+                        <td>T1</td>
+                        <td>2018/10/01</td>
+                        <td>2018/10/31</td>
+                        <td>50</td>
+                        <td>50</td>
+                        <td>6</td>
+                        <td>進行中</td>
+                        <td><a href="#"><i class="fas fa-book"></i></a></td>
+                        <td><a href="#"><i class="fas fa-pencil-alt"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 切換分頁 -->
+            <ul class="pagination justify-content-center back-page">
+                <li><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li class="disabled"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+
+        <input type="radio" name="catch-radio" id="message-radio">
+        <div class="back-text message-text">
+            <div class="banner">留言審核</div>
+            <div class="add-field"><a href="#">新增</a></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">檢舉編號</th>
+                        <th scope="col">餐點編號</th>
+                        <th scope="col">留言編號</th>
+                        <th scope="col">檢舉日期</th>
+                        <th scope="col">審核狀態</th>
+                        <th scope="col">詳情</th>
+                        <th scope="col">修改</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">MR1</th>
+                        <td>1</td>
+                        <td>M1</td>
+                        <td>2018/10/01</td>
+                        <td>待審核</td>
+                        <td><a href="#"><i class="fas fa-book"></i></a></td>
+                        <td><a href="#"><i class="fas fa-pencil-alt"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 切換分頁 -->
+            <ul class="pagination justify-content-center back-page">
+                <li><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li class="disabled"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+
+        <input type="radio" name="catch-radio" id="chatBot-radio">
+        <div class="back-text chatBot-text">
+            <div class="banner">客服機器人</div>
+            <div class="add-field"><a href="#">新增</a></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">關鍵字編號</th>
+                        <th scope="col">關鍵字</th>
+                        <th scope="col">關鍵字內容</th>
+                        <th scope="col">是否使用</th>
+                        <th scope="col">詳情</th>
+                        <th scope="col">修改</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">C1</th>
+                        <td>嗨</td>
+                        <td>請問</td>
+                        <td>Yes</td>
+                        <td><a href="#"><i class="fas fa-book"></i></a></td>
+                        <td><a href="#"><i class="fas fa-pencil-alt"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 切換分頁 -->
+            <ul class="pagination justify-content-center back-page">
+                <li><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li class="disabled"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+
+        <input type="radio" name="catch-radio" id="achievement-radio">
+        <div class="back-text achievement-text">
+            <div class="banner">勳章管理</div>
+            <div class="add-field"><a href="#">新增</a></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">勳章編號</th>
+                        <th scope="col">勳章名稱</th>
+                        <th scope="col">勳章圖片</th>
+                        <th scope="col">勳章門檻</th>
+                        <th scope="col">勳章狀態</th>
+                        <th scope="col">詳情</th>
+                        <th scope="col">修改</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">A1</th>
+                        <td>小菜蟲</td>
+                        <td><img src="images/icon7.png" alt="小菜蟲"></td>
+                        <td>300</td>
+                        <td>使用中</td>
+                        <td><a href="#"><i class="fas fa-book"></i></a></td>
+                        <td><a href="#"><i class="fas fa-pencil-alt"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 切換分頁 -->
+            <ul class="pagination justify-content-center back-page">
+                <li><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li class="disabled"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+
+        <input type="radio" name="catch-radio" id="memberOrder-radio">
+        <div class="back-text memberOrder-text">
+            <div class="banner">訂單管理</div>
+            <div class="add-field"><a href="#">新增</a></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">訂單編號</th>
+                        <th scope="col">會員編號</th>
+                        <th scope="col">訂單金額</th>
+                        <th scope="col">訂單狀態</th>
+                        <th scope="col">詳情</th>
+                        <th scope="col">修改</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">O1</th>
+                        <td>ME1</td>
+                        <td>300</td>
+                        <td>製作中</td>
+                        <td><a href="#"><i class="fas fa-book"></i></a></td>
+                        <td><a href="#"><i class="fas fa-pencil-alt"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 切換分頁 -->
+            <ul class="pagination justify-content-center back-page">
+                <li><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li class="disabled"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+
+        <input type="radio" name="catch-radio" id="manager-radio">
+        <div class="back-text manager-text">
+            <div class="banner">管理員帳號</div>
+            <!-- <div class="add-field"><a href="#">新增</a></div> -->
+
+
+
+
+            <button type="button" class="btn btn-primary add-field" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">新增</button>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="col-form-label">Recipient:</label>  抬頭
+                                    <input type="text" class="form-control" id="recipient-name">           輸入格
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="col-form-label">Message:</label>      抬頭
+                                    <textarea class="form-control" id="message-text"></textarea>           輸入格
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Example select</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Example textarea</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlFile1">Example file input</label>
+                                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Send message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">管理員編號</th>
+                        <th scope="col">管理員帳號</th>
+                        <th scope="col">管理員密碼</th>
+                        <th scope="col">管理員權限</th>
+                        <th scope="col">修改</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>gogo</td>
+                        <td>gogo</td>
+                        <td>All</td>
+                        <td><a href="#"><i class="fas fa-pencil-alt"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 切換分頁 -->
+            <ul class="pagination justify-content-center back-page">
+                <li><a href="#">&laquo;</a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li class="disabled"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</html>
+
+
+
+

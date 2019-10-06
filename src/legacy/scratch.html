@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700italic,700' rel='stylesheet' type='text/css'>
+  
+  <title>Scratch Card</title>
+  <link rel="stylesheet" href="css/scratch.css">
+
+</head>
+<body>
+
+  <div class="overlay" id="overlay"></div>
+
+<div class="scrach-card modal">
+  <div class="scratch-container">
+    <div id="promo" class="scratchpad"></div>
+  </div>
+  <div class="promo-container" style="display:none;">
+    <div class="promo-code"></div>
+    <a href="javascript::" target="_blank" class="btn">確認</a>
+  </div>
+</div>
+
+<a class="btnPOP" href="#">開始刮刮樂</a>
+
+<script src="https://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="https://jennamolby.com/scratch-and-win/js/wScratchPad.min.js"></script>
+
+<script type="text/javascript">
+var promoCode = '';
+var bg1 = 'images/scratchCard_181029-01.png';
+var bg2 = 'images/scratchCard_181029-02.png';
+var bg3 = 'images/scratchCard_181029-03.png';
+var bgArray= [ bg1, bg2, bg3 ];
+selectBG = bgArray[Math.floor(Math.random() * bgArray.length)];
+if (selectBG == bg1) {
+    promoCode = '購物金50元';
+  } else if (selectBG == bg2) {
+    promoCode = '購物金30元';
+  } if (selectBG == bg3) {
+    var promoCode = '';
+  }
+  
+$('#promo').wScratchPad({
+    // the size of the eraser
+    size        : 50,    
+    // the randomized scratch images   
+    bg:  selectBG,
+    // give real-time updates
+    realtime    : true, 
+    // The overlay images
+    fg: 'images/scrachBg.png',
+    // The cursor (coin) images
+    'cursor': 'url("images/coin1.png") 5 5, default',
+    
+    scratchMove: function (e, percent) {
+        // Show the plain-text promo code and call-to-action when the scratch area is 50% scratched
+        if ((percent > 50) && (promoCode != '')) {
+          console.log(percent);
+          if($('.promo-container')) {
+            $('.promo-container').show();
+          }
+          $('body').removeClass('not-selectable');
+          $('.promo-code').html('您的購物金: ' + promoCode);
+        }
+      }
+ });
+
+ document.querySelector('.btn').addEventListener('click',function(){
+      document.querySelector('.promo-container').style.display = 'none';
+      document.querySelector('.scrach-card').removeChild(document.querySelector('.scrach-card').children[1]);
+ });
+</script>
+  
+  <script>
+    document.querySelector('.btnPOP').addEventListener('click', function() {
+    document.getElementById('overlay').classList.add('is-visible');
+    document.getElementById('modal').classList.add('is-visible');
+  });
+
+  document.getElementById('close-btn').addEventListener('click', function() {
+    document.getElementById('overlay').classList.remove('is-visible');
+    document.getElementById('modal').classList.remove('is-visible');
+  });
+  document.getElementById('overlay').addEventListener('click', function() {
+    document.getElementById('overlay').classList.remove('is-visible');
+    document.getElementById('modal').classList.remove('is-visible');
+  });
+
+    
+  </script>
+</body>
+</html>
