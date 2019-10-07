@@ -11,6 +11,7 @@
     "@types/react": "16.9.5",
     "@types/react-dom": "16.9.1",
     "@types/react-router-dom": "^5.1.0",
+    "awesome-typescript-loader": "^5.2.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-router": "^5.1.2",
@@ -22,7 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,5 +41,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^5.2.1",
+    "@storybook/addon-links": "^5.2.1",
+    "@storybook/addons": "^5.2.1",
+    "@storybook/react": "^5.2.1",
+    "@types/storybook__react": "^4.0.2"
   }
 }
