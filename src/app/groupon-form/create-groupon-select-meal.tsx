@@ -6,7 +6,7 @@ import { Box, Typography } from '@material-ui/core';
 const AddMealPanel = () => {
   return (
     <Box className={'addMeal-container clearfix'}>
-
+      
     </Box>
   );
 };
@@ -18,34 +18,34 @@ const SettingThreshold = () => {
         {'設定此飯團的購物金人數門檻'}
       </Typography>
       <div className="setting grid-12 grid-md-6 clearfix">
-        <h3>設定人數門檻(單位: 人)</h3>
+        <h3>{'設定人數門檻(單位: 人)'}</h3>
         <div className="settingArea">
           <div id="minus" className="plusAndMinus grid-3">
-                  -
+            {'-'}
           </div>
           <div id="people" className="grid-6 people">
-                  10 
+            {'10'} 
           </div>
           <div id="plus" className="plusAndMinus grid-3">
-                  +
+            {'+'}
           </div>
         </div>
       </div>
       <div id="bonus" className="bonus grid-12 grid-md-6">
-        <h3 className="grid-12">達到後 前 
-          <span className="people" id="people2">10</span>
-                  人每人可獲得:  
+        <h3 className="grid-12">{'達到後 前 '}
+          <span className="people" id="people2">{'10'}</span>
+          {'人每人可獲得:'}  
         </h3>
         <div className="bonus-container grid-12 clearfix">
           <div className="grid-4">
             <div className="pic">
               <img src="images/bonusIcon-05.svg" alt="bonus" />
-              <span className="bonus-coin">99</span>
+              <span className="bonus-coin">{'99'}</span>
             </div>
           </div>
           <p className="grid-8">
-            <span className="bonus" id="3_2Bonus">0</span>
-                  元購物金
+            <span className="bonus" id="3_2Bonus">{'0'}</span>
+            {'元購物金'}
           </p>
         </div>
       </div>
