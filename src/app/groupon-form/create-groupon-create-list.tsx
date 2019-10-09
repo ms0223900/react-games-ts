@@ -1,14 +1,25 @@
 import React from 'react';
 import { Box, Typography, Paper } from '@material-ui/core';
 import { getAnotherDay, getDateString } from 'lib/fn';
+import MealItem from 'app/common-components/mealItem';
 
-const AddedMealPart = () => {
+
+type AddedMealPartProps = {
+  meals: import('common-types').SingleMeal[]
+}
+const AddedMealPart = ({ meals }: AddedMealPartProps) => {
   return (
     <Paper>
-      
+      <Typography>{'您選擇的餐點'}</Typography>
+      <Box>
+        {meals.map((meal, i) => (
+          <MealItem {...meal} />
+        ))}
+      </Box>
     </Paper>
   );
 };
+
 
 type GrouponTitleProps = {
   title: string
@@ -40,22 +51,52 @@ const GrouponDate = ({ startDate, dayAmount }: GrouponDateProps) => {
     </Box>
   );
 };
-const SelectedDetailsPart = () => {
+
+
+type BonusAreaProps = {
+  peopleRequired: number
+  gottenBonus: number
+}
+const BonusArea = ({ peopleRequired, gottenBonus }: BonusAreaProps) => {
+  return (
+    <Box>
+      <Box>
+        <Typography>{'購物金門檻'}</Typography>
+        <Typography>
+          {`${peopleRequired}人`}
+        </Typography>
+      </Box>
+      <Box>
+        <Typography>
+          {`達到後 前${peopleRequired}人每人可獲得: ${gottenBonus}`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+};
+
+
+type SelectedDetailsPartProps = GrouponTitleProps & GrouponDateProps & BonusAreaProps
+const SelectedDetailsPart = (props: SelectedDetailsPartProps) => {
   return (
     <Paper>
-
+      <GrouponTitle {...props} />
+      <GrouponDate {...props} />
+      <BonusArea {...props} />
     </Paper>
   );
 };
 
 
-const HomePage = () => {
+type CreateGrouponCreateListProps = SelectedDetailsPartProps & AddedMealPartProps
+const CreateGrouponCreateList = (props: CreateGrouponCreateListProps) => {
   return (
     <Box>
       <Typography>{'您發起的飯團詳情'}</Typography>
-
+      <AddedMealPart {...props} />
+      <SelectedDetailsPart {...props} />
     </Box>
   );
 };
 
-export default HomePage;
+export default CreateGrouponCreateList;
