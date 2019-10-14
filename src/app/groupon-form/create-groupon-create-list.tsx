@@ -88,7 +88,7 @@ const SelectedDetailsPart = (props: SelectedDetailsPartProps) => {
 };
 
 
-type CreateGrouponCreateListProps = SelectedDetailsPartProps & AddedMealPartProps
+export type CreateGrouponCreateListProps = SelectedDetailsPartProps & AddedMealPartProps
 const CreateGrouponCreateList = (props: CreateGrouponCreateListProps) => {
   return (
     <Box>

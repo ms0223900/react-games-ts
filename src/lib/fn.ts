@@ -1,6 +1,7 @@
-export const getAnotherDay = (date: Date, days=1) => (
-  new Date(date.setDate(date.getDate() + days))
-);
+export const getAnotherDay = (date: Date, days=1) => {
+  const newDate = new Date(date);
+  return new Date(newDate.setDate(newDate.getDate() + days));
+};
 
 export const getDaysAfterToday = (days=1, startDate?: Date) => {
   let res: Date[] = [];
@@ -21,4 +22,9 @@ export const getDaysAfterToday = (days=1, startDate?: Date) => {
 export const getDateString = (date: Date) => (
   `${date.getMonth() + 1}/${date.getDate()}`
 );
+
+export const checkDatesIsSame = (date1: Date, date2: Date) => {
+  if(date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth()) return true;
+  return false;
+};
 

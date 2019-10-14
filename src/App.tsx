@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import CreatePart from 'app/groupon-form/create-part';
+import GrouponForm from 'app/containers/grouponForm';
 // import 'style/style.css';
 
 const App: React.FC = () => {
   return (
     <>
-      <CreatePart />
+      <GrouponForm />
     </>
   );
 };
