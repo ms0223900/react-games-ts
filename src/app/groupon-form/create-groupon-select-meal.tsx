@@ -1,17 +1,77 @@
 /* eslint-disable no-lone-blocks */
 import React from 'react';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, makeStyles, Button } from '@material-ui/core';
+import { SingleMeal } from 'common-types';
+import { meals_mockData } from 'app/common-components/storage/mockData';
+import MealItem from 'app/common-components/mealItem';
+import { mealItemWidth } from 'config';
+import { getBonusFromMealsAndPeople } from 'lib/fn';
 
 //改成同一個頁面勾選餐點 不要分兩邊
-const AddMealPanel = () => {
+
+const useStyles_addMealPanel = makeStyles({
+  mealItem: {
+    position: 'absolute',
+    zIndex: 0,
+    width: '100%',
+    height: '100%',
+    top: 0,
+    left: 0,
+    backgroundColor: '#aaa',
+    opacity: 0.4,
+    borderRadius: 6,
+    transition: '0.2s',
+    '&:hover': {
+      opacity: 0.7,
+      transition: '0.2s',
+    }
+  }
+});
+
+
+type AddMealPanelProps = {
+  meals?: SingleMeal[]
+  selectedMealsId?: Array<number | string>
+  selectMealFn?: (id: any) => any
+}
+const AddMealPanel = ({ 
+  meals=meals_mockData,
+  selectedMealsId, 
+  selectMealFn 
+}: AddMealPanelProps) => {
+  const classes = useStyles_addMealPanel();
   return (
-    <Box className={'addMeal-container clearfix'}>
-      
+    <Box className={'addMeal-container clearfix'} display={'flex'}>
+      {meals.map((meal, i) => (
+        <Box 
+          position={'relative'} 
+          onClick={() => selectMealFn && selectMealFn(meal.id)}
+        >
+          <MealItem 
+            {...meal} 
+          />
+          {selectedMealsId && selectedMealsId.indexOf(meal.id) !== -1 && (
+            <Box className={classes.mealItem}>
+              {'cancel'}
+            </Box>
+          )}
+        </Box>
+      ))}
     </Box>
   );
 };
 
-const SettingThreshold = () => {
+
+type SettingThresholdProps = {
+  peopleRequired?: number
+  setPeopleFn?: (x: any) => any
+  gottenBonus?: number
+}
+const SettingThreshold = ({
+  peopleRequired=10,
+  setPeopleFn,
+  gottenBonus=0
+}: SettingThresholdProps) => {
   return (
     <Box className={'settingThreshold-container grid-12 clearfix'}>
       <Typography>
@@ -19,46 +79,48 @@ const SettingThreshold = () => {
       </Typography>
       <div className="setting grid-12 grid-md-6 clearfix">
         <h3>{'設定人數門檻(單位: 人)'}</h3>
-        <div className="settingArea">
-          <div id="minus" className="plusAndMinus grid-3">
+        <Box>
+          <Button
+            variant={'contained'} 
+            onClick={() => setPeopleFn && setPeopleFn('-')}
+          >
             {'-'}
-          </div>
-          <div id="people" className="grid-6 people">
-            {'10'} 
-          </div>
-          <div id="plus" className="plusAndMinus grid-3">
+          </Button>
+          <Typography>
+            {peopleRequired}
+          </Typography>
+          <Button
+            variant={'contained'} 
+            onClick={() => setPeopleFn && setPeopleFn('+')}
+          >
             {'+'}
-          </div>
-        </div>
+          </Button>
+        </Box>
       </div>
       <div id="bonus" className="bonus grid-12 grid-md-6">
         <h3 className="grid-12">{'達到後 前 '}
-          <span className="people" id="people2">{'10'}</span>
+          <span className="people" id="people2">
+            {peopleRequired}
+          </span>
           {'人每人可獲得:'}  
         </h3>
-        <div className="bonus-container grid-12 clearfix">
-          <div className="grid-4">
-            <div className="pic">
-              <img src="images/bonusIcon-05.svg" alt="bonus" />
-              <span className="bonus-coin">{'99'}</span>
-            </div>
-          </div>
-          <p className="grid-8">
-            <span className="bonus" id="3_2Bonus">{'0'}</span>
-            {'元購物金'}
-          </p>
-        </div>
+        <Typography variant={'h4'}>
+          {`${gottenBonus} 元購物金`}
+        </Typography>
       </div>
     </Box>
   );
 };
 
-const CreateGroupoonSelectMeal = () => {
+
+type CreateGroupoonSelectMealProps = AddMealPanelProps & SettingThresholdProps
+const CreateGroupoonSelectMeal = (props: CreateGroupoonSelectMealProps) => {
   return (
     <Box>
       <Typography variant={'h4'}>{'選擇你想在此飯團加入的餐點'}</Typography>
-      <AddMealPanel />
-      <SettingThreshold />
+      <AddMealPanel {...props} />
+      <SettingThreshold 
+        {...props} />
     </Box>
   );
 };

@@ -11,7 +11,7 @@ export default {
 };
 
 export const createPart = () => (
-  <CreatePart />
+  <CreatePart selectedTag={'aa'} selectTagFn={() => {}} />
 );
 
 export const createGrouponSelectMeal = () => (

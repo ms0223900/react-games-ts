@@ -28,3 +28,6 @@ export const checkDatesIsSame = (date1: Date, date2: Date) => {
   return false;
 };
 
+export const getBonusFromMealsAndPeople = (mealsAmount: number, people: number) => {
+  return Math.round(mealsAmount * people / 10) * 10;
+};

@@ -5,11 +5,17 @@ import { getDaysAfterToday, checkDatesIsSame } from 'lib/fn';
 import { tags_mockData } from 'storage/create-form-mocks';
 
 type TagSelectsProps = {
-  tags: string[]
+  tags?: string[]
+  selectTagFn: (e: any) => any
+  selectedTag: string
 }
-const TagSelects = ({ tags }: TagSelectsProps) => {
+const TagSelects = ({ 
+  tags=tags_mockData, 
+  selectTagFn, 
+  selectedTag  
+}: TagSelectsProps) => {
   return (
-    <Select>
+    <Select onChange={selectTagFn} value={selectedTag}>
       {tags.map((tag, i) => (
         <MenuItem key={i} value={tag}>{tag}</MenuItem>
       ))}
@@ -51,12 +57,11 @@ const ChooseDayPart = ({ selectedDay, chooseDay }: ChooseDayPartProps) => {
 type NameTagPartProps = {
   onChangeNameFn?: (e: React.ChangeEvent<HTMLInputElement>) => any
   nameValue?: string
-  tags?: string[]
-}
+} & TagSelectsProps
 const NameTagPart = ({
   onChangeNameFn,
   nameValue,
-  tags=tags_mockData
+  ...tagProps
 }: NameTagPartProps) => {
   return (
     <Box className={'name-container clearfix'}>
@@ -80,7 +85,7 @@ const NameTagPart = ({
         <h3>
           {'請選擇此飯團的標籤'}
         </h3>
-        <TagSelects tags={tags} />
+        <TagSelects {...tagProps} />
       </div>
     </Box>
   );

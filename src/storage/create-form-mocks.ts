@@ -7,11 +7,21 @@ export const tags_mockData = [
 ];
 
 export const createList_mockData: CreateGrouponCreateListProps = {
-  startDate: new Date('2019/10/10'),
+  startDate: new Date('3000/10/10'),
   dayAmount: 3,
-  title: 'hello meal',
-  tag: 'say hello',
+  title: '',
+  tag: '',
   peopleRequired: 10,
-  gottenBonus: 100,
-  meals: [meal_mockData]
+  gottenBonus: 0,
+  meals: []
+};
+
+export const createList_init = {
+  startDate: null,
+  dayAmount: null,
+  title: null,
+  tag: null,
+  peopleRequired: null,
+  gottenBonus: null,
+  meals: []
 };

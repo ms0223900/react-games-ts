@@ -5,6 +5,9 @@ import CreatePart from 'app/groupon-form/create-part';
 import CreateGroupoonSelectMeal from 'app/groupon-form/create-groupon-select-meal';
 import CreateGrouponCreateList from 'app/groupon-form/create-groupon-create-list';
 import { createList_mockData } from 'storage/create-form-mocks';
+import { meals_mockData } from 'app/common-components/storage/mockData';
+import { SingleMeal } from 'common-types';
+import { getBonusFromMealsAndPeople } from 'lib/fn';
 
 const steps = ['選擇開始日期', '選擇餐點和人數', '確認發起日期'];
 const maxPage = steps.length - 1;
@@ -33,7 +36,10 @@ const StepPart = ({ pageNow }: { pageNow: number }) => {
 };
 
 
-const GrouponForm = () => {
+type GrouponFormProps = {
+  mealsData?: SingleMeal[]
+}
+const GrouponForm = ({ mealsData=meals_mockData }: GrouponFormProps) => {
   const classes = useStyles();
   const createPartRef = useRef({ getName: () => {} });
   const [pageNow, setPage] = useState(0);
@@ -44,10 +50,23 @@ const GrouponForm = () => {
     if(prevOrNext === 'prev') {
       newPage = newPage - 1 >= 0 ? newPage - 1 : 0;
     } else {
+      //check state before next page
+      if(pageNow === 0) {
+        const { startDate, title, tag } = formState;
+        if(startDate.getFullYear() === 3000 || !title || !tag) {
+          return window.alert('something has lost!');
+        }
+      }
+      if(pageNow === 1) {
+        const { meals } = formState;
+        if(meals.length === 0) {
+          return window.alert('please choose at least 1 meal');
+        }
+      }
       newPage = newPage + 1 <= maxPage ? newPage + 1 : maxPage;
     }
     setPage(newPage);
-  }, [pageNow]);
+  }, [pageNow, formState]);
 
   const handleChooseStartDay = (date: Date) => {
     setFormState(form => ({
@@ -64,7 +83,49 @@ const GrouponForm = () => {
     }));
   };
 
+  const handleSelectTag = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    console.log(value);
+    setFormState(form => ({
+      ...form,
+      tag: value,
+    }));
+  };
 
+  const handleSelectMeal = useCallback((mealId: number) => {
+    const { meals } = formState;
+    const isSelected = meals.find(meal => meal.id === mealId);
+    let newMeals = meals;
+    //add
+    if(!isSelected) {
+      const selectedMeal = mealsData.find(m => m.id === mealId);
+      newMeals = selectedMeal ? [...formState.meals, selectedMeal] : formState.meals;
+    } else {
+      //remove
+      newMeals = meals.filter(m => m.id !== mealId);
+    }
+    setFormState(f => ({
+      ...f,
+      meals: newMeals
+    }));
+  }, [formState]);
+
+  const handleSetPeople = useCallback((ope='+') => {
+    const { peopleRequired } = formState;
+    let res = peopleRequired;
+    if(ope === '+') {
+      res += 1;
+    } else {
+      res = res - 1 >= 0 ? res - 1 : 0;
+    }
+    setFormState(f => ({
+      ...f,
+      peopleRequired: res
+    }));
+  }, [formState]);
+
+  const selectedMealsId = formState.meals.map(m => m.id);
+  const gottenBonus = getBonusFromMealsAndPeople(selectedMealsId.length, formState.peopleRequired);
   return (
     <Container>
       <StepPart pageNow={pageNow} />
@@ -75,13 +136,23 @@ const GrouponForm = () => {
             onChangeNameFn={handleInputName}
             nameValue={formState.title}
             selectedDay={formState.startDate}
-            chooseDay={handleChooseStartDay} />
+            chooseDay={handleChooseStartDay}
+            selectedTag={formState.tag}
+            selectTagFn={handleSelectTag} />
         )}
         {pageNow === 1 && (
-          <CreateGroupoonSelectMeal />
+          <CreateGroupoonSelectMeal
+            selectedMealsId={selectedMealsId}
+            meals={mealsData}
+            selectMealFn={handleSelectMeal}
+            peopleRequired={formState.peopleRequired}
+            setPeopleFn={handleSetPeople}
+            gottenBonus={gottenBonus} />
         )}
         {pageNow === 2 && (
-          <CreateGrouponCreateList {...formState} />
+          <CreateGrouponCreateList 
+            {...formState}
+            gottenBonus={gottenBonus} />
         )}
       </Paper>
       <Box>

@@ -11,6 +11,9 @@ const useStyles = makeStyles<any, MealItemProps>({
     margin: 6,
     overflow: 'hidden',
     userSelect: 'none',
+    '& :hover': {
+      cursor: 'pointer',
+    }
   },
   img: {
     width: mealItemWidth,
@@ -26,12 +29,14 @@ const useStyles = makeStyles<any, MealItemProps>({
   }
 });
 
-type MealItemProps = import('common-types').SingleMeal
+type MealItemProps = import('common-types').SingleMeal & {
+  clickFn?: (x: any) => any
+}
 const MealItem = (props: MealItemProps) => {
-  const { name, imgSrc, price } = props;
+  const { name, imgSrc, price, clickFn } = props;
   const classes = useStyles(props);
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} onClick={clickFn}>
       <Box className={classes.img}>
         <Box className={classes.infoPart}>
           <Typography>{name}</Typography>

@@ -29,7 +29,7 @@ const GrouponTitle = ({ title, tag }: GrouponTitleProps) => {
   return (
     <Box>
       <Box component={'span'}>{'飯團名稱: '}</Box>
-      <Typography>{title}</Typography>
+      <Typography variant={'h4'}>{title}</Typography>
       <Box component={'span'}>{'#' + tag}</Box>
     </Box>
   );
