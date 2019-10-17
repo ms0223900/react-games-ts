@@ -40,11 +40,11 @@ type GrouponDateProps = {
   startDate: Date
   dayAmount: number
 }
-const GrouponDate = ({ startDate, dayAmount }: GrouponDateProps) => {
+export const GrouponDate = ({ startDate, dayAmount }: GrouponDateProps) => {
   const endDate = getAnotherDay(startDate, dayAmount);
   return (
     <Box>
-      <Typography>
+      <Typography variant={'h5'}>
         {`${getDateString(startDate)} - ${getDateString(endDate)}`}
       </Typography>
       <Typography>{`共: ${dayAmount}天`}</Typography>

@@ -94,11 +94,6 @@ const NameTagPart = ({
 
 type CreatePartProps = ChooseDayPartProps & NameTagPartProps
 const CreatePart = (props: CreatePartProps, ref: any) => {
-  // const [name, setName] = useState('');
-  // const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { value } = e.target;
-  //   setName(value);
-  // };
   useImperativeHandle(
     ref,
     () => ({

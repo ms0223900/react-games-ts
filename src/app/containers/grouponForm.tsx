@@ -1,13 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect, useContext } from 'react';
 import { Box, Container, Button, Stepper, Step, StepLabel, Paper, makeStyles } from '@material-ui/core';
 import CreatePart from 'app/groupon-form/create-part';
 import CreateGroupoonSelectMeal from 'app/groupon-form/create-groupon-select-meal';
 import CreateGrouponCreateList from 'app/groupon-form/create-groupon-create-list';
 import { createList_mockData } from 'storage/create-form-mocks';
 import { meals_mockData } from 'app/common-components/storage/mockData';
-import { SingleMeal } from 'common-types';
+import { SingleMeal, UserInfo } from 'common-types';
 import { getBonusFromMealsAndPeople } from 'lib/fn';
+import Modal from 'app/common-components/Modal';
+import GrouponResultContent from 'app/groupon-form/GrouponResultContent';
+import ContextStore from 'constants/context';
 
 const steps = ['選擇開始日期', '選擇餐點和人數', '確認發起日期'];
 const maxPage = steps.length - 1;
@@ -38,10 +41,13 @@ const StepPart = ({ pageNow }: { pageNow: number }) => {
 
 type GrouponFormProps = {
   mealsData?: SingleMeal[]
+} & {
+  userInfo: UserInfo
 }
-const GrouponForm = ({ mealsData=meals_mockData }: GrouponFormProps) => {
+const GrouponForm = ({ mealsData=meals_mockData, userInfo }: GrouponFormProps) => {
   const classes = useStyles();
   const createPartRef = useRef({ getName: () => {} });
+  const [isModal, setModal] = useState(false);
   const [pageNow, setPage] = useState(0);
   const [formState, setFormState] = useState(createList_mockData);
 
@@ -62,6 +68,10 @@ const GrouponForm = ({ mealsData=meals_mockData }: GrouponFormProps) => {
         if(meals.length === 0) {
           return window.alert('please choose at least 1 meal');
         }
+      }
+      if(pageNow === 2) {
+        if(username) return setModal(true);
+        return 'please log in';
       }
       newPage = newPage + 1 <= maxPage ? newPage + 1 : maxPage;
     }
@@ -124,6 +134,11 @@ const GrouponForm = ({ mealsData=meals_mockData }: GrouponFormProps) => {
     }));
   }, [formState]);
 
+  const handleCloseModal = useCallback(() => {
+    setModal(m => !m);
+  }, [isModal]);
+
+  const { username } = userInfo;
   const selectedMealsId = formState.meals.map(m => m.id);
   const gottenBonus = getBonusFromMealsAndPeople(selectedMealsId.length, formState.peopleRequired);
   return (
@@ -155,6 +170,9 @@ const GrouponForm = ({ mealsData=meals_mockData }: GrouponFormProps) => {
             gottenBonus={gottenBonus} />
         )}
       </Paper>
+      <Modal isModal={isModal} closeFn={handleCloseModal}>
+        <GrouponResultContent {...formState} username={username} />
+      </Modal>
       <Box>
         <Button onClick={() => handlePage('prev')}>{'prev'}</Button>
         <Button color={'primary'} onClick={() => handlePage('next')}>
@@ -165,4 +183,11 @@ const GrouponForm = ({ mealsData=meals_mockData }: GrouponFormProps) => {
   );  
 };
 
-export default GrouponForm;
+const ContextedGrouponForm = () => {
+  const { state } = useContext(ContextStore);
+  return (
+    <GrouponForm userInfo={state.userInfo} />
+  );
+};
+
+export default ContextedGrouponForm;
