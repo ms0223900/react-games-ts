@@ -1,7 +1,6 @@
 import React from 'react';
 import CreatePart from 'app/groupon-form/create-part';
 import CreateGroupoonSelectMeal from 'app/groupon-form/create-groupon-select-meal';
-import 'style/style.css';
 import CreateGrouponCreateList from 'app/groupon-form/create-groupon-create-list';
 import { createList_mockData } from 'storage/create-form-mocks';
 import GrouponForm from 'app/containers/grouponForm';

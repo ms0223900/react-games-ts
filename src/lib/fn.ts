@@ -22,7 +22,15 @@ export const getDaysAfterToday = (days=1, startDate?: Date) => {
 };
 
 export const getDateString = (date: Date) => (
-  `${date.getMonth() + 1}/${date.getDate()}`
+  `${date.getMonth() + 1}-${date.getDate()}`
+);
+
+export const getTimeString = (date: Date) => (
+  `${date.getHours()}:${date.getMinutes()}`
+);
+
+export const getDateAndTime = (date: Date) => (
+  `${getDateString(date)} ${getTimeString(date)}`
 );
 
 export const checkDatesIsSame = (date1: Date, date2: Date) => {
