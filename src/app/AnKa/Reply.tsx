@@ -43,8 +43,8 @@ const Reply = (props: MessageProps) => {
     username, 
     content, 
     created_at, 
-    isAnkaHost,
-    isAnkaed,
+    // isAnkaHost,
+    // isAnkaed,
     ankaElement
   } = props;
   const classes = useStyles(props);

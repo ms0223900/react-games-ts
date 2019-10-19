@@ -1,9 +1,10 @@
-import React, { useState, useCallback, ChangeEvent } from 'react';
-import { Box, Container, Divider, makeStyles } from '@material-ui/core';
+import React, { useState, useCallback, ChangeEvent, useRef, useEffect } from 'react';
+import { Box, Container, Divider, makeStyles, RootRef, Typography } from '@material-ui/core';
 import Reply from './Reply';
 import { ID, SingleMessage, SingleAnkaElement } from 'anka-types';
 import AnkaTextArea from './AnkaTextArea';
 import { user01_mockData } from 'app/AnKa/storage/mockData';
+import { scrollToBottom } from 'lib/fn';
 
 const getSingleAnkaEl = () => {
   const number = ~~(Math.random() * 4);
@@ -14,8 +15,18 @@ const getSingleAnkaEl = () => {
   });
 };
 
-const checkIsAnkaed = (hostAnkaEl: SingleAnkaElement, otherAnkaEl: SingleAnkaElement) => {
-  
+const checkIsAnkaed = (messages: SingleMessage[], messageIndex: number, hostIndexNow=0) => {
+  const hostMes = messages[hostIndexNow];
+  const comparedMes = messages[messageIndex];
+  if(
+    messages.length > 0 &&
+    comparedMes &&
+    hostMes.ankaElement &&
+    comparedMes.ankaElement &&
+    hostMes.ankaElement.type === comparedMes.ankaElement.type &&
+    hostMes.ankaElement.number === comparedMes.ankaElement.number
+  ) return true;
+  return false;
 };
 
 
@@ -23,7 +34,7 @@ const useStyles = makeStyles({
   mesContainer: {
     backgroundColor: '#eee',
     padding: 16,
-    maxHeight: 600,
+    height: 600,
     overflowY: 'scroll',
   }
 });
@@ -33,7 +44,9 @@ type AnkaPageProps = {
   queriedMessages?: SingleMessage[]
 }
 const AnkaPage = ({ ankaHostId, queriedMessages=[] }: AnkaPageProps) => {
+  const replyRef = useRef<HTMLElement | null>();
   const classes = useStyles();
+  const [ankaIsFulfilled, setFulfilled] = useState(false);
   const [messages, setMessages] = useState(queriedMessages);
   const [replyUseAnka, setUseAnka] = useState(false);
   const [textAreaValue, setValue] = useState('');
@@ -62,17 +75,48 @@ const AnkaPage = ({ ankaHostId, queriedMessages=[] }: AnkaPageProps) => {
     setUseAnka(a => !a);
   };
 
+  const setReplyRef = (el: HTMLElement | null) => {
+    replyRef.current = el;
+  };
+
+  useEffect(() => {
+    //scroll to bottom
+    if(replyRef && messages.length > 0) {
+      console.log(replyRef.current);
+      const el = replyRef.current;
+      scrollToBottom(el);
+    }
+    //check is anka reply now is fulfilled
+    for (let i = 0; i < messages.length; i++) {
+      if(checkIsAnkaed(messages, i)) 
+        return setFulfilled(true);
+    }
+  }, [messages]);
+
   // const isAnkaHost = ankaHostId === mes.userId;
   return (
     <Container>
+      {ankaIsFulfilled && (
+        <Typography variant={'h3'}>
+          {'anka reply is fulfilled now :)'}
+        </Typography>
+      )}
+      {/* <RootRef rootRef={setReplyRef}> */}
       <Box className={classes.mesContainer}>
-        {messages.map(mes => (
-          <Reply 
-            key={mes.id}
-            {...mes} 
-            isAnkaHost={ankaHostId === mes.userId} />
-        ))}
+        <div ref={setReplyRef}>
+          {messages.map((mes, i) => {
+            const isAnkaed = checkIsAnkaed(messages, i);
+            return (
+              <Reply 
+                key={i}
+                {...mes}
+                isAnkaed={isAnkaed} 
+                isAnkaHost={ankaHostId === mes.userId} />
+            );
+          })}
+        </div>
       </Box>
+      {/* </RootRef> */}
       <Divider />
       <AnkaTextArea 
         isUseAnka={replyUseAnka}

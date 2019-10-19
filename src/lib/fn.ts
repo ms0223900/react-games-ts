@@ -60,3 +60,7 @@ export const getPriceFromMeals = (meals: SingleMeal[], discountRatio=1) => {
   });
   return result * discountRatio;
 };
+
+export const scrollToBottom = (el: HTMLElement | null | undefined) => {
+  el && el.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'end' });
+};

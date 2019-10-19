@@ -44,5 +44,8 @@ export const reply_host_mockData: MessageProps = {
 export const replies_mockData = [
   reply_host_mockData,
   reply_mockData,
-  reply_mockData,
+  {
+    ...reply_mockData,
+    ankaElement: ankaElement_dice_mockData,
+  },
 ];
