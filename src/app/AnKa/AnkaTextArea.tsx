@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, FormControl, TextareaAutosize, Button, Checkbox, Typography, FormControlLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { ankaElementTypes } from './config';
 import 'app/AnKa/styles/styles.scss';
+import { HostUsedAnkaElements } from './AnkaPage';
 
 const useStyles = makeStyles({
   textArea: {
@@ -15,15 +17,21 @@ const useStyles = makeStyles({
 });
 
 export type AnkaTextAreaProps = {
+  isAnkaHost?: boolean
   isUseAnka?: boolean
   setUseAnkaFn?: (x: any) => any
+  hostUsedAnkaElements?: HostUsedAnkaElements
+  setAnkaHostUseAnkaFn?: (x: any) => any
   inputTextAreaFn?: (x: any) => any
   textAreaValue?: string
   sendFn?: (x: any) => any
 }
 const AnkaTextArea = ({
+  isAnkaHost,
   isUseAnka=false,
   setUseAnkaFn,
+  setAnkaHostUseAnkaFn,
+  hostUsedAnkaElements=[],
   inputTextAreaFn,
   textAreaValue='',
   sendFn
@@ -39,11 +47,27 @@ const AnkaTextArea = ({
           onChange={inputTextAreaFn}
           value={textAreaValue}  />
       </FormControl>
-      <FormControlLabel control={
-        <Checkbox 
-          checked={isUseAnka}
-          onChange={setUseAnkaFn} />
-      } label={'use Anka'} />
+      {isAnkaHost ? (
+        <>
+          {hostUsedAnkaElements.map((t, i) => (
+            <FormControlLabel 
+              key={i}
+              label={`use ${t.type}`}
+              control={
+                <Checkbox 
+                  checked={t.checked}
+                  onChange={setAnkaHostUseAnkaFn && setAnkaHostUseAnkaFn(i)} />
+              }  />
+          ))}
+        </>
+      ) : (
+        <FormControlLabel control={
+          <Checkbox 
+            checked={isUseAnka}
+            onChange={setUseAnkaFn} />
+        } label={'use Anka'} />
+      )}
+      
       <Button 
         variant={'contained'} 
         color={'primary'}
@@ -55,5 +79,6 @@ const AnkaTextArea = ({
     </Box>
   );
 };
+
 
 export default AnkaTextArea;

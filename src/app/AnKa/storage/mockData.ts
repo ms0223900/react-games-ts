@@ -9,6 +9,10 @@ export const ankaElement_color_mockData: SingleAnkaElementProps = {
   type: 'color',
   number: 2
 };
+export const ankaElement_floor_mockData: SingleAnkaElementProps = {
+  type: 'floor',
+  number: 6
+};
 
 export const ankaHostId_mockData = '3';
 export const user01_mockData = {
@@ -29,7 +33,8 @@ export const reply_mockData: MessageProps = {
   userId: '1',
   username: 'aa123',
   content: 'hi\nhi',
-  created_at: new Date('2019/10/31 10:31')
+  created_at: new Date('2019/10/31 10:31'),
+  ankaElements: []
 };
 
 export const reply_host_mockData: MessageProps = {
@@ -38,7 +43,7 @@ export const reply_host_mockData: MessageProps = {
   username: 'aa123',
   content: 'hi\nhi',
   created_at: new Date('2019/10/31 10:31'),
-  ankaElement: ankaElement_dice_mockData,
+  ankaElements: [ankaElement_dice_mockData, ankaElement_color_mockData],
 };
 
 export const replies_mockData = [
@@ -46,6 +51,6 @@ export const replies_mockData = [
   reply_mockData,
   {
     ...reply_mockData,
-    ankaElement: ankaElement_dice_mockData,
+    ankaElements: [ankaElement_dice_mockData],
   },
 ];

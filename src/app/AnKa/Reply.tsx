@@ -45,7 +45,7 @@ const Reply = (props: MessageProps) => {
     created_at, 
     // isAnkaHost,
     // isAnkaed,
-    ankaElement
+    ankaElements
   } = props;
   const classes = useStyles(props);
   return (
@@ -69,9 +69,9 @@ const Reply = (props: MessageProps) => {
           <Paper className={classes.contentPart}>
             {content}
           </Paper>
-          {ankaElement && (
-            <SingleAnkaElementItem {...ankaElement}/>
-          )}
+          {ankaElements.map((el, i) => (
+            <SingleAnkaElementItem key={i} {...el}/>
+          ))}
         </Box>
         
       </Box>

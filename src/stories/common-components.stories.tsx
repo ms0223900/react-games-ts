@@ -5,6 +5,7 @@ import Modal from 'app/common-components/Modal';
 import { Typography } from '@material-ui/core';
 import GrouponResultContent from 'app/groupon-form/GrouponResultContent';
 import { createList_mockData } from 'storage/create-form-mocks';
+import MultiUserPage from 'app/common-components/MultiUserPage';
 
 export default {
   title: 'common components'
@@ -24,4 +25,8 @@ export const modalWithContent = () => (
   <Modal isModal={true}>
     <GrouponResultContent {...createList_mockData} username={'aaa122'} />
   </Modal>
+);
+
+export const multiUserPage = () => (
+  <MultiUserPage />
 );
