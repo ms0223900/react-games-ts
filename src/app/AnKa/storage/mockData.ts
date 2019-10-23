@@ -32,7 +32,7 @@ export const reply_mockData: MessageProps = {
   id: 2,
   userId: '3',
   username: 'aa123',
-  content: 'hi\nhi',
+  content: 'hi\nhi(_dice_3)',
   created_at: new Date('2019/10/31 10:31'),
   ankaElements: []
 };
@@ -55,3 +55,8 @@ export const replies_mockData = [
     ankaElements: [ankaElement_dice_mockData],
   },
 ];
+
+export const ankaElementString_mockData = '(_dice_2)';
+export const message_input_mockData = 'Hisjdakjd;ak(_dice)\nfasfa';
+export const message_queried_mockData = ['(_dice_2)Hisjdakjd;ak(_dice_2)(_color_1)(_sdadssss(XDDD', 'fasfa'];
+

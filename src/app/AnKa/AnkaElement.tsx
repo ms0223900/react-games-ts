@@ -8,9 +8,12 @@ const elWidth = 32;
 
 const useStyles = makeStyles({
   root: {
+    display: 'inline-block',
+    verticalAlign: 'middle',
     width: elWidth,
     height: elWidth,
     marginLeft: 4,
+    marginRight: 4,
     borderRadius: 4,
     backgroundColor: '#333',
     color: '#fff',

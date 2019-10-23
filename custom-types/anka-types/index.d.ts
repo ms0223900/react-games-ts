@@ -17,5 +17,17 @@ declare module 'anka-types' {
   export type SingleAnkaElement = {
     type: ankaElementTypesString
     number: number
+    [x: string]: any
+  }
+  
+  type MesType = 'ankaElement' | 'message'
+  export type ParsedMessage_element = {
+    mesType: 'ankaElement'
+    type: ankaElementTypesString
+    number: number
+  }
+  export type ParsedMessage_message = {
+    mesType: 'message'
+    message: string
   }
 }

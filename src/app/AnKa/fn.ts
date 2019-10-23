@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { ankaElementTypes, ankaElementTypesString } from './config';
-import { SingleMessage, SingleAnkaElement } from 'anka-types';
+import { SingleMessage, SingleAnkaElement, ParsedMessage_element, ParsedMessage_message } from 'anka-types';
+import { message_queried_mockData } from './storage/mockData';
 
 export const getRandomSingleAnkaEl = (type: ankaElementTypesString,ankaHostFloorNow?: number) => {
   // const types = Object.keys(ankaElementTypes);
@@ -91,22 +92,62 @@ export const checkIsAnkaElementMatched = (hostLatestEls: SingleAnkaElement[], co
   return matchedRes;
 };
 
-const ankaElementString_mockData = '(_dice_2)';
-const message_input_mockData = 'Hisjdakjd;ak(_dice)\nfasfa';
-const message_queried_mockData = ['(_dice_2)Hisjdakjd;ak(_dice_2)(_color_1)(_sdad)', 'fasfa'];
-const ankaElsInMessageRegExp = (allEls: boolean, ankaEl?: ankaElementTypesString, ) => {
+const conditionElRegExp = (conditionEls: string, isFromInput=false) => (
+  isFromInput ? (
+    new RegExp(`(\\(_(?:${conditionEls})\\))`, 'g')
+  ) : (
+    new RegExp(`(\\(_(?:${conditionEls})_\\d+\\))`, 'g')
+  )
+);
+export const ankaElsInMessageRegExp = (isFromInput: boolean, ankaEl?: ankaElementTypesString) => {
   const els = Object.keys(ankaElementTypes);
   const conditionEls = els.join('|');
-  if(allEls) return new RegExp(`(\\(_(?:${conditionEls})_\\d+\\))`, 'g');
-  return allEls ? 
-    new RegExp(`(${conditionEls})_\\d+?`, 'g') : 
-    new RegExp(`(${ankaEl})+?`, 'g');
+  return conditionElRegExp(conditionEls, isFromInput);
+  // if(allEls) return conditionElRegExp(conditionEls, false);
+  // return allEls ? 
+  //   new RegExp(`(${conditionEls})_\\d+?`, 'g') : 
+  //   new RegExp(`(${ankaEl})+?`, 'g');
 };
 
-const splitElRegExp = /\(_|\)/g;
-export const parsedSingleMessage = (message: string=message_queried_mockData[0]) => {
-  const regExp = ankaElsInMessageRegExp(true);
-  const splitMessages = message.split(regExp);
-  console.log(splitMessages);
-  
+const splitElementStringRegExp = /\(_|_|\)/g;
+export const splitSingleMessage = (message: string=message_queried_mockData[0]) => {
+  const regExp = ankaElsInMessageRegExp(false);
+  const splitMessages = message.split(regExp).filter(t => t !== '');
+  const matchedElements = message.match(regExp);
+  // console.log(splitMessages, matchedElements);
+  return {
+    splitMessages,
+    matchedElements,
+  };
+};
+
+
+export const parsedSingleMessage = (messageAndMatches: {
+  splitMessages: string[]
+  matchedElements: string[] | null,
+}) => {
+  const {
+    splitMessages,
+    matchedElements,
+  } = messageAndMatches;
+  let res = [] as (ParsedMessage_element|ParsedMessage_message)[];
+  splitMessages.forEach(mes => {
+    const checkIsEl = matchedElements && matchedElements.find(el => el === mes);
+    if(checkIsEl) {
+      const el = mes.split(splitElementStringRegExp).filter(t => t !== '');
+      // console.log(el);
+      res = [...res, {
+        mesType: 'ankaElement',
+        type: el[0] as ankaElementTypesString,
+        number: parseInt(el[1]),
+      }];
+    } else {
+      res = [...res, {
+        mesType: 'message',
+        message: mes
+      }];
+    }
+  });
+  // console.log(res);
+  return res;
 };

@@ -6,6 +6,8 @@ import SingleAnkaElement from 'app/AnKa/AnkaElement';
 import AnkaTextArea from 'app/AnKa/AnkaTextArea';
 import AnkaPage, { initHostUsedAnkaElements } from 'app/AnKa/AnkaPage';
 import MultiUserPage from 'app/common-components/MultiUserPage';
+import ReplyContent from 'app/AnKa/ReplyContent';
+import { splitSingleMessage, parsedSingleMessage } from 'app/AnKa/fn';
 
 export default {
   title: 'Anka components'
@@ -35,6 +37,16 @@ export const ankaElement = () => {
       <br />
       <Typography>{'floor type'}</Typography>
       <SingleAnkaElement {...ankaElement_floor_mockData}/>
+    </>
+  );
+};
+
+export const parsedAnkaReplyContent = () => {
+  const splitMes = splitSingleMessage();
+  const parsedMessages = parsedSingleMessage(splitMes);
+  return (
+    <>
+      <ReplyContent parsedMessages={parsedMessages} />
     </>
   );
 };

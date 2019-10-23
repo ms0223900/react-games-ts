@@ -7,6 +7,7 @@ const apiUrl =
 
 export const socket = openSocket(apiUrl);
 
+export const splitElementStringRegExp = /\(_|_|\)/g;
 export type ankaElementTypesString = 'dice' | 'color' | 'floor';
 export const ankaElementTypes: {[x in ankaElementTypesString]: any} = {
   'dice': {

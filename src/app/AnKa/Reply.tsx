@@ -4,6 +4,8 @@ import { AccountCircle } from '@material-ui/icons';
 import { getDateAndTime } from 'lib/fn';
 import { SingleMessage } from 'anka-types';
 import SingleAnkaElementItem from './AnkaElement';
+import { splitSingleMessage, parsedSingleMessage } from './fn';
+import ReplyContent from './ReplyContent';
 
 const useStyles = makeStyles<any, MessageProps>({
   wrapper: {
@@ -56,6 +58,7 @@ const Reply = (props: MessageProps) => {
     ankaElements
   } = props;
   const classes = useStyles(props);
+  const splitContent = content.split('\n');
   return (
     <Box className={classes.wrapper}>
       <Box 
@@ -76,7 +79,16 @@ const Reply = (props: MessageProps) => {
           </Box>
           <Box display={'flex'} alignItems={'center'}>
             <Box className={classes.contentPart}>
-              {content}
+              {splitContent.map((content, i) => {
+                const splitContent = splitSingleMessage(content);
+                const parsed = parsedSingleMessage(splitContent);
+                return (
+                  <>
+                    <ReplyContent key={i} parsedMessages={parsed} />
+                    {/* <br /> */}
+                  </>
+                );
+              })}
             </Box>
             {ankaElements.map((el, i) => (
               <SingleAnkaElementItem key={i} {...el}/>

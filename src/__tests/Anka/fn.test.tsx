@@ -1,9 +1,14 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { parsedSingleMessage } from 'app/AnKa/fn';
+import { splitSingleMessage, parsedSingleMessage } from 'app/AnKa/fn';
 
 describe('test functions', () => {
   it('test parsedSingleMessage', () => {
-    parsedSingleMessage();
+    // splitSingleMessage();
+  });
+
+  it('test parsedSingleMessage', () => {
+    const splitSingleMessage_mockData = splitSingleMessage();
+    parsedSingleMessage(splitSingleMessage_mockData);
   });
 });

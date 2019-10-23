@@ -1,9 +1,9 @@
 import React, { useState, ChangeEvent, useCallback } from 'react';
 import { Box } from '@material-ui/core';
 import { ankaElementTypesString, SingleMessage, ID, SingleAnkaElement } from 'anka-types';
-import { ankaElementTypes, socket } from '../config';
+import { ankaElementTypes, socket, splitElementStringRegExp } from '../config';
 import AnkaTextArea from '../AnkaTextArea';
-import { getRandomSingleAnkaEl } from '../fn';
+import { getRandomSingleAnkaEl, ankaElsInMessageRegExp } from '../fn';
 import { AnkaPageProps } from '../AnkaPage';
 import { user01_mockData } from '../storage/mockData';
 
@@ -45,6 +45,42 @@ export class fn {
   };
 }
 
+export const convertContent = (content: string, newId: number) => {
+  let res = {
+    content: '',
+    ankaElements: [] as any[]
+  };
+  let elementTypes;
+  const regExp = ankaElsInMessageRegExp(true);
+  const splitContent = content.split(regExp);
+  const elements = content.match(regExp);
+  if(elements) {
+    //element
+    elementTypes = elements.map(el => {
+      const type = el
+        .split(splitElementStringRegExp)
+        .filter(s => s !== '')[0] as ankaElementTypesString;
+      return {
+        type,
+        checked: false
+      };
+    });
+    const ankaElements = fn.getAnkaHostElementsOfReply(elementTypes, newId);
+    res = {
+      ...res,
+      ankaElements
+    };
+    //put into content
+    const convertedContent = splitContent.map(cnt => {
+      
+    });
+  }
+  //
+
+};
+
+
+
 type AnkaTextAreaContainerProps = AnkaPageProps & {
   isAnkaHost: boolean
   messages: SingleMessage[]
@@ -80,12 +116,8 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
   const handleSendReply = useCallback(() => {
     const newId = messages.length + 1;
     let ankaElements: SingleAnkaElement[];
-    // if(isAnkaHost) {
-    //   ankaElements = fn.getAnkaHostElementsOfReply(hostUsedAnkaElements, newId);
-    // } else {
-    //   ankaElements = fn.getAnkaElementsOfReply(messages, ankaHostId, replyUseAnka);
-    // }
-    ankaElements = fn.getAnkaHostElementsOfReply(hostUsedAnkaElements, newId);
+    // ankaElements = fn.getAnkaHostElementsOfReply(hostUsedAnkaElements, newId);
+    
     const newestMessage = {
       id: newId,
       userId: userInfo.id,
@@ -100,7 +132,7 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
     ]);
     socket.emit('send_chat', [ankaPageId, newestMessage]);
     setValue('');
-  }, [ankaPageId, hostUsedAnkaElements, messages, setMessagesFn, textAreaValue, userInfo.id, userInfo.username]);
+  }, [ankaPageId, messages, setMessagesFn, textAreaValue, userInfo.id, userInfo.username]);
 
   return (
     <AnkaTextArea
