@@ -1,3 +1,12 @@
+import openSocket from 'socket.io-client';
+
+const apiUrl = 
+  process.env.NODE_ENV === 'production' ? 
+    'https://intense-brushlands-46000.herokuapp.com' : 
+    process.env.STORYBOOK_API || 'http://localhost:1337'; 
+
+export const socket = openSocket(apiUrl);
+
 export type ankaElementTypesString = 'dice' | 'color' | 'floor';
 export const ankaElementTypes: {[x in ankaElementTypesString]: any} = {
   'dice': {
@@ -16,3 +25,4 @@ export const ankaElementTypes: {[x in ankaElementTypesString]: any} = {
     maxNumber: 10
   },
 };
+

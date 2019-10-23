@@ -29,9 +29,13 @@ export const getTimeString = (date: Date) => (
   `${date.getHours()}:${date.getMinutes()}`
 );
 
-export const getDateAndTime = (date: Date) => (
-  `${getDateString(date)} ${getTimeString(date)}`
-);
+export const getDateAndTime = (date: Date | string) => {
+  let formatDate= date as Date;
+  if(typeof(date) === 'string') {
+    formatDate = new Date(date);
+  }  
+  return `${getDateString(formatDate)} ${getTimeString(formatDate)}`;
+};
 
 export const checkDatesIsSame = (date1: Date, date2: Date) => {
   if(date1.getDate() === date2.getDate() && date1.getMonth() === date2.getMonth()) return true;

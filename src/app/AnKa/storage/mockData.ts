@@ -24,13 +24,13 @@ export const user02_mockData = {
   username: 'ms0112233'
 };
 export const user03_host_mockData = {
-  id: '3',
+  id: '1',
   username: 'dd132aa'
 };
 
 export const reply_mockData: MessageProps = {
   id: 2,
-  userId: '1',
+  userId: '3',
   username: 'aa123',
   content: 'hi\nhi',
   created_at: new Date('2019/10/31 10:31'),
@@ -39,7 +39,7 @@ export const reply_mockData: MessageProps = {
 
 export const reply_host_mockData: MessageProps = {
   id: 1,
-  userId: '3',
+  userId: '1',
   username: 'aa123',
   content: 'hi\nhi',
   created_at: new Date('2019/10/31 10:31'),
@@ -51,6 +51,7 @@ export const replies_mockData = [
   reply_mockData,
   {
     ...reply_mockData,
+    id: 3,
     ankaElements: [ankaElement_dice_mockData],
   },
 ];

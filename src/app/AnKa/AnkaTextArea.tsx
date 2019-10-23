@@ -6,15 +6,59 @@ import 'app/AnKa/styles/styles.scss';
 import { HostUsedAnkaElements } from './AnkaPage';
 
 const useStyles = makeStyles({
+  root: {
+    paddingTop: 16,
+  },
   textArea: {
     resize: 'none',
+    width: 400,
     height: 64,
+    padding: 8,
     // border: 0,
     outline: 0,
     borderRadius: 4,
-    fontSize: 16,
+    fontSize: 20,
   }
 });
+
+
+type CheckBoxesPartProps = {
+  isAnkaHost?: boolean
+  hostUsedAnkaElements: HostUsedAnkaElements
+  setAnkaHostUseAnkaFn?: (x: any) => any
+}
+export const CheckBoxesPart = ({
+  isAnkaHost,
+  hostUsedAnkaElements,
+  setAnkaHostUseAnkaFn
+}: CheckBoxesPartProps) => {
+  let ankaElements = hostUsedAnkaElements;
+  if(!isAnkaHost) {
+    ankaElements = hostUsedAnkaElements.filter(el => {
+      return el.type !== 'floor';
+    });
+  }
+  return (
+    <>
+      {ankaElements.map((t, i) => {
+        const floorElemnt = hostUsedAnkaElements.find(el => el.type === 'floor');
+        const floorChecked = !!(floorElemnt && floorElemnt.checked);
+        return (
+          <FormControlLabel 
+            key={i}
+            label={`use ${t.type}`}
+            control={
+              <Checkbox 
+                checked={t.checked}
+                disabled={floorChecked && t.type !== 'floor'}
+                onChange={setAnkaHostUseAnkaFn && setAnkaHostUseAnkaFn(i)} />
+            }  />
+        );
+      })}
+    </>
+  );
+};
+
 
 export type AnkaTextAreaProps = {
   isAnkaHost?: boolean
@@ -26,19 +70,24 @@ export type AnkaTextAreaProps = {
   textAreaValue?: string
   sendFn?: (x: any) => any
 }
-const AnkaTextArea = ({
-  isAnkaHost,
-  isUseAnka=false,
-  setUseAnkaFn,
-  setAnkaHostUseAnkaFn,
-  hostUsedAnkaElements=[],
-  inputTextAreaFn,
-  textAreaValue='',
-  sendFn
-}: AnkaTextAreaProps) => {
+const AnkaTextArea = (props: AnkaTextAreaProps) => {
+  const {
+    isAnkaHost,
+    isUseAnka=false,
+    setUseAnkaFn,
+    setAnkaHostUseAnkaFn,
+    hostUsedAnkaElements=[],
+    inputTextAreaFn,
+    textAreaValue='',
+    sendFn
+  } = props;
   const classes = useStyles();
   return (
-    <Box display={'flex'} alignItems={'center'}>
+    <Box 
+      className={classes.root}
+      display={'flex'} 
+      alignItems={'center'}
+    >
       <FormControl>
         <TextareaAutosize 
           className={classes.textArea}
@@ -47,26 +96,9 @@ const AnkaTextArea = ({
           onChange={inputTextAreaFn}
           value={textAreaValue}  />
       </FormControl>
-      {isAnkaHost ? (
-        <>
-          {hostUsedAnkaElements.map((t, i) => (
-            <FormControlLabel 
-              key={i}
-              label={`use ${t.type}`}
-              control={
-                <Checkbox 
-                  checked={t.checked}
-                  onChange={setAnkaHostUseAnkaFn && setAnkaHostUseAnkaFn(i)} />
-              }  />
-          ))}
-        </>
-      ) : (
-        <FormControlLabel control={
-          <Checkbox 
-            checked={isUseAnka}
-            onChange={setUseAnkaFn} />
-        } label={'use Anka'} />
-      )}
+      <CheckBoxesPart 
+        {...props}
+        hostUsedAnkaElements={hostUsedAnkaElements}  />
       
       <Button 
         variant={'contained'} 
@@ -79,6 +111,7 @@ const AnkaTextArea = ({
     </Box>
   );
 };
+
 
 
 export default AnkaTextArea;

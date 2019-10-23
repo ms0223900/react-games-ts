@@ -10,7 +10,7 @@ declare module 'anka-types' {
     userId: ID
     username: string
     content: string
-    created_at: Date
+    created_at: Date | string
     ankaElements: SingleAnkaElement[]
   }
 

@@ -6,16 +6,20 @@ import { SingleMessage } from 'anka-types';
 import SingleAnkaElementItem from './AnkaElement';
 
 const useStyles = makeStyles<any, MessageProps>({
-  root: {
+  wrapper: {
+    padding: 4,
     paddingLeft: props => props.isAnkaHost ? 0 : 32,
-    padding: 8,
-    borderRadius: 8,
-    borderColor: '#aaa',
-    borderStyle: 'dashed',
-    borderWidth: props => props.isAnkaed ? '3px': '0px',
+  },
+  root: {
+    padding: 4,
+    boxSizing: 'border-box',
+    borderColor: '#00a',
+    borderStyle: 'solid',
+    borderEndEndRadius: 24,
+    borderWidth: props => props.isAnkaed ? '0px 0px 0px 4px': '0px',
   },
   replyContainer: {
-    minWidth: 600,
+    width: 600,
   },
   userImg: {
     width: 16,
@@ -28,8 +32,12 @@ const useStyles = makeStyles<any, MessageProps>({
     width: '100%',
     whiteSpace: 'pre-wrap',
     padding: 8,
-    backgroundColor: props => props.isAnkaHost ? '#555' : '#fff',
-    color: props => props.isAnkaHost ? '#fff' : '#111'
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    fontSize: '1.25em',
+    lineHeight: '1.5em',
+    // backgroundColor: props => props.isAnkaHost ? '#555' : '#fff',
+    // color: props => props.isAnkaHost ? '#fff' : '#111'
   }
 });
 
@@ -49,33 +57,33 @@ const Reply = (props: MessageProps) => {
   } = props;
   const classes = useStyles(props);
   return (
-    <Box 
-      className={classes.root} 
-      display={'flex'} 
-      alignItems={'center'}
-    >
-      <Typography >{`${id}F`}</Typography>
-      <Box className={classes.replyContainer}>
-        <Box display={'flex'} justifyContent={'space-between'}>
-          <Box display={'flex'} alignItems={'center'}>
-            <Box className={classes.userImg}>
-              <AccountCircle />
+    <Box className={classes.wrapper}>
+      <Box 
+        className={classes.root} 
+        display={'flex'} 
+        alignItems={'center'}
+      >
+        <Typography >{`${id}F`}</Typography>
+        <Box className={classes.replyContainer}>
+          <Box display={'flex'} justifyContent={'space-between'}>
+            <Box display={'flex'} alignItems={'center'}>
+              <Box className={classes.userImg}>
+                <AccountCircle />
+              </Box>
+              <Typography>{username}</Typography>
             </Box>
-            <Typography>{username}</Typography>
+            <Typography>{getDateAndTime(created_at)}</Typography>
           </Box>
-          <Typography>{getDateAndTime(created_at)}</Typography>
+          <Box display={'flex'} alignItems={'center'}>
+            <Box className={classes.contentPart}>
+              {content}
+            </Box>
+            {ankaElements.map((el, i) => (
+              <SingleAnkaElementItem key={i} {...el}/>
+            ))}
+          </Box>
         </Box>
-        <Box display={'flex'} alignItems={'center'}>
-          <Paper className={classes.contentPart}>
-            {content}
-          </Paper>
-          {ankaElements.map((el, i) => (
-            <SingleAnkaElementItem key={i} {...el}/>
-          ))}
-        </Box>
-        
       </Box>
-      
     </Box>
   );
 };
