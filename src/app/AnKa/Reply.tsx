@@ -66,7 +66,9 @@ const Reply = (props: MessageProps) => {
         display={'flex'} 
         alignItems={'center'}
       >
-        <Typography >{`${id}F`}</Typography>
+        <Typography style={{width: '2em'}}>
+          {`${id}F`}
+        </Typography>
         <Box className={classes.replyContainer}>
           <Box display={'flex'} justifyContent={'space-between'}>
             <Box display={'flex'} alignItems={'center'}>

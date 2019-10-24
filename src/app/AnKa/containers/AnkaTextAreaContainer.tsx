@@ -1,9 +1,9 @@
-import React, { useState, ChangeEvent, useCallback } from 'react';
+import React, { useState, ChangeEvent, useCallback, KeyboardEvent } from 'react';
 import { Box } from '@material-ui/core';
 import { ankaElementTypesString, SingleMessage, ID, SingleAnkaElement } from 'anka-types';
 import { ankaElementTypes, socket, splitElementStringRegExp } from '../config';
 import AnkaTextArea from '../AnkaTextArea';
-import { getRandomSingleAnkaEl, ankaElsInMessageRegExp } from '../fn';
+import { getRandomSingleAnkaEl, ankaElsInMessageRegExp, insertStringAfterIndex, convertContent, splitSingleMessage } from '../fn';
 import { AnkaPageProps } from '../AnkaPage';
 import { user01_mockData } from '../storage/mockData';
 
@@ -45,40 +45,6 @@ export class fn {
   };
 }
 
-export const convertContent = (content: string, newId: number) => {
-  let res = {
-    content: '',
-    ankaElements: [] as any[]
-  };
-  let elementTypes;
-  const regExp = ankaElsInMessageRegExp(true);
-  const splitContent = content.split(regExp);
-  const elements = content.match(regExp);
-  if(elements) {
-    //element
-    elementTypes = elements.map(el => {
-      const type = el
-        .split(splitElementStringRegExp)
-        .filter(s => s !== '')[0] as ankaElementTypesString;
-      return {
-        type,
-        checked: false
-      };
-    });
-    const ankaElements = fn.getAnkaHostElementsOfReply(elementTypes, newId);
-    res = {
-      ...res,
-      ankaElements
-    };
-    //put into content
-    const convertedContent = splitContent.map(cnt => {
-      
-    });
-  }
-  //
-
-};
-
 
 
 type AnkaTextAreaContainerProps = AnkaPageProps & {
@@ -107,43 +73,56 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
     const { value } = e.target;
     setValue(value);
   };
-  const handleSetAnkaHostUseAnkaElements = useCallback((index: number) => (e: ChangeEvent<HTMLInputElement>) => {
-    const newEls = [...hostUsedAnkaElements];
-    // const { value } = e.target;
-    newEls[index].checked = !newEls[index].checked;
-    setHostUsedAnkaElements(newEls);
-  }, [hostUsedAnkaElements]);
+  
+  const handlAddAnkaElement = useCallback((ankaEl: string) => {
+    const ankaElementStr = `(_${ankaEl})`;
+    setValue(val => val + ankaElementStr);
+  }, []);
   const handleSendReply = useCallback(() => {
     const newId = messages.length + 1;
-    let ankaElements: SingleAnkaElement[];
-    // ankaElements = fn.getAnkaHostElementsOfReply(hostUsedAnkaElements, newId);
-    
+    // let ankaElements: SingleAnkaElement[];
+    let { ankaElements, content } = convertContent(textAreaValue, newId);
+    const checkContentIsEmpty = content.trim().length === 0;
+    const checkHaveAnkaElementsAndStringExpectAnkaElements = () => {
+      return ankaElements.length > 0;
+    };
     const newestMessage = {
       id: newId,
       userId: userInfo.id,
       username: userInfo.username,
-      content: textAreaValue,
       created_at: new Date(),
+      content,
       ankaElements,
     };
-    setMessagesFn([
-      ...messages,
-      newestMessage
-    ]);
-    socket.emit('send_chat', [ankaPageId, newestMessage]);
-    setValue('');
+    if(!checkContentIsEmpty) {
+      setMessagesFn([
+        ...messages,
+        newestMessage
+      ]);
+      setValue('');
+      socket.emit('send_chat', [ankaPageId, newestMessage]);
+    }
+    
   }, [ankaPageId, messages, setMessagesFn, textAreaValue, userInfo.id, userInfo.username]);
+  const handleSendByEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    const { keyCode } = e;
+    e.preventDefault();
+    if(keyCode === 13 && !e.shiftKey) {
+      handleSendReply();
+    }
+  };
 
   return (
     <AnkaTextArea
       {...props}
       hostUsedAnkaElements={hostUsedAnkaElements}
-      setAnkaHostUseAnkaFn={handleSetAnkaHostUseAnkaElements}
+      addAnkaElementFn={handlAddAnkaElement}
       isUseAnka={replyUseAnka}
       setUseAnkaFn={handleSetUseAnka}
       textAreaValue={textAreaValue} 
       inputTextAreaFn={handleInput}
-      sendFn={handleSendReply} />
+      sendFn={handleSendReply}
+      sendByEnterFn={handleSendByEnter} />
   );
 };
 

@@ -8,7 +8,7 @@ export const getRandomSingleAnkaEl = (type: ankaElementTypesString,ankaHostFloor
   // const randTypeIndex = ~~(Math.random() * (types.length + 1));
   // const type = types[randTypeIndex] as ankaElementTypesString;
   const randRange = ankaElementTypes[type].maxNumber - ankaElementTypes[type].minNumber;
-  let number = ~~(Math.random() * randRange) + ankaElementTypes[type].minNumber;
+  let number: number = ~~(Math.random() * randRange) + ankaElementTypes[type].minNumber;
   if(type === 'floor' && ankaHostFloorNow) {
     number += (ankaHostFloorNow + 1);
   }
@@ -121,6 +121,9 @@ export const splitSingleMessage = (message: string=message_queried_mockData[0]) 
   };
 };
 
+export const getElementType = (elementStr: string) => (
+  elementStr.split(splitElementStringRegExp).filter(t => t !== '')
+);
 
 export const parsedSingleMessage = (messageAndMatches: {
   splitMessages: string[]
@@ -134,7 +137,7 @@ export const parsedSingleMessage = (messageAndMatches: {
   splitMessages.forEach(mes => {
     const checkIsEl = matchedElements && matchedElements.find(el => el === mes);
     if(checkIsEl) {
-      const el = mes.split(splitElementStringRegExp).filter(t => t !== '');
+      const el = getElementType(mes);
       // console.log(el);
       res = [...res, {
         mesType: 'ankaElement',
@@ -151,3 +154,52 @@ export const parsedSingleMessage = (messageAndMatches: {
   // console.log(res);
   return res;
 };
+
+export const insertStringAfterIndex = (str: string, addStr: string, index: number) => {
+  const start = str.substring(0, index + 1);
+  const end = str.substring(index + 1);
+  return start + addStr + end;
+};
+
+export const convertContent = (content: string, newId: number) => {
+  let res = {
+    content,
+    ankaElements: [] as SingleAnkaElement[]
+  };
+  const regExp = ankaElsInMessageRegExp(true);
+  const elements = content.match(regExp);
+  if(elements) {
+    //element types
+    const elementTypes = elements.map(el => getElementType(el)[0] as ankaElementTypesString);
+    //elements and insert number into content
+    let { newContent, ankaElements } = getConvertContentFromTypes(content, elementTypes, newId);
+    res = {
+      content: newContent,
+      ankaElements,
+    };
+  }
+  //
+  return res;
+};
+
+export function getConvertContentFromTypes(content: string, elementTypes: ankaElementTypesString[], newId: number) {
+  let newContent = content;
+  let ankaElements = [] as SingleAnkaElement[];
+  let stringSearchPos = 0;
+  elementTypes.forEach(type => {
+    const ankaElement = getRandomSingleAnkaEl(type, newId);
+    ankaElements = [
+      ...ankaElements,
+      ankaElement
+    ];
+    const typeStr = `(_${type})`;
+    const numberStr = String(ankaElement.number);
+    const indexOfType = newContent.indexOf(typeStr, stringSearchPos);
+    const endIndexOfType = indexOfType + (typeStr.length - 1) - 1;
+    const addNumber = '_' + numberStr;
+    newContent = insertStringAfterIndex(newContent, addNumber, endIndexOfType);
+    // console.log(newContent, indexOfType, endIndexOfType);
+    stringSearchPos = endIndexOfType + 1 + addNumber.length;
+  });
+  return { newContent, ankaElements };
+}

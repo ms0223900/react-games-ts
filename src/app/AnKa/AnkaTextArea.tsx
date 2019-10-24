@@ -22,37 +22,36 @@ const useStyles = makeStyles({
 });
 
 
-type CheckBoxesPartProps = {
+type ButtonsPartProps = {
   isAnkaHost?: boolean
   hostUsedAnkaElements: HostUsedAnkaElements
-  setAnkaHostUseAnkaFn?: (x: any) => any
+  addAnkaElementFn?: (x: any) => any
 }
-export const CheckBoxesPart = ({
+export const ButtonsPart = ({
   isAnkaHost,
   hostUsedAnkaElements,
-  setAnkaHostUseAnkaFn
-}: CheckBoxesPartProps) => {
+  addAnkaElementFn
+}: ButtonsPartProps) => {
   let ankaElements = hostUsedAnkaElements;
   if(!isAnkaHost) {
     ankaElements = hostUsedAnkaElements.filter(el => {
       return el.type !== 'floor';
     });
   }
+  const handleAddAnkaEl = (type: string) => {
+    addAnkaElementFn && addAnkaElementFn(type);
+  };
   return (
     <>
       {ankaElements.map((t, i) => {
-        const floorElemnt = hostUsedAnkaElements.find(el => el.type === 'floor');
-        const floorChecked = !!(floorElemnt && floorElemnt.checked);
+        // const floorElemnt = hostUsedAnkaElements.find(el => el.type === 'floor');
+        // const floorChecked = !!(floorElemnt && floorElemnt.checked);
         return (
-          <FormControlLabel 
-            key={i}
-            label={`use ${t.type}`}
-            control={
-              <Checkbox 
-                checked={t.checked}
-                disabled={floorChecked && t.type !== 'floor'}
-                onChange={setAnkaHostUseAnkaFn && setAnkaHostUseAnkaFn(i)} />
-            }  />
+          <Button
+            variant={'contained'} 
+            onClick={() => handleAddAnkaEl(t.type)}>
+            {t.type}
+          </Button>
         );
       })}
     </>
@@ -65,21 +64,23 @@ export type AnkaTextAreaProps = {
   isUseAnka?: boolean
   setUseAnkaFn?: (x: any) => any
   hostUsedAnkaElements?: HostUsedAnkaElements
-  setAnkaHostUseAnkaFn?: (x: any) => any
+  addAnkaElementFn?: (x: any) => any
   inputTextAreaFn?: (x: any) => any
   textAreaValue?: string
   sendFn?: (x: any) => any
+  sendByEnterFn?: (x: any) => any
 }
 const AnkaTextArea = (props: AnkaTextAreaProps) => {
   const {
     isAnkaHost,
     isUseAnka=false,
     setUseAnkaFn,
-    setAnkaHostUseAnkaFn,
+    addAnkaElementFn,
     hostUsedAnkaElements=[],
     inputTextAreaFn,
     textAreaValue='',
-    sendFn
+    sendFn,
+    sendByEnterFn,
   } = props;
   const classes = useStyles();
   return (
@@ -94,12 +95,12 @@ const AnkaTextArea = (props: AnkaTextAreaProps) => {
           rowsMax={3}
           placeholder={'say something :)'}
           onChange={inputTextAreaFn}
+          onKeyUp={sendByEnterFn}
           value={textAreaValue}  />
       </FormControl>
-      <CheckBoxesPart 
+      <ButtonsPart 
         {...props}
         hostUsedAnkaElements={hostUsedAnkaElements}  />
-      
       <Button 
         variant={'contained'} 
         color={'primary'}
