@@ -109,6 +109,9 @@ export const ankaElsInMessageRegExp = (isFromInput: boolean, ankaEl?: ankaElemen
   //   new RegExp(`(${ankaEl})+?`, 'g');
 };
 
+export const recoverElementToStr = (ankaElement: SingleAnkaElement) => (
+  `(_${ankaElement.type}_${ankaElement.number})`
+);
 const splitElementStringRegExp = /\(_|_|\)/g;
 export const splitSingleMessage = (message: string=message_queried_mockData[0]) => {
   const regExp = ankaElsInMessageRegExp(false);

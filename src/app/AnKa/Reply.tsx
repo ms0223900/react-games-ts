@@ -66,9 +66,7 @@ const Reply = (props: MessageProps) => {
         display={'flex'} 
         alignItems={'center'}
       >
-        <Typography style={{width: '2em'}}>
-          {`${id}F`}
-        </Typography>
+        
         <Box className={classes.replyContainer}>
           <Box display={'flex'} justifyContent={'space-between'}>
             <Box display={'flex'} alignItems={'center'}>
@@ -92,10 +90,16 @@ const Reply = (props: MessageProps) => {
                 );
               })}
             </Box>
-            {ankaElements.map((el, i) => (
-              <SingleAnkaElementItem key={i} {...el}/>
-            ))}
+            <Box>
+              {ankaElements.map((el, i) => (
+                <SingleAnkaElementItem key={i} {...el}/>
+              ))}
+              <Typography style={{width: '2em'}}>
+                {`${id}F`}
+              </Typography>
+            </Box>
           </Box>
+          
         </Box>
       </Box>
     </Box>

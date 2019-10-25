@@ -3,7 +3,7 @@ import { Box } from '@material-ui/core';
 import { ankaElementTypesString, SingleMessage, ID, SingleAnkaElement } from 'anka-types';
 import { ankaElementTypes, socket, splitElementStringRegExp } from '../config';
 import AnkaTextArea from '../AnkaTextArea';
-import { getRandomSingleAnkaEl, ankaElsInMessageRegExp, insertStringAfterIndex, convertContent, splitSingleMessage } from '../fn';
+import { getRandomSingleAnkaEl, ankaElsInMessageRegExp, insertStringAfterIndex, convertContent, splitSingleMessage, recoverElementToStr } from '../fn';
 import { AnkaPageProps } from '../AnkaPage';
 import { user01_mockData } from '../storage/mockData';
 
@@ -83,9 +83,13 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
     // let ankaElements: SingleAnkaElement[];
     let { ankaElements, content } = convertContent(textAreaValue, newId);
     const checkContentIsEmpty = content.trim().length === 0;
-    const checkHaveAnkaElementsAndStringExpectAnkaElements = () => {
-      return ankaElements.length > 0;
+    const checkLackStringExpectAnkaElementsInContent = () => {
+      const recoveredStringOfElements = ankaElements.map(el => recoverElementToStr(el));
+      const stringLength = recoveredStringOfElements.join('').length;
+      return stringLength === content.length;
     };
+    if(checkLackStringExpectAnkaElementsInContent()) 
+      return window.alert('please input some message expect anka elements!');
     const newestMessage = {
       id: newId,
       userId: userInfo.id,
