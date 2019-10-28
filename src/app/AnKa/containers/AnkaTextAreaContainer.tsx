@@ -86,7 +86,7 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
     const checkLackStringExpectAnkaElementsInContent = () => {
       const recoveredStringOfElements = ankaElements.map(el => recoverElementToStr(el));
       const stringLength = recoveredStringOfElements.join('').length;
-      return stringLength === content.length;
+      return stringLength === content.trim().length;
     };
     if(checkLackStringExpectAnkaElementsInContent()) 
       return window.alert('please input some message expect anka elements!');

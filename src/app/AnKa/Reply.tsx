@@ -9,11 +9,11 @@ import ReplyContent from './ReplyContent';
 
 const useStyles = makeStyles<any, MessageProps>({
   wrapper: {
-    padding: 4,
+    padding: 8,
     paddingLeft: props => props.isAnkaHost ? 0 : 32,
   },
   root: {
-    padding: 4,
+    paddingLeft: 4,
     boxSizing: 'border-box',
     borderColor: '#00a',
     borderStyle: 'solid',
@@ -21,17 +21,10 @@ const useStyles = makeStyles<any, MessageProps>({
     borderWidth: props => props.isAnkaed ? '0px 0px 0px 4px': '0px',
   },
   replyContainer: {
-    width: 600,
-  },
-  userImg: {
-    width: 16,
-    height: 16,
-    marginRight: 8,
-    // backgroundColor: '#ddd',
-    // borderRadius: '50%'
+    // width: 500,
   },
   contentPart: {
-    width: '100%',
+    width: 500,
     whiteSpace: 'pre-wrap',
     padding: 8,
     backgroundColor: '#fff',
@@ -42,6 +35,53 @@ const useStyles = makeStyles<any, MessageProps>({
     // color: props => props.isAnkaHost ? '#fff' : '#111'
   }
 });
+
+
+const useStyles_header = makeStyles({
+  root: {
+    color: '#888',
+    paddingBottom: 4,
+    borderBottom: '1px solid #ddd',
+    // '&:hover': {
+    //   color: '#111'
+    // }
+  },
+  userImg: {
+    width: 16,
+    height: 16,
+    marginRight: 8,
+    // backgroundColor: '#ddd',
+    // borderRadius: '50%'
+  },
+});
+
+type ContentHeaderProps = {
+  username: SingleMessage['username']
+  created_at: SingleMessage['created_at']
+}
+export const ContentHeader = (props: ContentHeaderProps) => {
+  const classes = useStyles_header();
+  const {
+    username,
+    created_at,
+  } = props;
+  return (
+    <Box
+      className={classes.root} 
+      display={'flex'} 
+      justifyContent={'space-between'}
+      alignItems={'center'}
+    >
+      <Box display={'flex'} alignItems={'center'}>
+        {/* <Box className={classes.userImg}>
+          <AccountCircle />
+        </Box> */}
+        <Typography>{username}</Typography>
+      </Box>
+      <Typography>{getDateAndTime(created_at)}</Typography>
+    </Box>
+  );
+};
 
 export type MessageProps = {
   isAnkaHost?: boolean
@@ -68,17 +108,11 @@ const Reply = (props: MessageProps) => {
       >
         
         <Box className={classes.replyContainer}>
-          <Box display={'flex'} justifyContent={'space-between'}>
-            <Box display={'flex'} alignItems={'center'}>
-              <Box className={classes.userImg}>
-                <AccountCircle />
-              </Box>
-              <Typography>{username}</Typography>
-            </Box>
-            <Typography>{getDateAndTime(created_at)}</Typography>
-          </Box>
+          
           <Box display={'flex'} alignItems={'center'}>
+            
             <Box className={classes.contentPart}>
+              <ContentHeader {...props}/>
               {splitContent.map((content, i) => {
                 const splitContent = splitSingleMessage(content);
                 const parsed = parsedSingleMessage(splitContent);
@@ -90,13 +124,14 @@ const Reply = (props: MessageProps) => {
                 );
               })}
             </Box>
-            <Box>
+            <Box display={'flex'} alignItems={'center'}>
+              <Typography style={{padding: 4}}>
+                {`${id}F`}
+              </Typography>
               {ankaElements.map((el, i) => (
                 <SingleAnkaElementItem key={i} {...el}/>
               ))}
-              <Typography style={{width: '2em'}}>
-                {`${id}F`}
-              </Typography>
+              
             </Box>
           </Box>
           

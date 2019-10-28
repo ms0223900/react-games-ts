@@ -30,4 +30,12 @@ declare module 'anka-types' {
     mesType: 'message'
     message: string
   }
+
+  type SinglePost = {
+    id: ID
+    userId: ID
+    username: string
+    title: string
+    created_at: Date | string
+  }
 }

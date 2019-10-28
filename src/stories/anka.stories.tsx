@@ -8,6 +8,8 @@ import AnkaPage, { initHostUsedAnkaElements } from 'app/AnKa/AnkaPage';
 import MultiUserPage from 'app/common-components/MultiUserPage';
 import ReplyContent from 'app/AnKa/ReplyContent';
 import { splitSingleMessage, parsedSingleMessage } from 'app/AnKa/fn';
+import SinglePostItem from 'app/AnKa/SingleAnkaPost';
+import PostTextArea from 'app/AnKa/PostTextArea';
 
 export default {
   title: 'Anka components'
@@ -83,5 +85,19 @@ export const ankaPageWithUserWrapper = () => {
         queriedMessages={replies_mockData} 
       />
     </MultiUserPage>
+  );
+};
+
+export const singlePost = () => {
+  return (
+    <SinglePostItem 
+      {...reply_mockData} 
+      title={reply_mockData.content} />
+  );
+};
+
+export const postTextArea = () => {
+  return (
+    <PostTextArea value={''} />
   );
 };

@@ -25,8 +25,11 @@ export const getDateString = (date: Date) => (
   `${date.getMonth() + 1}-${date.getDate()}`
 );
 
+const getTimeStr = (min: number) => (
+  min < 10 ? '0' + min : min
+);
 export const getTimeString = (date: Date) => (
-  `${date.getHours()}:${date.getMinutes()}`
+  `${getTimeStr(date.getHours())}:${getTimeStr(date.getMinutes())}`
 );
 
 export const getDateAndTime = (date: Date | string) => {
