@@ -6,9 +6,9 @@ import { ID, SingleMessage, SingleAnkaElement, ankaElementTypesString } from 'an
 import { user01_mockData } from 'app/AnKa/storage/mockData';
 import { scrollToBottom } from 'lib/fn';
 import { UserInfo } from 'anka-types';
-import { getRandomSingleAnkaEl, checkIsAnkaed, checkIsAnkaElementMatched } from './fn';
-import { ankaElementTypes, socket } from './config';
-import AnkaTextAreaContainer from './containers/AnkaTextAreaContainer';
+import { getRandomSingleAnkaEl, checkIsAnkaed, checkIsAnkaElementMatched } from '../fn';
+import { ankaElementTypes, socket } from '../config';
+import AnkaTextAreaContainer from '../containers/AnkaTextAreaContainer';
 import SingleAnkaElementItem from './AnkaElement';
 import { KeyboardArrowDown } from '@material-ui/icons';
 

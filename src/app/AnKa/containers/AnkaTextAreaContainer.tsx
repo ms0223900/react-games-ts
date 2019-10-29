@@ -2,9 +2,9 @@ import React, { useState, ChangeEvent, useCallback, KeyboardEvent } from 'react'
 import { Box } from '@material-ui/core';
 import { ankaElementTypesString, SingleMessage, ID, SingleAnkaElement } from 'anka-types';
 import { ankaElementTypes, socket, splitElementStringRegExp } from '../config';
-import AnkaTextArea from '../AnkaTextArea';
+import AnkaTextArea from '../components/AnkaTextArea';
 import { getRandomSingleAnkaEl, ankaElsInMessageRegExp, insertStringAfterIndex, convertContent, splitSingleMessage, recoverElementToStr } from '../fn';
-import { AnkaPageProps } from '../AnkaPage';
+import { AnkaPageProps } from '../components/AnkaPage';
 import { user01_mockData } from '../storage/mockData';
 
 export type HostUsedAnkaElements = {
@@ -63,12 +63,9 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
     setMessagesFn
   } = props;
   const [hostUsedAnkaElements, setHostUsedAnkaElements] = useState(initHostUsedAnkaElements());
-  const [replyUseAnka, setUseAnka] = useState(false);
   const [textAreaValue, setValue] = useState('');
 
-  const handleSetUseAnka = () => {
-    setUseAnka(a => !a);
-  };
+  
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setValue(value);
@@ -121,8 +118,6 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
       {...props}
       hostUsedAnkaElements={hostUsedAnkaElements}
       addAnkaElementFn={handlAddAnkaElement}
-      isUseAnka={replyUseAnka}
-      setUseAnkaFn={handleSetUseAnka}
       textAreaValue={textAreaValue} 
       inputTextAreaFn={handleInput}
       sendFn={handleSendReply}

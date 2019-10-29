@@ -1,4 +1,6 @@
 declare module 'common-types' {
+  export type HOC<InjectProps> = <Props>(Component: React.ComponentType<Props & InjectProps>) => React.ComponentType<Props & InjectProps>
+  
   type ID = string | number
   export type Action = {
     type: string

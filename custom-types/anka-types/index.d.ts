@@ -35,7 +35,7 @@ declare module 'anka-types' {
     id: ID
     userId: ID
     username: string
-    title: string
+    content: string
     created_at: Date | string
   }
 }

@@ -136,7 +136,7 @@ export const parsedSingleMessage = (messageAndMatches: {
     splitMessages,
     matchedElements,
   } = messageAndMatches;
-  let res = [] as (ParsedMessage_element|ParsedMessage_message)[];
+  let res = [] as (ParsedMessage_element | ParsedMessage_message)[];
   splitMessages.forEach(mes => {
     const checkIsEl = matchedElements && matchedElements.find(el => el === mes);
     if(checkIsEl) {

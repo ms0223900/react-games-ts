@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Fab, TextField, TextareaAutosize } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
+import { useStyles } from 'app/AnKa/components/AnkaTextArea';
 
 
 
@@ -21,9 +22,11 @@ type Props = {
   sendFn?: (x: any) => any
 }
 const PostTextArea = (props: Props) => {
+  const classes = useStyles();
   return (
     <Box>
-      <TextareaAutosize 
+      <TextareaAutosize
+        className={classes.textArea} 
         value={props.value} 
         onChange={props.changeFn} 
         placeholder={'add a Anka'} />

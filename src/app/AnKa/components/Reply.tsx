@@ -4,7 +4,7 @@ import { AccountCircle } from '@material-ui/icons';
 import { getDateAndTime } from 'lib/fn';
 import { SingleMessage } from 'anka-types';
 import SingleAnkaElementItem from './AnkaElement';
-import { splitSingleMessage, parsedSingleMessage } from './fn';
+import { splitSingleMessage, parsedSingleMessage } from '../fn';
 import ReplyContent from './ReplyContent';
 
 const useStyles = makeStyles<any, MessageProps>({
@@ -83,6 +83,33 @@ export const ContentHeader = (props: ContentHeaderProps) => {
   );
 };
 
+
+export const parseContent = (content: string) => {
+  const splitContent = content.split('\n');
+  return splitContent.map(cnt => {
+    const splitStr = splitSingleMessage(cnt);
+    const parsed = parsedSingleMessage(splitStr);
+    return parsed;
+  });
+};
+
+export const getContents = (content: string) => {
+  const parsedContents = parseContent(content);
+  return (
+    <>
+      {parsedContents.map((content, i) => {
+        return (
+          <>
+            <ReplyContent key={i} parsedMessages={content} />
+            {/* <br /> */}
+          </>
+        );
+      })}
+    </>
+  );
+};
+
+
 export type MessageProps = {
   isAnkaHost?: boolean
   isAnkaed?: boolean
@@ -98,7 +125,6 @@ const Reply = (props: MessageProps) => {
     ankaElements
   } = props;
   const classes = useStyles(props);
-  const splitContent = content.split('\n');
   return (
     <Box className={classes.wrapper}>
       <Box 
@@ -106,23 +132,11 @@ const Reply = (props: MessageProps) => {
         display={'flex'} 
         alignItems={'center'}
       >
-        
         <Box className={classes.replyContainer}>
-          
           <Box display={'flex'} alignItems={'center'}>
-            
             <Box className={classes.contentPart}>
               <ContentHeader {...props}/>
-              {splitContent.map((content, i) => {
-                const splitContent = splitSingleMessage(content);
-                const parsed = parsedSingleMessage(splitContent);
-                return (
-                  <>
-                    <ReplyContent key={i} parsedMessages={parsed} />
-                    {/* <br /> */}
-                  </>
-                );
-              })}
+              {getContents(content)}
             </Box>
             <Box display={'flex'} alignItems={'center'}>
               <Typography style={{padding: 4}}>

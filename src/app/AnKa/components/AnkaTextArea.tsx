@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Box, FormControl, TextareaAutosize, Button, Checkbox, Typography, FormControlLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { ankaElementTypes } from './config';
+import { ankaElementTypes } from '../config';
 import 'app/AnKa/styles/styles.scss';
 import { HostUsedAnkaElements } from './AnkaPage';
 
-const useStyles = makeStyles({
+export const useStyles = makeStyles({
   root: {
     paddingTop: 16,
   },
@@ -61,8 +61,6 @@ export const ButtonsPart = ({
 
 export type AnkaTextAreaProps = {
   isAnkaHost?: boolean
-  isUseAnka?: boolean
-  setUseAnkaFn?: (x: any) => any
   hostUsedAnkaElements?: HostUsedAnkaElements
   addAnkaElementFn?: (x: any) => any
   inputTextAreaFn?: (x: any) => any
@@ -73,8 +71,6 @@ export type AnkaTextAreaProps = {
 const AnkaTextArea = (props: AnkaTextAreaProps) => {
   const {
     isAnkaHost,
-    isUseAnka=false,
-    setUseAnkaFn,
     addAnkaElementFn,
     hostUsedAnkaElements=[],
     inputTextAreaFn,

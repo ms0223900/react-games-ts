@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { red, green, blue, deepPurple, grey } from '@material-ui/core/colors';
 import { SingleAnkaElement } from 'anka-types';
-type ankaElementTypesString = import('./config').ankaElementTypesString
+type ankaElementTypesString = import('../config').ankaElementTypesString
 
 const elWidth = 32;
 
