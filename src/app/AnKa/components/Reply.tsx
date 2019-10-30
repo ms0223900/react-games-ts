@@ -2,9 +2,9 @@ import React from 'react';
 import { Box, Typography, Paper, makeStyles } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import { getDateAndTime } from 'lib/fn';
-import { SingleMessage } from 'anka-types';
+import { SingleMessage, SingleAnkaElement } from 'anka-types';
 import SingleAnkaElementItem from './AnkaElement';
-import { splitSingleMessage, parsedSingleMessage } from '../fn';
+import { splitSingleMessage, parsedSingleMessage, ParsedContents, ParsedSingleLineContent } from '../fn';
 import ReplyContent from './ReplyContent';
 
 const useStyles = makeStyles<any, MessageProps>({
@@ -84,20 +84,40 @@ export const ContentHeader = (props: ContentHeaderProps) => {
 };
 
 
-export const parseContent = (content: string) => {
+
+type ParsedContents = {
+  parsedContent: ParsedSingleLineContent[]
+  ankaElements: SingleAnkaElement[]
+}
+export const parseContents = (content: string): ParsedContents => {
+  let res: ParsedContents = {
+    parsedContent: [],
+    ankaElements: [],
+  };
   const splitContent = content.split('\n');
-  return splitContent.map(cnt => {
+  splitContent.forEach(cnt => {
     const splitStr = splitSingleMessage(cnt);
     const parsed = parsedSingleMessage(splitStr);
-    return parsed;
+    const {
+      parsedContent,
+      ankaElements
+    } = parsed;
+    res.parsedContent = [
+      ...res.parsedContent,
+      parsedContent
+    ];
+    res.ankaElements = [
+      ...res.ankaElements,
+      ...ankaElements
+    ];
   });
+  return res;
 };
 
-export const getContents = (content: string) => {
-  const parsedContents = parseContent(content);
+export const getContents = (parsedContentLists: ParsedSingleLineContent[]) => {
   return (
     <>
-      {parsedContents.map((content, i) => {
+      {parsedContentLists.map((content, i) => {
         return (
           <>
             <ReplyContent key={i} parsedMessages={content} />
@@ -110,10 +130,10 @@ export const getContents = (content: string) => {
 };
 
 
-export type MessageProps = {
+export type MessageProps = SingleMessage & {
   isAnkaHost?: boolean
   isAnkaed?: boolean
-} & SingleMessage
+}
 const Reply = (props: MessageProps) => {
   const { 
     id, 

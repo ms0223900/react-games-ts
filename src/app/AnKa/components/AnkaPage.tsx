@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useCallback, ChangeEvent, useRef, useEffect } from 'react';
 import { Box, Container, Divider, makeStyles, RootRef, Typography, Button } from '@material-ui/core';
-import Reply from './Reply';
-import { ID, SingleMessage, SingleAnkaElement, ankaElementTypesString } from 'anka-types';
-import { user01_mockData } from 'app/AnKa/storage/mockData';
+import Reply, { parseContent, parseContents } from './Reply';
+import { ID, SingleMessage, SingleAnkaElement, ankaElementTypesString, SingleMessageData } from 'anka-types';
+import { user01_mockData, replies_mockData } from 'app/AnKa/storage/mockData';
 import { scrollToBottom } from 'lib/fn';
 import { UserInfo } from 'anka-types';
 import { getRandomSingleAnkaEl, checkIsAnkaed, checkIsAnkaElementMatched } from '../fn';
@@ -11,6 +11,8 @@ import { ankaElementTypes, socket } from '../config';
 import AnkaTextAreaContainer from '../containers/AnkaTextAreaContainer';
 import SingleAnkaElementItem from './AnkaElement';
 import { KeyboardArrowDown } from '@material-ui/icons';
+import { useParams } from 'react-router';
+import SinglePostItem from './SingleAnkaPost';
 
 
 const getLatestAnkaHost = (messages: SingleMessage[], ankaHostId: ID): SingleMessage | undefined => {
@@ -28,6 +30,11 @@ const getLatestAnkaHostElementsTypes = (messages: SingleMessage[], ankaHostId: I
   return [];
 };
 
+
+
+
+
+
 const useStyles = makeStyles({
   mesContainer: {
     // position: 'relative',
@@ -43,14 +50,37 @@ const useStyles = makeStyles({
   }
 });
 
+export const Header = ({
+  ankaHostId,
+  latestAnkaHostEls,
+}: {
+  ankaHostId: ID
+  latestAnkaHostEls: SingleAnkaElement[]
+}) => {
+  return (
+    <>
+      <Typography variant={'h4'}>
+        {`Anka Host Id: ${ankaHostId}`}
+      </Typography>
+      <Box display={'flex'}>
+        <Typography>
+          {'latest anka host elements: '}
+        </Typography>
+        {latestAnkaHostEls.map((el, i) => (
+          <SingleAnkaElementItem key={i} {...el} />
+        ))}
+      </Box>
+    </>
+  );
+};
+
+
 
 export type HostUsedAnkaElements = {
   type: ankaElementTypesString
-  checked: boolean
 }[]
 export const initHostUsedAnkaElements: HostUsedAnkaElements = Object.keys(ankaElementTypes).map(t => ({
   type: t as ankaElementTypesString,
-  checked: false,
 }));
 
 
@@ -58,14 +88,14 @@ export type AnkaPageProps = {
   userInfo?: UserInfo
   ankaPageId?: ID
   ankaHostId: ID
-  queriedMessages?: SingleMessage[]
+  queriedParsedMessages?: SingleMessage[]
 }
 const AnkaPage = (props: AnkaPageProps) => {
   const {
     userInfo=user01_mockData, 
     ankaPageId='1',
     ankaHostId, 
-    queriedMessages=[] 
+    queriedParsedMessages=[] 
   } = props;
   const classes = useStyles();
   const isAnkaHostInThisAnka = ankaHostId === userInfo.id;
@@ -77,7 +107,7 @@ const AnkaPage = (props: AnkaPageProps) => {
   const [ankaIsFulfilled, setFulfilled] = useState(false);
   const [latestAnkaHostEls, setLatestEls] = useState<SingleAnkaElement[]>([]);
   const [ankaMatchedIds, setAnkaMatchedIds] = useState<ID[]>([]);
-  const [messages, setMessages] = useState(queriedMessages);
+  const [messages, setMessages] = useState(queriedParsedMessages);
 
   const handleDownToBottom = () => {
     if(replyRef) {
@@ -121,24 +151,15 @@ const AnkaPage = (props: AnkaPageProps) => {
 
   return (
     <Container>
-      <Typography variant={'h4'}>
-        {`Anka Host Id: ${ankaHostId}`}
-      </Typography>
-      {ankaIsFulfilled && (
-        <Typography>
-          {'anka reply is fulfilled now :)'}
-        </Typography>
-      )}
-      <Box display={'flex'}>
-        <Typography>
-          {'latest anka host elements: '}
-        </Typography>
-        {latestAnkaHostEls.map((el, i) => (
-          <SingleAnkaElementItem key={i} {...el} />
-        ))}
-      </Box>
+      <Header {...props} latestAnkaHostEls={latestAnkaHostEls} />
       <Box position={'relative'}>
+        
         <Box className={classes.mesContainer}>
+          {/* just mock */}
+          {ankaPageId && (
+            <Reply {...replies_mockData[Number(ankaPageId) - 1]} isAnkaHost={true} />
+          )}
+          <Divider />
           <div ref={setReplyRef}>
             {messages.map((mes, i) => {
               const isAnkaHost = ankaHostId === mes.userId;
@@ -165,6 +186,37 @@ const AnkaPage = (props: AnkaPageProps) => {
         setMessagesFn={setMessages}
       />
     </Container>
+  );
+};
+
+export const AnkaPageWithRouter = (props: AnkaPageProps) => {
+  const { id: ankaPageId } = useParams();
+  return (
+    <AnkaPage {...props} ankaPageId={ankaPageId} />
+  );
+};
+
+
+export const getParseMessagesFromQuery = (singleMessageData: SingleMessageData) => {
+  const {
+    parsedContent,
+    ankaElements,
+  } = parseContents(singleMessageData.content);
+  return {
+    ...singleMessageData,
+    content: parsedContent,
+    ankaElements,
+  };
+};
+
+export const AnkaPageWithQuery = (props: AnkaPageProps) => {
+  //mock queried data
+  const messagesData = replies_mockData;
+  const parsedMessages = messagesData.map(data => getParseMessagesFromQuery(data));
+  return (
+    <AnkaPageWithRouter 
+      {...props} 
+      queriedParsedMessages={parsedMessages} />
   );
 };
 

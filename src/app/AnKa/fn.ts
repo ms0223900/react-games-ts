@@ -128,6 +128,11 @@ export const getElementType = (elementStr: string) => (
   elementStr.split(splitElementStringRegExp).filter(t => t !== '')
 );
 
+export type ParsedSingleLineContent = (ParsedMessage_element | ParsedMessage_message)[]
+export type ParsedContents = {
+  parsedContent: ParsedSingleLineContent
+  ankaElements: SingleAnkaElement[]
+}
 export const parsedSingleMessage = (messageAndMatches: {
   splitMessages: string[]
   matchedElements: string[] | null,
@@ -136,19 +141,29 @@ export const parsedSingleMessage = (messageAndMatches: {
     splitMessages,
     matchedElements,
   } = messageAndMatches;
-  let res = [] as (ParsedMessage_element | ParsedMessage_message)[];
+  let res: ParsedContents = {
+    parsedContent: [],
+    ankaElements: []
+  };
   splitMessages.forEach(mes => {
-    const checkIsEl = matchedElements && matchedElements.find(el => el === mes);
-    if(checkIsEl) {
+    const checkIsElement = matchedElements && matchedElements.find(el => el === mes);
+    if(checkIsElement) {
       const el = getElementType(mes);
-      // console.log(el);
-      res = [...res, {
-        mesType: 'ankaElement',
+      const ankaElement = {
         type: el[0] as ankaElementTypesString,
         number: parseInt(el[1]),
+      };
+      // console.log(el);
+      res.parsedContent = [...res.parsedContent, {
+        mesType: 'ankaElement',
+        ...ankaElement,
       }];
+      res.ankaElements = [
+        ...res.ankaElements,
+        ankaElement,
+      ];
     } else {
-      res = [...res, {
+      res.parsedContent = [...res.parsedContent, {
         mesType: 'message',
         message: mes
       }];

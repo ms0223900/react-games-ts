@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import AnkaPostsPage from '../components/AnkaPostsPage';
-import AnkaPage from '../components/AnkaPage';
-import { replies_mockData } from '../storage/mockData';
+import AnkaPage, { AnkaPageWithRouter } from '../components/AnkaPage';
+import { replies_mockData, ankaPage_mockData } from '../storage/mockData';
+import MultiUserPage from 'app/common-components/MultiUserPage';
 
 const RoutePage = () => {
   return (
@@ -14,7 +15,11 @@ const RoutePage = () => {
         <Route exact path={'/posts'} component={() => (
           <AnkaPostsPage queriedPosts={replies_mockData} />
         )} />
-        <Route path={'/posts/:id'} component={AnkaPage} />
+        <Route path={'/posts/:id'} render={props => (
+          <MultiUserPage>
+            <AnkaPageWithRouter {...props} {...ankaPage_mockData}/>
+          </MultiUserPage>
+        )} />
       </Switch>
     </Router>
     
