@@ -1,9 +1,8 @@
 import React, { useState, ChangeEvent, useCallback, KeyboardEvent } from 'react';
-import { ankaElementTypesString, SingleMessage, ID, UserInfo, SinglePost } from 'anka-types';
-import { ankaElementTypes, socket } from '../config';
+import { ankaElementTypesString, UserInfo, SinglePost } from 'anka-types';
+import { ankaElementTypes } from '../config';
 import AnkaTextArea from '../components/AnkaTextArea';
-import { convertContent, recoverElementToStr } from '../fn';
-import { AnkaPageProps } from '../components/AnkaPage';
+import { getNewMessage } from '../fn';
 import { user01_mockData } from '../storage/mockData';
 
 export type HostUsedAnkaElements = {
@@ -41,27 +40,8 @@ const PostTextAreaContainer = (props: PostTextAreaContainerProps) => {
     setValue(val => val + ankaElementStr);
   }, []);
   const handleAddPost = useCallback(() => {
-    const newId = posts.length + 1;
-    // let ankaElements: SingleAnkaElement[];
-    let { ankaElements, content } = convertContent(textAreaValue, newId);
-    const contentLength = content.trim().length;
-    const checkContentIsEmpty = contentLength === 0;
-    const checkLackStringExpectAnkaElementsInContent = () => {
-      const recoveredStringOfElements = ankaElements.map(el => recoverElementToStr(el));
-      const stringLength = recoveredStringOfElements.join('').length;
-      return stringLength === contentLength;
-    };
-    if(checkLackStringExpectAnkaElementsInContent()) 
-      return window.alert('please input some message expect anka elements!');
-    const newPost = {
-      id: newId,
-      userId: userInfo.id,
-      username: userInfo.username,
-      created_at: new Date(),
-      content,
-      ankaElements,
-    };
-    if(!checkContentIsEmpty) {
+    const newPost = getNewMessage({messages: posts, textAreaValue, userInfo});
+    if(newPost) {
       setPostsFn && setPostsFn([
         ...posts,
         newPost
@@ -69,7 +49,7 @@ const PostTextAreaContainer = (props: PostTextAreaContainerProps) => {
       setValue('');
     }
     
-  }, [posts, setPostsFn, textAreaValue, userInfo.id, userInfo.username]);
+  }, [posts, setPostsFn, textAreaValue, userInfo]);
   const handlePostByEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     const { keyCode } = e;
     e.preventDefault();

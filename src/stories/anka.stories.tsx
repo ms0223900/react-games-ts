@@ -1,6 +1,6 @@
 import React from 'react';
 import Reply from 'app/AnKa/components/Reply';
-import { reply_mockData, ankaElement_dice_mockData, ankaElement_color_mockData, replies_mockData, user03_host_mockData, ankaElement_floor_mockData, reply_longContent_mockData } from 'app/AnKa/storage/mockData';
+import { ankaElement_dice_mockData, ankaElement_color_mockData, user03_host_mockData, ankaElement_floor_mockData, parsedMessagesFromData } from 'app/AnKa/storage/mockData';
 import { Typography } from '@material-ui/core';
 import SingleAnkaElement from 'app/AnKa/components/AnkaElement';
 import AnkaTextArea from 'app/AnKa/components/AnkaTextArea';
@@ -9,7 +9,6 @@ import MultiUserPage from 'app/common-components/MultiUserPage';
 import ReplyContent from 'app/AnKa/components/ReplyContent';
 import { splitSingleMessage, parsedSingleMessage } from 'app/AnKa/fn';
 import SinglePostItem from 'app/AnKa/components/SingleAnkaPost';
-import PostTextArea from 'app/AnKa/components/PostTextArea';
 import PostTextAreaContainer from 'app/AnKa/containers/PostTextAreaContainer';
 import AnkaPostsPage from 'app/AnKa/components/AnkaPostsPage';
 import RoutePage from 'app/AnKa/containers/RoutePage';
@@ -22,10 +21,10 @@ export const reply = () => {
   return (
     <>
       <Typography>{'normal(not anka host) reply'}</Typography>
-      <Reply {...reply_mockData} />
+      <Reply {...parsedMessagesFromData[0]} />
       <br />
       <Typography>{'anka host'}</Typography>
-      <Reply {...reply_mockData} isAnkaHost={true} />
+      <Reply {...parsedMessagesFromData[0]} isAnkaHost={true} />
     </>
     
   );
@@ -51,7 +50,7 @@ export const parsedAnkaReplyContent = () => {
   const parsedMessages = parsedSingleMessage(splitMes);
   return (
     <>
-      <ReplyContent parsedMessages={parsedMessages} />
+      <ReplyContent parsedMessages={parsedMessages.parsedContent} />
     </>
   );
 };
@@ -75,7 +74,7 @@ export const ankaPage = () => {
   return (
     <AnkaPage 
       ankaHostId={user03_host_mockData.id}
-      queriedMessages={replies_mockData} 
+      queriedParsedMessages={parsedMessagesFromData} 
     />
   );
 };
@@ -85,7 +84,7 @@ export const ankaPageWithUserWrapper = () => {
     <MultiUserPage>
       <AnkaPage 
         ankaHostId={user03_host_mockData.id}
-        queriedMessages={replies_mockData} 
+        queriedParsedMessages={parsedMessagesFromData} 
       />
     </MultiUserPage>
   );
@@ -94,13 +93,13 @@ export const ankaPageWithUserWrapper = () => {
 export const singlePost = () => {
   return (
     <SinglePostItem 
-      {...reply_mockData} />
+      {...parsedMessagesFromData[0]} />
   );
 };
 
 export const postTextArea = () => {
   return (
-    <PostTextAreaContainer posts={[reply_mockData]} />
+    <PostTextAreaContainer posts={parsedMessagesFromData} />
   );
 };
 
@@ -108,10 +107,7 @@ export const ankaPostPage = () => {
   return (
     <MultiUserPage>
       <AnkaPostsPage
-        queriedPosts={[
-          ...replies_mockData,
-          reply_longContent_mockData,
-        ]} 
+        queriedParsedPosts={parsedMessagesFromData} 
       />
     </MultiUserPage>
   );

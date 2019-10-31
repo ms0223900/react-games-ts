@@ -1,10 +1,9 @@
 import React from 'react';
-import { Box, Typography, Paper, makeStyles } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import { Box, Typography, makeStyles } from '@material-ui/core';
 import { getDateAndTime } from 'lib/fn';
-import { SingleMessage, SingleAnkaElement } from 'anka-types';
+import { SingleMessage } from 'anka-types';
 import SingleAnkaElementItem from './AnkaElement';
-import { splitSingleMessage, parsedSingleMessage, ParsedContents, ParsedSingleLineContent } from '../fn';
+import { ParsedSingleLineContent } from '../fn';
 import ReplyContent from './ReplyContent';
 
 const useStyles = makeStyles<any, MessageProps>({
@@ -83,37 +82,6 @@ export const ContentHeader = (props: ContentHeaderProps) => {
   );
 };
 
-
-
-type ParsedContents = {
-  parsedContent: ParsedSingleLineContent[]
-  ankaElements: SingleAnkaElement[]
-}
-export const parseContents = (content: string): ParsedContents => {
-  let res: ParsedContents = {
-    parsedContent: [],
-    ankaElements: [],
-  };
-  const splitContent = content.split('\n');
-  splitContent.forEach(cnt => {
-    const splitStr = splitSingleMessage(cnt);
-    const parsed = parsedSingleMessage(splitStr);
-    const {
-      parsedContent,
-      ankaElements
-    } = parsed;
-    res.parsedContent = [
-      ...res.parsedContent,
-      parsedContent
-    ];
-    res.ankaElements = [
-      ...res.ankaElements,
-      ...ankaElements
-    ];
-  });
-  return res;
-};
-
 export const getContents = (parsedContentLists: ParsedSingleLineContent[]) => {
   return (
     <>
@@ -137,9 +105,7 @@ export type MessageProps = SingleMessage & {
 const Reply = (props: MessageProps) => {
   const { 
     id, 
-    username, 
     content, 
-    created_at, 
     // isAnkaHost,
     // isAnkaed,
     ankaElements

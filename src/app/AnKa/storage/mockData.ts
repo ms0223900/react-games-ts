@@ -1,7 +1,7 @@
-import { MessageProps } from "app/AnKa/components/Reply";
 import { SingleAnkaElementProps } from "../components/AnkaElement";
 import { AnkaPageProps } from "../components/AnkaPage";
-import { SingleMessage, SingleMessageData } from "anka-types";
+import { SingleMessageData } from "anka-types";
+import { getParseMessagesFromQuery } from "../fn";
 
 export const ankaElement_dice_mockData: SingleAnkaElementProps = {
   type: 'dice',
@@ -67,8 +67,13 @@ export const ankaElementString_mockData = '(_dice_2)';
 export const message_input_mockData = 'first(_dice)(_color)second(_color)(_dice)';
 export const message_queried_mockData = ['(_dice_2)Hisjdakjd;ak(_dice_2)(_color_1)(_sdadssss(XDDD', 'fasfa'];
 
+
+export const parsedMessagesFromData = replies_mockData.map(data => (
+  getParseMessagesFromQuery(data)
+));
+
 export const ankaPage_mockData: AnkaPageProps = {
   ankaHostId: user03_host_mockData.id,
-  // queriedParsedMessages: replies_mockData,
+  queriedParsedMessages: parsedMessagesFromData,
 };
 

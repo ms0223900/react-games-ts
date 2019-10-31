@@ -1,7 +1,7 @@
 declare module 'anka-types' {
   type ID = string | number
   type ankaElementTypesString = 'dice' | 'color' | 'floor'
-   
+  type ParsedContent = ParsedSingleLineContent[]
   type MesType = 'ankaElement' | 'message'
   export type ParsedMessage_element = {
     mesType: 'ankaElement'
@@ -18,16 +18,16 @@ declare module 'anka-types' {
     id: ID
     username: string
   }
-  export type BasiceMessage = {
+  export type BasicMessage = {
     id: ID
     userId: ID
     username: string
     created_at: Date | string
   }
-  export type SingleMessageData = BasiceMessage & {
+  export type SingleMessageData = BasicMessage & {
     content: string
   }
-  export type SingleMessage = BasiceMessage & {
+  export type SingleMessage = BasicMessage & {
     content: ParsedSingleLineContent[]
     ankaElements: SingleAnkaElement[]
   }
@@ -38,11 +38,6 @@ declare module 'anka-types' {
     [x: string]: any
   }
  
-  type SinglePost = {
-    id: ID
-    userId: ID
-    username: string
-    content: string
-    created_at: Date | string
-  }
+  type SinglePostData = SingleMessageData
+  type SinglePost = SingleMessage
 }

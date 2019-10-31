@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useCallback, ChangeEvent, useRef, useEffect } from 'react';
-import { Box, Container, Divider, makeStyles, RootRef, Typography, Button } from '@material-ui/core';
-import Reply, { parseContent, parseContents } from './Reply';
-import { ID, SingleMessage, SingleAnkaElement, ankaElementTypesString, SingleMessageData } from 'anka-types';
+import React, { useState, useRef, useEffect } from 'react';
+import { Box, Container, Divider, makeStyles, Typography, Button } from '@material-ui/core';
+import Reply from './Reply';
+import { ID, SingleMessage, SingleAnkaElement, ankaElementTypesString } from 'anka-types';
 import { user01_mockData, replies_mockData } from 'app/AnKa/storage/mockData';
 import { scrollToBottom } from 'lib/fn';
 import { UserInfo } from 'anka-types';
-import { getRandomSingleAnkaEl, checkIsAnkaed, checkIsAnkaElementMatched } from '../fn';
+import { checkIsAnkaElementMatched, getParseMessagesFromQuery } from '../fn';
 import { ankaElementTypes, socket } from '../config';
 import AnkaTextAreaContainer from '../containers/AnkaTextAreaContainer';
 import SingleAnkaElementItem from './AnkaElement';
 import { KeyboardArrowDown } from '@material-ui/icons';
 import { useParams } from 'react-router';
-import SinglePostItem from './SingleAnkaPost';
 
 
 const getLatestAnkaHost = (messages: SingleMessage[], ankaHostId: ID): SingleMessage | undefined => {
@@ -86,14 +85,14 @@ export const initHostUsedAnkaElements: HostUsedAnkaElements = Object.keys(ankaEl
 
 export type AnkaPageProps = {
   userInfo?: UserInfo
-  ankaPageId?: ID
+  postId?: ID
   ankaHostId: ID
   queriedParsedMessages?: SingleMessage[]
 }
 const AnkaPage = (props: AnkaPageProps) => {
   const {
     userInfo=user01_mockData, 
-    ankaPageId='1',
+    postId='1',
     ankaHostId, 
     queriedParsedMessages=[] 
   } = props;
@@ -104,7 +103,6 @@ const AnkaPage = (props: AnkaPageProps) => {
     replyRef.current = el;
   };
 
-  const [ankaIsFulfilled, setFulfilled] = useState(false);
   const [latestAnkaHostEls, setLatestEls] = useState<SingleAnkaElement[]>([]);
   const [ankaMatchedIds, setAnkaMatchedIds] = useState<ID[]>([]);
   const [messages, setMessages] = useState(queriedParsedMessages);
@@ -117,7 +115,7 @@ const AnkaPage = (props: AnkaPageProps) => {
     }
   };
   useEffect(() => {
-    socket.emit('join', ankaPageId);
+    socket.emit('join', postId);
     socket.on('get_chat', (message: SingleMessage) => {
       console.log(message, 'socket get chat');
       setMessages(mes => [
@@ -125,7 +123,7 @@ const AnkaPage = (props: AnkaPageProps) => {
         message
       ]);
     });
-  }, [ankaPageId]);
+  }, [postId]);
   useEffect(() => {
     //scroll to bottom
     handleDownToBottom();
@@ -152,13 +150,14 @@ const AnkaPage = (props: AnkaPageProps) => {
   return (
     <Container>
       <Header {...props} latestAnkaHostEls={latestAnkaHostEls} />
+      <Typography>{'postId: ' + postId}</Typography>
       <Box position={'relative'}>
         
         <Box className={classes.mesContainer}>
           {/* just mock */}
-          {ankaPageId && (
-            <Reply {...replies_mockData[Number(ankaPageId) - 1]} isAnkaHost={true} />
-          )}
+          {/* {postId && (
+            <Reply {...replies_mockData[Number(postId) - 1]} isAnkaHost={true} />
+          )} */}
           <Divider />
           <div ref={setReplyRef}>
             {messages.map((mes, i) => {
@@ -190,23 +189,10 @@ const AnkaPage = (props: AnkaPageProps) => {
 };
 
 export const AnkaPageWithRouter = (props: AnkaPageProps) => {
-  const { id: ankaPageId } = useParams();
+  const { id: postId } = useParams();
   return (
-    <AnkaPage {...props} ankaPageId={ankaPageId} />
+    <AnkaPage {...props} postId={postId} />
   );
-};
-
-
-export const getParseMessagesFromQuery = (singleMessageData: SingleMessageData) => {
-  const {
-    parsedContent,
-    ankaElements,
-  } = parseContents(singleMessageData.content);
-  return {
-    ...singleMessageData,
-    content: parsedContent,
-    ankaElements,
-  };
 };
 
 export const AnkaPageWithQuery = (props: AnkaPageProps) => {
