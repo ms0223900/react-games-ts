@@ -21,10 +21,10 @@ export const reply = () => {
   return (
     <>
       <Typography>{'normal(not anka host) reply'}</Typography>
-      <Reply {...parsedMessagesFromData[0]} />
+      <Reply index={0} {...parsedMessagesFromData[0]} />
       <br />
       <Typography>{'anka host'}</Typography>
-      <Reply {...parsedMessagesFromData[0]} isAnkaHost={true} />
+      <Reply index={0} {...parsedMessagesFromData[0]} isAnkaHost={true} />
     </>
     
   );

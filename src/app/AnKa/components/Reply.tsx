@@ -99,11 +99,13 @@ export const getContents = (parsedContentLists: ParsedSingleLineContent[]) => {
 
 
 export type MessageProps = SingleMessage & {
+  index: number
   isAnkaHost?: boolean
   isAnkaed?: boolean
 }
 const Reply = (props: MessageProps) => {
   const { 
+    index,
     id, 
     content, 
     // isAnkaHost,
@@ -126,7 +128,7 @@ const Reply = (props: MessageProps) => {
             </Box>
             <Box display={'flex'} alignItems={'center'}>
               <Typography style={{padding: 4}}>
-                {`${id}F`}
+                {`${index + 1}F`}
               </Typography>
               {ankaElements.map((el, i) => (
                 <SingleAnkaElementItem key={i} {...el}/>

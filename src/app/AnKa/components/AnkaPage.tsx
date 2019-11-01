@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Box, Container, Divider, makeStyles, Typography, Button } from '@material-ui/core';
 import Reply from './Reply';
-import { ID, SingleMessage, SingleAnkaElement, ankaElementTypesString } from 'anka-types';
+import { ID, SingleMessage, SingleAnkaElement, ankaElementTypesString, SingleMessageData } from 'anka-types';
 import { user01_mockData, replies_mockData } from 'app/AnKa/storage/mockData';
 import { scrollToBottom } from 'lib/fn';
 import { UserInfo } from 'anka-types';
@@ -12,6 +12,8 @@ import AnkaTextAreaContainer from '../containers/AnkaTextAreaContainer';
 import SingleAnkaElementItem from './AnkaElement';
 import { KeyboardArrowDown } from '@material-ui/icons';
 import { useParams } from 'react-router';
+import { useQuery } from '@apollo/react-hooks';
+import { QUERY_MESSAGES } from '../constants/API';
 
 
 const getLatestAnkaHost = (messages: SingleMessage[], ankaHostId: ID): SingleMessage | undefined => {
@@ -166,6 +168,7 @@ const AnkaPage = (props: AnkaPageProps) => {
               return (
                 <Reply 
                   key={i}
+                  index={i}
                   {...mes}
                   isAnkaed={!isAnkaHost && isAnkaed} 
                   isAnkaHost={isAnkaHost} />
@@ -188,21 +191,41 @@ const AnkaPage = (props: AnkaPageProps) => {
   );
 };
 
-export const AnkaPageWithRouter = (props: AnkaPageProps) => {
-  const { id: postId } = useParams();
+
+export const AnkaPageWithQuery = (props: AnkaPageProps) => {
+  const { postId } = props;
+  let parsedMessages;
+  const {data, loading, error} = useQuery(QUERY_MESSAGES, {
+    variables: {
+      whichPost: {
+        postId
+      },
+      whichPostInPost: {
+        id: postId
+      }
+    }
+  });
+  if(loading) {
+    return (
+      <Typography>{'loading...'}</Typography>
+    );
+  }
+  if(data) {
+    const messagesData = data.ankamessages as SingleMessageData[];
+    console.log(data);
+    parsedMessages = messagesData.map(data => getParseMessagesFromQuery(data));
+  }
   return (
-    <AnkaPage {...props} postId={postId} />
+    <AnkaPage 
+      {...props} 
+      queriedParsedMessages={parsedMessages} />
   );
 };
 
-export const AnkaPageWithQuery = (props: AnkaPageProps) => {
-  //mock queried data
-  const messagesData = replies_mockData;
-  const parsedMessages = messagesData.map(data => getParseMessagesFromQuery(data));
+export const AnkaPageWithRouter = (props: AnkaPageProps) => {
+  const { id: postId } = useParams();
   return (
-    <AnkaPageWithRouter 
-      {...props} 
-      queriedParsedMessages={parsedMessages} />
+    <AnkaPageWithQuery {...props} postId={postId} />
   );
 };
 
