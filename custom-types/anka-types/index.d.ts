@@ -18,6 +18,11 @@ declare module 'anka-types' {
     id: ID
     username: string
   }
+  export type BasiceMessageDataPayload = {
+    userId: ID
+    username: string
+    content: string
+  }
   export type BasicMessage = {
     id: ID
     userId: ID

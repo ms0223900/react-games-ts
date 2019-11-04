@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Box, Typography, makeStyles } from '@material-ui/core';
 import { getDateAndTime } from 'lib/fn';
 import { SingleMessage } from 'anka-types';
@@ -87,10 +87,10 @@ export const getContents = (parsedContentLists: ParsedSingleLineContent[]) => {
     <>
       {parsedContentLists.map((content, i) => {
         return (
-          <>
-            <ReplyContent key={i} parsedMessages={content} />
+          <Fragment key={i}> 
+            <ReplyContent parsedMessages={content} />
             {/* <br /> */}
-          </>
+          </Fragment>
         );
       })}
     </>

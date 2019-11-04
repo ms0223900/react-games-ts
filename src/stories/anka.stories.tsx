@@ -73,7 +73,7 @@ export const textArea = () => {
 export const ankaPage = () => {
   return (
     <AnkaPage 
-      ankaHostId={user03_host_mockData.id}
+      ankaHostUserId={user03_host_mockData.id}
       queriedParsedMessages={parsedMessagesFromData} 
     />
   );
@@ -83,7 +83,7 @@ export const ankaPageWithUserWrapper = () => {
   return (
     <MultiUserPage>
       <AnkaPage 
-        ankaHostId={user03_host_mockData.id}
+        ankaHostUserId={user03_host_mockData.id}
         queriedParsedMessages={parsedMessagesFromData} 
       />
     </MultiUserPage>

@@ -44,10 +44,9 @@ export const ButtonsPart = ({
   return (
     <>
       {ankaElements.map((t, i) => {
-        // const floorElemnt = hostUsedAnkaElements.find(el => el.type === 'floor');
-        // const floorChecked = !!(floorElemnt && floorElemnt.checked);
         return (
           <Button
+            key={i}
             variant={'contained'} 
             onClick={() => handleAddAnkaEl(t.type)}>
             {t.type}

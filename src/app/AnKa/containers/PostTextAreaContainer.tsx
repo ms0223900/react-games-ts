@@ -40,16 +40,16 @@ const PostTextAreaContainer = (props: PostTextAreaContainerProps) => {
     setValue(val => val + ankaElementStr);
   }, []);
   const handleAddPost = useCallback(() => {
-    const newPost = getNewMessage({messages: posts, textAreaValue, userInfo});
-    if(newPost) {
-      setPostsFn && setPostsFn([
-        ...posts,
-        newPost
-      ]);
-      setValue('');
-    }
+    // const newPost = getNewMessage({messages: posts, textAreaValue, userInfo});
+    // if(newPost) {
+    //   setPostsFn && setPostsFn([
+    //     ...posts,
+    //     newPost
+    //   ]);
+    //   setValue('');
+    // }
     
-  }, [posts, setPostsFn, textAreaValue, userInfo]);
+  }, []);
   const handlePostByEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     const { keyCode } = e;
     e.preventDefault();

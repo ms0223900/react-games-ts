@@ -24,6 +24,17 @@ export const ApolloWrapper = (props: any) => {
 };
  
 
+export const QUERY_POSTS = gql`
+  query QUERY_POSTS {
+    ankaposts {
+      id
+      userId
+      username
+      content
+      created_at
+    }
+  }`;
+
 
 export const QUERY_MESSAGES = gql`
   query QUERY_MESSAGES($whichPost: JSON, $whichPostInPost: JSON) {
@@ -36,6 +47,24 @@ export const QUERY_MESSAGES = gql`
       postId
     }
     ankaposts(where: $whichPostInPost) {
-      ankaHostId
+      id
+      userId
+      username
+      content
+      created_at
+    }
+  }`;
+
+export const ADD_MESSAGE = gql`
+  mutation ADD_MESSAGE($payload: createAnkamessageInput) {
+    createAnkamessage(input: $payload) {
+      ankamessage {
+        id
+        userId
+        username
+        created_at
+        content
+        postId
+      }
     }
   }`;

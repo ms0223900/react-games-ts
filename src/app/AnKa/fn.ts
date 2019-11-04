@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 import { ankaElementTypes, ankaElementTypesString } from './config';
-import { SingleMessage, SingleAnkaElement, ParsedMessage_element, ParsedMessage_message, SingleMessageData, UserInfo } from 'anka-types';
+import { SingleMessage, SingleAnkaElement, ParsedMessage_element, ParsedMessage_message, SingleMessageData, UserInfo, SinglePostData } from 'anka-types';
 import { message_queried_mockData } from './storage/mockData';
 
 export const getRandomSingleAnkaEl = (type: ankaElementTypesString,ankaHostFloorNow?: number) => {
@@ -233,7 +233,7 @@ export const parseContents = (content: string): ParsedContentsFromData => {
   return res;
 };
 
-export const getParseMessagesFromQuery = (singleMessageData: SingleMessageData) => {
+export const getParseMessagesFromQuery = (singleMessageData: SingleMessageData | SinglePostData) => {
   const {
     parsedContent,
     ankaElements,
@@ -244,6 +244,8 @@ export const getParseMessagesFromQuery = (singleMessageData: SingleMessageData) 
     ankaElements,
   };
 };
+
+
 
 
 export const convertContent = (content: string, newId: number) => {
@@ -258,11 +260,14 @@ export const convertContent = (content: string, newId: number) => {
     //element types
     const elementTypes = elements.map(el => getElementType(el)[0] as ankaElementTypesString);
     //elements and insert number into content
-    let { newContent, ankaElements } = getConvertContentFromTypes(content, elementTypes, newId);
+    const { newContent, ankaElements } = getConvertContentFromTypes(content, elementTypes, newId);
     res = {
       ...res,
       content_string: newContent,
-      ankaElements,
+      ankaElements: [
+        ...res.ankaElements,
+        ...ankaElements,
+      ],
     };
   }
   res = {
@@ -279,6 +284,26 @@ export type NewMessageAction = {
   textAreaValue: string
   userInfo: UserInfo
 }
+
+export const checkLackAnkaElementsInContent = (textAreaValue: string) => {
+  const regExp = ankaElsInMessageRegExp(true);
+  const removeAnkaElementString = textAreaValue.replace(regExp, '');
+  return removeAnkaElementString.length === 0;
+};
+export const verifyTextAreaValue = (textAreaValue: string) => {
+  const stringLength = textAreaValue.trim().length;
+  if(stringLength === 0) {
+    return undefined;
+  }
+  const checkContentIsLack = checkLackAnkaElementsInContent(textAreaValue);
+  if(checkContentIsLack) {
+    window.alert('please input some message expect anka elements!');
+    return undefined;
+  }
+  return true;
+};
+
+
 export const getNewMessage = ({messages, textAreaValue, userInfo}: NewMessageAction) => {
   const newId = messages.length + 1;
   // let ankaElements: SingleAnkaElement[];
@@ -287,25 +312,11 @@ export const getNewMessage = ({messages, textAreaValue, userInfo}: NewMessageAct
     content,
     content_string, 
   } = convertContent(textAreaValue, newId);
-  const contentStringLength = content_string.trim().length;
-  const checkContentIsEmpty = contentStringLength === 0;
-  if(checkContentIsEmpty) {
-    return undefined;
-  }
-  const checkLackStringExpectAnkaElementsInContent = () => {
-    const recoveredStringOfElements = ankaElements.map(el => recoverElementToStr(el));
-    const stringLength = recoveredStringOfElements.join('').length;
-    return stringLength === contentStringLength;
-  };
-  if(checkLackStringExpectAnkaElementsInContent()) {
-    window.alert('please input some message expect anka elements!');
-    return undefined;
-  }
   const newestMessage = {
-    id: newId,
+    // id: newId,
     userId: userInfo.id,
     username: userInfo.username,
-    created_at: new Date(),
+    // created_at: new Date(),
     content,
     content_string,
     ankaElements,

@@ -73,7 +73,7 @@ export const parsedMessagesFromData = replies_mockData.map(data => (
 ));
 
 export const ankaPage_mockData: AnkaPageProps = {
-  ankaHostId: user03_host_mockData.id,
+  ankaHostUserId: user03_host_mockData.id,
   queriedParsedMessages: parsedMessagesFromData,
 };
 
