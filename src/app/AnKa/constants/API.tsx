@@ -68,3 +68,16 @@ export const ADD_MESSAGE = gql`
       }
     }
   }`;
+
+export const ADD_POST = gql`
+  mutation ADD_POST($payload: createAnkapostInput) {
+      createAnkapost(input: $payload) {
+        ankapost {
+          id
+          userId
+          username
+          created_at
+          content
+        }
+      }
+    }`;

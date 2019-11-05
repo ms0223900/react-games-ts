@@ -8,7 +8,7 @@ import MultiUserPage from 'app/common-components/MultiUserPage';
 
 const RoutePage = () => {
   return (
-    <MemoryRouter initialEntries={['/posts']}>
+    <Router>
       <Link to={'/posts'}>{'posts'}</Link>
       <Switch>
       
@@ -21,7 +21,7 @@ const RoutePage = () => {
           </MultiUserPage>
         )} />
       </Switch>
-    </MemoryRouter>
+    </Router>
     
   );
 };

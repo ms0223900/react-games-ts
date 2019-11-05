@@ -2,13 +2,19 @@ import React, { useState, ChangeEvent, useCallback, KeyboardEvent } from 'react'
 import { ankaElementTypesString, UserInfo, SinglePost } from 'anka-types';
 import { ankaElementTypes } from '../config';
 import AnkaTextArea from '../components/AnkaTextArea';
-import { getNewMessage } from '../fn';
+import { getNewMessage, verifyTextAreaValue } from '../fn';
 import { user01_mockData } from '../storage/mockData';
+import { useMutation } from '@apollo/react-hooks';
+import { ADD_POST } from '../constants/API';
+import { MesMutationPayload, dispatchWithMutationFn, reducer_ankaTextAreaContainer, getNewActionFromMutation } from './AnkaTextAreaContainer';
 
 export type HostUsedAnkaElements = {
   type: ankaElementTypesString
   checked: boolean
 }[]
+
+
+
 
 const initHostUsedAnkaElements = (): HostUsedAnkaElements => Object.keys(ankaElementTypes).map(t => ({
   type: t as ankaElementTypesString,
@@ -27,29 +33,45 @@ const PostTextAreaContainer = (props: PostTextAreaContainerProps) => {
     posts,
     setPostsFn
   } = props;
+  const [addPost] = useMutation(ADD_POST);
   const [hostUsedAnkaElements] = useState(initHostUsedAnkaElements());
   const [textAreaValue, setValue] = useState('');
+  const setPostsFnWithMiddleware = dispatchWithMutationFn(posts, setPostsFn, reducer_ankaTextAreaContainer);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setValue(value);
   };
-  
   const handlAddAnkaElement = useCallback((ankaEl: string) => {
     const ankaElementStr = `(_${ankaEl})`;
     setValue(val => val + ankaElementStr);
   }, []);
-  const handleAddPost = useCallback(() => {
-    // const newPost = getNewMessage({messages: posts, textAreaValue, userInfo});
-    // if(newPost) {
-    //   setPostsFn && setPostsFn([
-    //     ...posts,
-    //     newPost
-    //   ]);
-    //   setValue('');
-    // }
+  const handleAddPost = useCallback(async () => {
+    const mutationFn = (payload: MesMutationPayload) => {
+      return addPost({
+        variables: {
+          payload: {
+            data: payload
+          }
+        }
+      });
+    };
+    const checkValueResult = verifyTextAreaValue(textAreaValue);
+    if(checkValueResult) {
+      const messageAction = { messages: posts, textAreaValue, userInfo };
+      const newestMessage = getNewMessage(messageAction);
+      const action = {
+        payload: {
+          ...newestMessage,
+          // postId: '',
+        }
+      };
+      const newAction = await getNewActionFromMutation(posts, action, mutationFn);
+      setPostsFnWithMiddleware(newAction);
+    }
     
-  }, []);
+    
+  }, [addPost, posts, setPostsFnWithMiddleware, textAreaValue, userInfo]);
   const handlePostByEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     const { keyCode } = e;
     e.preventDefault();

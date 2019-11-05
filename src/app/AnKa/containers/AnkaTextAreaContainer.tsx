@@ -22,29 +22,49 @@ const initHostUsedAnkaElements = (): HostUsedAnkaElements => Object.keys(ankaEle
 type NewMessageAction = { 
   payload: SingleMessage 
 }
+type NewDataPayload = ReturnType<typeof getNewMessage>
 type NewMessageDataAction = {
-  payload: ReturnType<typeof getNewMessage> & {
+  payload: NewDataPayload & {
     postId: ID
   }
 }
+type NewPostDataAction = {
+  payload: NewDataPayload
+}
 type NewMessagesReducer = (action: NewMessageAction, state: SingleMessage[]) => any
-type MutationPayload = {
+export type MesMutationPayload = {
   userId: ID
   username: string
   content: string
+}
+type MutationPayload = MesMutationPayload & {
   postId: ID
 }
 
+export const dispatchWithMutationFn = (
+  state: any, 
+  dispatch: ((x: any) => any) | undefined, 
+  reducer: (state: any, action: any) => typeof state
+) => (action: any) => {
+  const newState = reducer(state, action);
+  return dispatch && dispatch(newState);
+};
 
-export const dispatchNewMessagesWithMiddleware = (dispatch: (x: SingleMessage[]) => any, mutationFn: (x: MutationPayload) => Promise<any>) => (reducer: NewMessagesReducer) => async(action: NewMessageDataAction, state: SingleMessage[]) => {
+
+export const getMutationPayload = (action: NewMessageDataAction) => {
   const { payload } = action;
-  const { userId, username, content_string, postId } = payload;
+  const { content_string } = payload;
   const mutationPayload = {
-    postId,
-    userId,
-    username,
+    ...payload,
     content: content_string
   };
+  return mutationPayload;
+};
+
+
+export async function getNewActionFromMutation(state: SingleMessage[], action: any, mutationFn: (x: MutationPayload) => Promise<any>) {
+  const { payload } = action;
+  const mutationPayload = getMutationPayload(action);
   const mutationRes = await mutationFn(mutationPayload);
   console.log(mutationRes);
   let newAction: NewMessageAction;
@@ -66,18 +86,19 @@ export const dispatchNewMessagesWithMiddleware = (dispatch: (x: SingleMessage[])
       }
     };
   }
-  const newState = reducer(newAction, state);
-  return dispatch(newState);
+  return newAction;
 };
 
-
-const reducer = (action: NewMessageAction, state: SingleMessage[]) => {
+export const reducer_ankaTextAreaContainer = (state: SingleMessage[], action: NewMessageAction) => {
   const { payload } = action;
+  console.log(state);
   return [
     ...state,
     payload
   ];
 };
+
+
 type AnkaTextAreaContainerProps = AnkaPageProps & {
   isAnkaHost: boolean
   messages: SingleMessage[]
@@ -92,18 +113,10 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
     setMessagesFn
   } = props;
   const [addMessage] = useMutation(ADD_MESSAGE);
-  const mutationFn = (payload: MutationPayload) => {
-    return addMessage({
-      variables: {
-        payload: {
-          data: payload
-        }
-      }
-    });
-  };
+  
   const [hostUsedAnkaElements] = useState(initHostUsedAnkaElements());
   const [textAreaValue, setValue] = useState('');
-  const setMessagesFnWithMiddleware = dispatchNewMessagesWithMiddleware(setMessagesFn, mutationFn);
+  const setMessagesFnWithMiddleware = dispatchWithMutationFn(messages, setMessagesFn, reducer_ankaTextAreaContainer);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -113,34 +126,33 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
     const ankaElementStr = `(_${ankaEl})`;
     setValue(val => val + ankaElementStr);
   }, []);
-  const handleSendReply = useCallback(() => {
+  const handleSendReply = useCallback(async () => {
+    const mutationFn = (payload: MutationPayload) => {
+      return addMessage({
+        variables: {
+          payload: {
+            data: payload
+          }
+        }
+      });
+    };
     const checkValueResult = verifyTextAreaValue(textAreaValue);
     if(checkValueResult) {
       const messageAction = { messages, textAreaValue, userInfo };
       const newestMessage = getNewMessage(messageAction);
       console.log(newestMessage);
-      setMessagesFnWithMiddleware(reducer)({
+      const action = {
         payload: {
           ...newestMessage,
           postId,
         }
-      }, messages);
+      };
+      const newAction = await getNewActionFromMutation(messages, action, mutationFn);
+      setMessagesFnWithMiddleware(newAction);
       setValue('');
       // socket.emit('send_chat', [postId, newestMessage]);
     }
-    // const messageAction = { messages, textAreaValue, userInfo };
-    // const newestMessage = getNewMessage({ messages, textAreaValue, userInfo });
-    // console.log(newestMessage);
-    // if(newestMessage) {
-    //   setMessagesFnWithMiddleware({
-    //     ...messageAction,
-    //     textAreaValue: newestMessage.content_string,
-    //   }, messages)(reducer);
-    //   setValue('');
-    //   socket.emit('send_chat', [postId, newestMessage]);
-    // }
-    
-  }, [messages, postId, setMessagesFnWithMiddleware, textAreaValue, userInfo]);
+  }, [addMessage, messages, postId, setMessagesFnWithMiddleware, textAreaValue, userInfo]);
   const handleSendByEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     const { keyCode } = e;
     e.preventDefault();

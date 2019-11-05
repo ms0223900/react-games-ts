@@ -18,7 +18,7 @@ import getLoadingAndError from './LoadingAndError';
 
 
 const getLatestAnkaHost = (messages: SingleMessage[], ankaHostUserId?: ID): SingleMessage | undefined => {
-  console.log(messages, ankaHostUserId);
+  // console.log(messages, ankaHostUserId);
   const hostMessages = messages.filter(mes => {
     return Number(mes.userId) === Number(ankaHostUserId) && 
       mes.ankaElements.length > 0;
