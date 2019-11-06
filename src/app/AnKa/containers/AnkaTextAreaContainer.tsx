@@ -51,24 +51,26 @@ export const dispatchWithMutationFn = (
 };
 
 
-export const getMutationPayload = (action: NewMessageDataAction) => {
+export const getMutationPayload = (action: NewMessageDataAction, isMessage?: boolean) => {
   const { payload } = action;
-  const { content_string } = payload;
+  const { userId, username, content_string, postId } = payload;
   const mutationPayload = {
-    ...payload,
-    content: content_string
+    userId,
+    username,
+    content: content_string,
+    postId: isMessage ? postId : undefined
   };
   return mutationPayload;
 };
 
-
-export async function getNewActionFromMutation(state: SingleMessage[], action: any, mutationFn: (x: MutationPayload) => Promise<any>) {
+type MutationFn = (x: MutationPayload | MesMutationPayload) => Promise<any>
+export async function getNewActionFromMutation(state: SingleMessage[], action: any, mutationFn: MutationFn) {
   const { payload } = action;
-  const mutationPayload = getMutationPayload(action);
-  const mutationRes = await mutationFn(mutationPayload);
-  console.log(mutationRes);
+  const mutationPayload = getMutationPayload(action, true);
   let newAction: NewMessageAction;
-  if(mutationRes) {
+  try {
+    console.log(mutationPayload);
+    const mutationRes = await mutationFn(mutationPayload);
     const { ankamessage } = mutationRes.data.createAnkamessage;
     newAction = {
       payload: {
@@ -77,7 +79,7 @@ export async function getNewActionFromMutation(state: SingleMessage[], action: a
         created_at: ankamessage.created_at as string
       }
     };
-  } else {
+  } catch(e) {
     newAction = {
       payload: {
         ...payload,
@@ -127,7 +129,7 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
     setValue(val => val + ankaElementStr);
   }, []);
   const handleSendReply = useCallback(async () => {
-    const mutationFn = (payload: MutationPayload) => {
+    const mutationFn: MutationFn = (payload) => {
       return addMessage({
         variables: {
           payload: {

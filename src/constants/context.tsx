@@ -12,6 +12,7 @@ type Context = {
 }
 
 export const initUserInfo: UserInfo = {
+  id: undefined,
   username: localStorage.getItem('username')
 };
 const initState = {

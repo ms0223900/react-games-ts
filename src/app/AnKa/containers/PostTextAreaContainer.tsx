@@ -67,10 +67,9 @@ const PostTextAreaContainer = (props: PostTextAreaContainerProps) => {
         }
       };
       const newAction = await getNewActionFromMutation(posts, action, mutationFn);
+      console.log(action);
       setPostsFnWithMiddleware(newAction);
     }
-    
-    
   }, [addPost, posts, setPostsFnWithMiddleware, textAreaValue, userInfo]);
   const handlePostByEnter = (e: KeyboardEvent<HTMLInputElement>) => {
     const { keyCode } = e;

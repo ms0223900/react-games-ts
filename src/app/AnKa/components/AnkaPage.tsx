@@ -135,8 +135,6 @@ const AnkaPage = (props: AnkaPageProps) => {
     let latestAnkaHostElsNow = latestAnkaHostEls;
     for (let i = 0; i < messages.length; i++) {
       const mes = messages[i];
-      // if(checkIsAnkaed(messages, i)) 
-      //   return setFulfilled(true);
       const checkedLatestAnkaHostEls = getLatestAnkaHostElementsTypes(messages, ankaHostUserId);
       if(checkedLatestAnkaHostEls.length > 0) {
         latestAnkaHostElsNow = checkedLatestAnkaHostEls;
@@ -202,7 +200,17 @@ const AnkaPage = (props: AnkaPageProps) => {
 };
 
 
-
+export const getParsedDataFromQuery = (data: any) => {
+  const messagesData = data.ankamessages as SingleMessageData[];
+  const postData = data.ankaposts[0] as SinglePostData;
+  console.log(data);
+  const queriedParsedMessages = messagesData.map(data => getParseMessagesFromQuery(data));
+  const queriedParsedPost = getParseMessagesFromQuery(postData);
+  return {
+    queriedParsedMessages,
+    queriedParsedPost
+  };
+};
 const queryVariables = (postId?: ID) => ({
   variables: {
     whichPost: {
@@ -217,17 +225,11 @@ export const AnkaPageWithQuery = (props: AnkaPageProps) => {
   const { postId } = props;
   const {data, loading, error} = useQuery(QUERY_MESSAGES, queryVariables(postId));
   if(data) {
-    const messagesData = data.ankamessages as SingleMessageData[];
-    const postData = data.ankaposts[0] as SinglePostData;
-    console.log(data);
-    const parsedMessages = messagesData.map(data => getParseMessagesFromQuery(data));
-    const parsedPost = getParseMessagesFromQuery(postData);
-    console.log(parsedPost);
+    const parsedDatas = getParsedDataFromQuery(data);
     return (
       <AnkaPage 
-        {...props} 
-        queriedParsedMessages={parsedMessages}
-        queriedParsedPost={parsedPost}
+        {...props}
+        {...parsedDatas}
       />
     );
   } else {

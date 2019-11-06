@@ -16,9 +16,9 @@ const RoutePage = () => {
           <AnkaPostWithQuery />
         )} />
         <Route path={'/posts/:id'} render={props => (
-          <MultiUserPage>
-            <AnkaPageWithRouter {...props} {...ankaPage_mockData}/>
-          </MultiUserPage>
+          <AnkaPageWithRouter 
+            {...props} 
+            {...ankaPage_mockData}/>
         )} />
       </Switch>
     </Router>

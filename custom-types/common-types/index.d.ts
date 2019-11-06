@@ -16,7 +16,7 @@ declare module 'common-types' {
   }
 
   export type UserInfo = {
-    // id: ID
+    id?: ID
     username: string | undefined | null
   }
 }

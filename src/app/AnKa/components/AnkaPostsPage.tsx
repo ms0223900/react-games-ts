@@ -41,17 +41,28 @@ const AnkaPostsPage = (props: AnkaPostsPageProps) => {
 
 export const AnkaPostWithQuery = (props: AnkaPostsPageProps) => {
   // const postsData = replies_mockData;
+  let postsData: SinglePostData[] = replies_mockData;
   const { loading, error, data } = useQuery(QUERY_POSTS);
-  if(data) {
-    const postsData = data.ankaposts as SinglePostData[];
-    const parsedPosts = postsData
-      .map(data => getParseMessagesFromQuery(data));
+  if(loading) {
     return (
-      <AnkaPostsPage {...props} queriedParsedPosts={parsedPosts} />
+      <Typography>{'loading...'}</Typography>
     );
-  } else {
-    return getLoadingAndError(loading, error);
   }
+  if(data) {
+    postsData = data.ankaposts as SinglePostData[];
+  }
+  const parsedPosts = postsData
+    .map(data => getParseMessagesFromQuery(data));
+  return (
+    <>
+      {error && (
+        <Typography>{'Network had something wrong, it is offline mode.'}</Typography>
+      )}
+      <AnkaPostsPage 
+        {...props} 
+        queriedParsedPosts={parsedPosts} />
+    </>
+  );
 };
 
 export default AnkaPostsPage;
