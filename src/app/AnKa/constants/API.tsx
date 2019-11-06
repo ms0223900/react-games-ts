@@ -5,8 +5,8 @@ import { createHttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from '@apollo/react-components';
 import Strapi from 'strapi-sdk-javascript/build/main';
-import { SignUpForm } from 'app/Anka/components/logAndSign/SignUp';
 import { UserInfo } from 'anka-types';
+import { SignUpForm } from 'app/AnKa/components/log-and-sign/NavBar';
 
 export const URI = process.env.NODE_ENV === 'development' ? 'http://localhost:1337/graphql' : 'https://intense-brushlands-46000.herokuapp.com/graphql';
 
@@ -26,20 +26,16 @@ export const ApolloWrapper = (props: any) => {
  
 export const strapi = new Strapi(URI);
 
-export const signUp = (signUpForm: SignUpForm, setUserInfoFn: (x: UserInfo) => any) => {
+export const signUp = (
+  signUpForm: SignUpForm
+) => {
   const { username, email, password } = signUpForm;
-  strapi
+  return strapi
     .register(username, email, password)
     .then(res => {
-      // res.user
-      // setUserInfoFn({
-      //   username: 
-      // })
+      return res;
     });
 };
-
-
-
 
 
 export const QUERY_POSTS = gql`

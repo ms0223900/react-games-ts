@@ -313,10 +313,8 @@ export const getNewMessage = ({messages, textAreaValue, userInfo}: NewMessageAct
     content_string, 
   } = convertContent(textAreaValue, newId);
   const newestMessage = {
-    // id: newId,
     userId: userInfo.id,
     username: userInfo.username,
-    // created_at: new Date(),
     content,
     content_string,
     ankaElements,

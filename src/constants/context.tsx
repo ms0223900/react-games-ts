@@ -4,7 +4,7 @@ import reducers from 'constants/reducers';
 import { UserInfo } from 'common-types';
 
 export type State = {
-  userInfo: typeof initUserInfo
+  userInfo: UserInfo
 }
 type Context = {
   dispatch: (x: any) => any

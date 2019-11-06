@@ -15,8 +15,8 @@ declare module 'anka-types' {
   export type ParsedSingleLineContent = (ParsedMessage_element | ParsedMessage_message)[]
 
   export type UserInfo = {
-    id: ID
-    username: string
+    id?: ID
+    username: string | undefined | null
   }
   export type BasiceMessageDataPayload = {
     userId: ID

@@ -14,7 +14,9 @@ const App: React.FC = () => {
   return (
     <>
       <ApolloWrapper>
-        <RoutePage />
+        <ContextWrapper>
+          <RoutePage />
+        </ContextWrapper>
       </ApolloWrapper>
     </>
   );

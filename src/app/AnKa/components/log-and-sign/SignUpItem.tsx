@@ -1,6 +1,9 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState, useEffect, useCallback } from 'react';
 import { Box, Paper, Typography, TextField, FormControl, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { QUERY_SAMENAME_USER, signUp } from 'app/AnKa/constants/API';
+import { UserInfo } from 'anka-types';
 
 const useStyles = makeStyles({
   root: {
@@ -76,13 +79,21 @@ const SignUp = (props: Props) => {
   );
 };
 
-export const SignUpContainer = () => {
+
+type SignUpContainerProps = {
+  setUserInfoFn?: (x: UserInfo) => any
+}
+export const SignUpContainer = (props: SignUpContainerProps) => {
+  const {
+    setUserInfoFn
+  } = props;
+  const [getSameNameUser, { data }] = useLazyQuery(QUERY_SAMENAME_USER);
   const [form, setForm] = useState({
     email: '',
     username: '',
     password: ''
   });
-  const [error, setErr] = useState<string>();
+  const [error, setError] = useState<string>();
   const handleChangeForm = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setForm(form => ({
@@ -90,10 +101,32 @@ export const SignUpContainer = () => {
       [id]: value,
     }));
   };
-  const handleSignUp = () => {
-
-  };
-
+  const handleSignUp = useCallback(() => {
+    const queryUserFn = (username: string) => {
+      return getSameNameUser({
+        variables: {
+          userWhere: {
+            username
+          }
+        }
+      });
+    };
+    queryUserFn(form.username);
+  }, [form.username, getSameNameUser]);
+  useEffect(() => {
+    const checkNoSameUser = data && data.users && data.users.length === 0;
+    if(checkNoSameUser) {
+      signUp(form)
+        .then(res => {
+          const user = res.user as UserInfo;
+          setUserInfoFn && setUserInfoFn({
+            id: user.id,
+            username: user.username,
+          });
+        })
+        .catch(e => setError(e.message));
+    }
+  }, [data, form, setUserInfoFn]);
 
   return (
     <SignUp 
@@ -103,7 +136,5 @@ export const SignUpContainer = () => {
       signUpFn={handleSignUp} />
   );
 };
-
-
 
 export default SignUp;

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import { Box, makeStyles, Container, Typography } from '@material-ui/core';
 import { user01_mockData, replies_mockData } from '../storage/mockData';
 import { SinglePost, UserInfo, SinglePostData } from 'anka-types';
@@ -42,7 +43,23 @@ const AnkaPostsPage = (props: AnkaPostsPageProps) => {
 export const AnkaPostWithQuery = (props: AnkaPostsPageProps) => {
   // const postsData = replies_mockData;
   let postsData: SinglePostData[] = replies_mockData;
-  const { loading, error, data } = useQuery(QUERY_POSTS);
+  const { loading, error, data, fetchMore } = useQuery(QUERY_POSTS, {
+    fetchPolicy: 'cache-and-network'
+  });
+  // useEffect(() => {
+  //   fetchMore({
+  //     updateQuery: (prev: any, { fetchMoreResult }) => {
+  //       if(!prev) return prev;
+  //       return {
+  //         ...prev,
+  //         ankaposts: [
+  //           ...prev.ankaposts,
+  //           ...fetchMoreResult.ankaposts
+  //         ]
+  //       };
+  //     }
+  //   });
+  // }, []);
   if(loading) {
     return (
       <Typography>{'loading...'}</Typography>

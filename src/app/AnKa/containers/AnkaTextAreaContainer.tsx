@@ -51,44 +51,51 @@ export const dispatchWithMutationFn = (
 };
 
 
-export const getMutationPayload = (action: NewMessageDataAction, isMessage?: boolean) => {
+export const getAndCheckMutationPayload = (action: NewMessageDataAction, isMessage?: boolean) => {
   const { payload } = action;
   const { userId, username, content_string, postId } = payload;
-  const mutationPayload = {
-    userId,
-    username,
-    content: content_string,
-    postId: isMessage ? postId : undefined
-  };
-  return mutationPayload;
+  if(typeof userId !== 'undefined' && !!username) {
+    const mutationPayload = {
+      userId,
+      username,
+      content: content_string,
+      postId: isMessage ? postId : undefined
+    };
+    return mutationPayload;
+  }
+  return false;
 };
 
 type MutationFn = (x: MutationPayload | MesMutationPayload) => Promise<any>
+
 export async function getNewActionFromMutation(state: SingleMessage[], action: any, mutationFn: MutationFn) {
   const { payload } = action;
-  const mutationPayload = getMutationPayload(action, true);
+  const mutationPayload = getAndCheckMutationPayload(action, true);
   let newAction: NewMessageAction;
-  try {
-    console.log(mutationPayload);
-    const mutationRes = await mutationFn(mutationPayload);
-    const { ankamessage } = mutationRes.data.createAnkamessage;
-    newAction = {
-      payload: {
-        ...payload,
-        id: ankamessage.id as ID,
-        created_at: ankamessage.created_at as string
-      }
-    };
-  } catch(e) {
-    newAction = {
-      payload: {
-        ...payload,
-        id: state.length + 1,
-        created_at: new Date()
-      }
-    };
+  if(mutationPayload) {
+    try {
+      console.log(mutationPayload);
+      const mutationRes = await mutationFn(mutationPayload);
+      const { ankamessage } = mutationRes.data.createAnkamessage;
+      newAction = {
+        payload: {
+          ...payload,
+          id: ankamessage.id as ID,
+          created_at: ankamessage.created_at as string
+        }
+      };
+    } catch(e) {
+      newAction = {
+        payload: {
+          ...payload,
+          id: state.length + 1,
+          created_at: new Date()
+        }
+      };
+    }
+    return newAction;
   }
-  return newAction;
+  
 };
 
 export const reducer_ankaTextAreaContainer = (state: SingleMessage[], action: NewMessageAction) => {
@@ -150,9 +157,14 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
         }
       };
       const newAction = await getNewActionFromMutation(messages, action, mutationFn);
-      setMessagesFnWithMiddleware(newAction);
-      setValue('');
-      // socket.emit('send_chat', [postId, newestMessage]);
+      if(newAction) {
+        setMessagesFnWithMiddleware(newAction);
+        setValue('');
+        socket.emit('send_chat', [postId, newAction.payload]);
+      } else {
+        window.alert('please log in / sign in~');
+      }
+      
     }
   }, [addMessage, messages, postId, setMessagesFnWithMiddleware, textAreaValue, userInfo]);
   const handleSendByEnter = (e: KeyboardEvent<HTMLInputElement>) => {

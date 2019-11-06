@@ -223,11 +223,16 @@ const queryVariables = (postId?: ID) => ({
 });
 export const AnkaPageWithQuery = (props: AnkaPageProps) => {
   const { postId } = props;
-  const {data, loading, error} = useQuery(QUERY_MESSAGES, queryVariables(postId));
+  const { data, loading, error } = useQuery(QUERY_MESSAGES, {
+    ...queryVariables(postId),
+    fetchPolicy: 'cache-and-network'
+  });
+  console.log(data);
   if(data) {
     const parsedDatas = getParsedDataFromQuery(data);
     return (
       <AnkaPage 
+        key={parsedDatas.queriedParsedMessages.length}
         {...props}
         {...parsedDatas}
       />
