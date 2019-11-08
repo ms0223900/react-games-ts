@@ -5,6 +5,22 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import { QUERY_SAMENAME_USER, signUp } from 'app/AnKa/constants/API';
 import { UserInfo } from 'anka-types';
 
+export function useForm<Form extends object>(initForm: Form): [
+  Form, (e: ChangeEvent<HTMLInputElement>) => any
+] {
+  const [form, setForm] = useState<Form>(initForm);
+  const handleChangeForm = (e: ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setForm(form => ({
+      ...form,
+      [id]: value,
+    }));
+  };
+  return [form, handleChangeForm];
+};
+
+
+
 const useStyles = makeStyles({
   root: {
     position: 'absolute',
@@ -88,19 +104,12 @@ export const SignUpContainer = (props: SignUpContainerProps) => {
     setUserInfoFn
   } = props;
   const [getSameNameUser, { data }] = useLazyQuery(QUERY_SAMENAME_USER);
-  const [form, setForm] = useState({
+  const [error, setError] = useState<string>();
+  const [form, handleChangeForm] = useForm<SignUpForm>({
     email: '',
     username: '',
     password: ''
   });
-  const [error, setError] = useState<string>();
-  const handleChangeForm = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setForm(form => ({
-      ...form,
-      [id]: value,
-    }));
-  };
   const handleSignUp = useCallback(() => {
     const queryUserFn = (username: string) => {
       return getSameNameUser({

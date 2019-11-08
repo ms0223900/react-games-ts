@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Container, Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { UserInfo } from 'anka-types';
@@ -51,23 +51,24 @@ export type SignUpForm = {
 type InputPopupProps = {
   isSignUp: boolean
   isLogin: boolean
-  handleClose?: (x?: any) => any
+  closeFn?: (x?: any) => any
 }
 export const InputPopup = (props: InputPopupProps) => {
   const classes = useStyles_inputPopup(props);
   const {
     isSignUp,
     isLogin,
-    handleClose,
+    closeFn,
   } = props;
   const isDisplay = isSignUp || isLogin;
+  const close = () => { closeFn && closeFn(); };
   return (
     <>
       {isDisplay && (
         <Box 
           className={ classes.back }
         >
-          <Box className={ classes.backBG } onClick={ handleClose } />
+          <Box className={ classes.backBG } onClick={close} />
           {isSignUp && (
             <SignUpContainer />
           )}
@@ -81,12 +82,12 @@ export const InputPopup = (props: InputPopupProps) => {
 };
 
 
-
+type SetPopupFn = (popupType: 'signUp' | 'login') => (x?: boolean) => any
 type Props = {
   userInfo: UserInfo
-  setPopupFn?: (popupType: 'signUp' | 'login') => (x?: any) => any
+  setPopupFn?: SetPopupFn
   logOutFn?: () => any
-}
+} & InputPopupProps
 const NavBar = (props: Props) => {
   const classes = useStyles(props);
   const {
@@ -101,12 +102,12 @@ const NavBar = (props: Props) => {
         {!username && (
           <>
             <Button 
-              onClick={setPopupFn && setPopupFn('signUp')}
+              onClick={() => { setPopupFn && setPopupFn('signUp')(true); }}
             >
               { 'sign up' }
             </Button>
             <Button 
-              onClick={setPopupFn && setPopupFn('login')}
+              onClick={() => { setPopupFn && setPopupFn('login')(true); }}
             >
               { 'log in' }
             </Button>
@@ -123,7 +124,38 @@ const NavBar = (props: Props) => {
           </>
         )}
       </Box>
+      <InputPopup {...props} />
     </Container>
+  );
+};
+
+
+const initPopupState = {
+  'login': false,
+  'signUp': false
+};
+const usePopup = (): [typeof initPopupState, SetPopupFn] => {
+  const [popup, setPopup] = useState(initPopupState);
+  const handlePopup: SetPopupFn = (type) => (isOpen=false) => {
+    setPopup(p => ({
+      ...initPopupState,
+      [type]: isOpen
+    }));
+  };
+  return [popup, handlePopup];
+};
+
+export const NavBarContainer = (props: {
+  userInfo: UserInfo
+}) => {
+  const [popup, setPopup] = usePopup();
+  return (
+    <NavBar 
+      {...props} 
+      setPopupFn={setPopup}
+      isSignUp={popup.signUp}
+      isLogin={popup.login}
+      closeFn={setPopup('signUp')} />
   );
 };
 
@@ -131,7 +163,7 @@ export const NavBarWithCtx = () => {
   const { state } = useContext(ContextStore);
   const { userInfo } = state;
   return (
-    <NavBar userInfo={userInfo} />
+    <NavBarContainer userInfo={userInfo} />
   );
 };
 
