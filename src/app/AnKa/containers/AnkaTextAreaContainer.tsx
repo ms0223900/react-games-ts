@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useCallback, KeyboardEvent } from 'react';
+import React, { useState, ChangeEvent, useCallback, KeyboardEvent, useContext } from 'react';
 import { ankaElementTypesString, SingleMessage, ID, UserInfo, SingleMessageData } from 'anka-types';
 import { ankaElementTypes, socket } from '../config';
 import AnkaTextArea from '../components/AnkaTextArea';
@@ -7,6 +7,7 @@ import { AnkaPageProps } from '../components/AnkaPage';
 import { user01_mockData } from '../storage/mockData';
 import { useMutation } from '@apollo/react-hooks';
 import { ADD_MESSAGE } from '../constants/API';
+import ContextStore from 'constants/context';
 
 export type HostUsedAnkaElements = {
   type: ankaElementTypesString
@@ -76,15 +77,24 @@ export async function getNewActionFromMutation(state: SingleMessage[], action: a
     try {
       console.log(mutationPayload);
       const mutationRes = await mutationFn(mutationPayload);
-      const { ankamessage } = mutationRes.data.createAnkamessage;
+      const { createAnkamessage, createAnkapost } = mutationRes.data;
+      let id, created_at;
+      if(createAnkamessage) {
+        id = createAnkamessage.ankamessage.id;
+        created_at = createAnkamessage.ankamessage.created_at;
+      } else {
+        id = createAnkapost.ankapost.id;
+        created_at = createAnkapost.ankapost.created_at;
+      }
       newAction = {
         payload: {
           ...payload,
-          id: ankamessage.id as ID,
-          created_at: ankamessage.created_at as string
+          id,
+          created_at,
         }
       };
     } catch(e) {
+      console.log('network had something wrong, it is offline mode');
       newAction = {
         payload: {
           ...payload,
@@ -146,6 +156,8 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
       });
     };
     const checkValueResult = verifyTextAreaValue(textAreaValue);
+    const isLogin = !!userInfo.username;
+    if(!isLogin) return window.alert('please log in / sign in~');
     if(checkValueResult) {
       const messageAction = { messages, textAreaValue, userInfo };
       const newestMessage = getNewMessage(messageAction);
@@ -184,6 +196,13 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
       inputTextAreaFn={handleInput}
       sendFn={handleSendReply}
       sendByEnterFn={handleSendByEnter} />
+  );
+};
+
+export const AnkaTextAreaWithCtx = (props: AnkaTextAreaContainerProps) => {
+  const { state } = useContext(ContextStore);
+  return (
+    <AnkaTextAreaContainer {...props} userInfo={state.userInfo} />
   );
 };
 

@@ -1,10 +1,9 @@
 import * as TYPEs from './actionTypes';
+import { UserInfo } from 'common-types';
 
-export const addUser = (username: string) => ({
+export const addUser = (userInfo: UserInfo) => ({
   type: TYPEs.ADD_USER,
-  payload: {
-    username
-  }
+  payload: userInfo
 });
 
 export const removeUser = () => ({

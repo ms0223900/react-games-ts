@@ -21,7 +21,7 @@ const NavBar = ({ dispatch, userInfo }: NavBarprops) => {
   const { username } = userInfo;
 
   const handleLogin = () => {
-    dispatch && dispatch(addUser(user_mockData));
+    dispatch && dispatch(addUser(userInfo));
     localStorage.setItem('username', user_mockData);
   };
   const handleLogout = () => {

@@ -7,7 +7,9 @@ import { ApolloProvider } from '@apollo/react-components';
 import Strapi from 'strapi-sdk-javascript/build/main';
 import { UserInfo } from 'anka-types';
 import { SignUpForm } from 'app/AnKa/components/log-and-sign/NavBar';
+import { LogInForm } from '../components/log-and-sign/LogInItem';
 
+export const baseUri = 'http://localhost:1337';
 export const URI = process.env.NODE_ENV === 'development' ? 'http://localhost:1337/graphql' : 'https://intense-brushlands-46000.herokuapp.com/graphql';
 
 const link = createHttpLink({ uri: URI, });
@@ -24,7 +26,7 @@ export const ApolloWrapper = (props: any) => {
   );
 };
  
-export const strapi = new Strapi(URI);
+export const strapi = new Strapi(baseUri);
 
 export const signUp = (
   signUpForm: SignUpForm
@@ -35,6 +37,14 @@ export const signUp = (
     .then(res => {
       return res;
     });
+};
+
+export const logIn = (
+  logInForm: LogInForm
+) => {
+  const { username, password } = logInForm;
+  return strapi.login(username, password)
+    .then(res => res);
 };
 
 

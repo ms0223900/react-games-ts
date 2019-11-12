@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Box, makeStyles, Container, Typography } from '@material-ui/core';
 import { user01_mockData, replies_mockData } from '../storage/mockData';
 import { SinglePost, UserInfo, SinglePostData } from 'anka-types';
@@ -10,6 +10,7 @@ import { getParseMessagesFromQuery } from '../fn';
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_POSTS } from '../constants/API';
 import getLoadingAndError from './LoadingAndError';
+import ContextStore from 'constants/context';
 
 // use
 
@@ -37,6 +38,13 @@ const AnkaPostsPage = (props: AnkaPostsPageProps) => {
           setPostsFn={setPosts}  />
       </Container>
     </Container>
+  );
+};
+
+export const AnkaPostsPageWithCtx = (props: AnkaPostsPageProps) => {
+  const { state } = useContext(ContextStore);
+  return (
+    <AnkaPostsPage {...props} userInfo={state.userInfo} />
   );
 };
 
@@ -75,7 +83,7 @@ export const AnkaPostWithQuery = (props: AnkaPostsPageProps) => {
       {error && (
         <Typography>{'Network had something wrong, it is offline mode.'}</Typography>
       )}
-      <AnkaPostsPage 
+      <AnkaPostsPageWithCtx 
         {...props} 
         queriedParsedPosts={parsedPosts} />
     </>

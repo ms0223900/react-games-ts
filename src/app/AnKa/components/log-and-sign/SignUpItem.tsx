@@ -103,7 +103,7 @@ export const SignUpContainer = (props: SignUpContainerProps) => {
   const {
     setUserInfoFn
   } = props;
-  const [getSameNameUser, { data }] = useLazyQuery(QUERY_SAMENAME_USER);
+  const [getSameNameUser, { data, error: queryError }] = useLazyQuery(QUERY_SAMENAME_USER);
   const [error, setError] = useState<string>();
   const [form, handleChangeForm] = useForm<SignUpForm>({
     email: '',
@@ -127,15 +127,19 @@ export const SignUpContainer = (props: SignUpContainerProps) => {
     if(checkNoSameUser) {
       signUp(form)
         .then(res => {
-          const user = res.user as UserInfo;
-          setUserInfoFn && setUserInfoFn({
-            id: user.id,
-            username: user.username,
-          });
+          let user = res.user as UserInfo;
+          user = {
+            ...user,
+            id: String(user.id)
+          };
+          setUserInfoFn && setUserInfoFn(user);
         })
         .catch(e => setError(e.message));
     }
-  }, [data, form, setUserInfoFn]);
+    if(queryError) {
+      setError(queryError.message);
+    }
+  }, [data, error, form, queryError, setUserInfoFn]);
 
   return (
     <SignUp 

@@ -313,7 +313,7 @@ export const getNewMessage = ({messages, textAreaValue, userInfo}: NewMessageAct
     content_string, 
   } = convertContent(textAreaValue, newId);
   const newestMessage = {
-    userId: userInfo.id,
+    userId: String(userInfo.id),
     username: userInfo.username,
     content,
     content_string,

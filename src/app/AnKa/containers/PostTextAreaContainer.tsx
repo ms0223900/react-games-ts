@@ -56,7 +56,9 @@ const PostTextAreaContainer = (props: PostTextAreaContainerProps) => {
         }
       });
     };
+    const isLogin = !!userInfo.username;
     const checkValueResult = verifyTextAreaValue(textAreaValue);
+    if(!isLogin) return window.alert('please log in~');
     if(checkValueResult) {
       const messageAction = { messages: posts, textAreaValue, userInfo };
       const newestMessage = getNewMessage(messageAction);

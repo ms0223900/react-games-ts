@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { UserInfo } from 'anka-types';
 import ContextStore from 'constants/context';
 import { SignUpContainer } from  'app/AnKa/components/log-and-sign/SignUpItem';
+import { LogInContainer, LogInWithCtx } from './LogInItem';
 
 const useStyles = makeStyles({
   root: {
@@ -72,9 +73,9 @@ export const InputPopup = (props: InputPopupProps) => {
           {isSignUp && (
             <SignUpContainer />
           )}
-          {/* {isLogin && (
-            <LogIn />
-          )} */}
+          {isLogin && (
+            <LogInWithCtx />
+          )}
         </Box>
       )}
     </>

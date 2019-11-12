@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Box, Container, Divider, makeStyles, Typography, Button } from '@material-ui/core';
 import Reply from './Reply';
 import { ID, SingleMessage, SingleAnkaElement, ankaElementTypesString, SingleMessageData, SinglePostData, SinglePost } from 'anka-types';
@@ -8,13 +8,14 @@ import { scrollToBottom } from 'lib/fn';
 import { UserInfo } from 'anka-types';
 import { checkIsAnkaElementMatched, getParseMessagesFromQuery } from '../fn';
 import { ankaElementTypes, socket } from '../config';
-import AnkaTextAreaContainer from '../containers/AnkaTextAreaContainer';
+import AnkaTextAreaContainer, { AnkaTextAreaWithCtx } from '../containers/AnkaTextAreaContainer';
 import SingleAnkaElementItem from './AnkaElement';
 import { KeyboardArrowDown } from '@material-ui/icons';
 import { useParams } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
 import { QUERY_MESSAGES } from '../constants/API';
 import getLoadingAndError from './LoadingAndError';
+import ContextStore from 'constants/context';
 
 
 const getLatestAnkaHost = (messages: SingleMessage[], ankaHostUserId?: ID): SingleMessage | undefined => {
@@ -188,7 +189,7 @@ const AnkaPage = (props: AnkaPageProps) => {
         </Button>
       </Box>
       <Divider />
-      <AnkaTextAreaContainer 
+      <AnkaTextAreaWithCtx 
         {...props}
         postId={postId}
         isAnkaHost={isAnkaHostInThisAnka}
@@ -240,6 +241,13 @@ export const AnkaPageWithQuery = (props: AnkaPageProps) => {
   } else {
     return getLoadingAndError(loading, error);
   }
+};
+
+export const AnkaPageWithCtx = (props: AnkaPageProps) => {
+  const { state } = useContext(ContextStore);
+  return (
+    <AnkaPageWithQuery {...props} userInfo={state.userInfo} />
+  );
 };
 
 export const AnkaPageWithRouter = (props: AnkaPageProps) => {
