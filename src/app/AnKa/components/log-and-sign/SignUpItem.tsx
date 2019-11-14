@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { ChangeEvent, FormEvent, useState, useEffect, useCallback } from 'react';
 import { Box, Paper, Typography, TextField, FormControl, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
@@ -121,8 +123,6 @@ export const SignUpContainer = (props: SignUpContainerProps) => {
       });
     };
     queryUserFn(form.username);
-  }, [form.username, getSameNameUser]);
-  useEffect(() => {
     const checkNoSameUser = data && data.users && data.users.length === 0;
     if(checkNoSameUser) {
       signUp(form)
@@ -132,6 +132,7 @@ export const SignUpContainer = (props: SignUpContainerProps) => {
             ...user,
             id: String(user.id)
           };
+          window.alert('Sign up success!');
           setUserInfoFn && setUserInfoFn(user);
         })
         .catch(e => setError(e.message));
@@ -139,7 +140,28 @@ export const SignUpContainer = (props: SignUpContainerProps) => {
     if(queryError) {
       setError(queryError.message);
     }
-  }, [data, error, form, queryError, setUserInfoFn]);
+  }, [form, data, queryError, getSameNameUser, setUserInfoFn]);
+  useEffect(() => {
+    data && handleSignUp();
+  }, [data]);
+  // useEffect(() => {
+  //   const checkNoSameUser = data && data.users && data.users.length === 0;
+  //   if(checkNoSameUser) {
+  //     signUp(form)
+  //       .then(res => {
+  //         let user = res.user as UserInfo;
+  //         user = {
+  //           ...user,
+  //           id: String(user.id)
+  //         };
+  //         setUserInfoFn && setUserInfoFn(user);
+  //       })
+  //       .catch(e => setError(e.message));
+  //   }
+  //   if(queryError) {
+  //     setError(queryError.message);
+  //   }
+  // }, [data]);
 
   return (
     <SignUp 

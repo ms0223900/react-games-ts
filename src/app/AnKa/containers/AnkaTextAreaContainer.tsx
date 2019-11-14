@@ -51,14 +51,17 @@ export const dispatchWithMutationFn = (
   return dispatch && dispatch(newState);
 };
 
-
+export const checkIsLogin = (id: UserInfo['id'], username: UserInfo['username']) => {
+  return (typeof id !== 'undefined' && !!username) ? username : false;
+};
 export const getAndCheckMutationPayload = (action: NewMessageDataAction, isMessage?: boolean) => {
   const { payload } = action;
   const { userId, username, content_string, postId } = payload;
-  if(typeof userId !== 'undefined' && !!username) {
+  const loginedUsername = checkIsLogin(userId, username);
+  if(loginedUsername) {
     const mutationPayload = {
       userId,
-      username,
+      username: loginedUsername,
       content: content_string,
       postId: isMessage ? postId : undefined
     };

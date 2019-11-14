@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     // position: 'relative',
     backgroundColor: '#eee',
     padding: 8,
-    height: 400,
+    height: 'calc(100vh - 300px)',
     overflowY: 'scroll',
   },
   arrowDown: {
@@ -148,7 +148,13 @@ const AnkaPage = (props: AnkaPageProps) => {
       ]);
     }
   }, [ankaHostUserId, latestAnkaHostEls, messages]);
+  useEffect(() => {
 
+    if(queriedParsedPost)  {
+      const checkedLatestAnkaHostEls = getLatestAnkaHostElementsTypes([queriedParsedPost], ankaHostUserId);
+      setLatestEls(checkedLatestAnkaHostEls);
+    }
+  }, [ankaHostUserId, messages, queriedParsedPost]);
 
   return (
     <Container>
