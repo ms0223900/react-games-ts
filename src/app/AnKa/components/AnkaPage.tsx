@@ -252,7 +252,7 @@ export const AnkaPageWithQuery = (props: AnkaPageProps) => {
 export const AnkaPageWithCtx = (props: AnkaPageProps) => {
   const { state } = useContext(ContextStore);
   return (
-    <AnkaPageWithQuery {...props} userInfo={state.userInfo} />
+    <AnkaPageWithQuery userInfo={state.userInfo} {...props} />
   );
 };
 

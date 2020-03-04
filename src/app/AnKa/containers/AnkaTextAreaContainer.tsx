@@ -205,7 +205,7 @@ const AnkaTextAreaContainer = (props: AnkaTextAreaContainerProps) => {
 export const AnkaTextAreaWithCtx = (props: AnkaTextAreaContainerProps) => {
   const { state } = useContext(ContextStore);
   return (
-    <AnkaTextAreaContainer {...props} userInfo={state.userInfo} />
+    <AnkaTextAreaContainer  userInfo={state.userInfo} {...props} />
   );
 };
 

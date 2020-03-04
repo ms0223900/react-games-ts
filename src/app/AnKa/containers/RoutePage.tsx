@@ -11,7 +11,6 @@ const RoutePage = () => {
       <Link to={'/posts'}>{'posts'}</Link>
       <NavBarWithCtx />
       <Switch>
-      
         <Route exact path={'/posts'} component={AnkaPostWithQuery} />
         <Route path={'/posts/:id'} render={props => (
           <AnkaPageWithRouter

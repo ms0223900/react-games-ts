@@ -12,9 +12,13 @@ import SinglePostItem from 'app/AnKa/components/SingleAnkaPost';
 import PostTextAreaContainer from 'app/AnKa/containers/PostTextAreaContainer';
 import AnkaPostsPage from 'app/AnKa/components/AnkaPostsPage';
 import RoutePage from 'app/AnKa/containers/RoutePage';
+import withApolloWrapper from './decorators/withApolloWrapper';
 
 export default {
-  title: 'Anka components'
+  title: 'Anka components',
+  decorators: [
+    withApolloWrapper,
+  ]
 };
 
 export const reply = () => {
