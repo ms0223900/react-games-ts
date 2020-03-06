@@ -1,4 +1,5 @@
 import { InputNameValue } from "common-types";
+import { User } from "components/BasicUserWrapper/types";
 
 export const inputNameValue: InputNameValue = {
   email: {
@@ -24,4 +25,10 @@ export const inputNameValue: InputNameValue = {
       }
     }
   },
+};
+
+export const userProps: User = {
+  name: 'Phantom0012',
+  username: 'ppp',
+  // userImageUrl: '',
 };
