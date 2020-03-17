@@ -1,7 +1,7 @@
-import { BasicMessage, ToDoMessageItemProps, MESSAGE_TYPE } from "bullet-note";
+import { BasicMessage, ToDoMessageItemProps, MESSAGE_TYPE } from "app/BulletNote/types";
 
 export const basicMessage: BasicMessage = {
-  content: '',
+  content: 'PlayStation 官方 Twitter 今（17）日亦宣布，研發中新一代主機「PlayStation 5（PS5）」',
   tagList: [],
   createdAt: '2020-03-16 23:20',
   dateTagList: [],

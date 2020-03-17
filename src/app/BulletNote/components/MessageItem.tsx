@@ -10,11 +10,11 @@ const BasicMessageItem = (props: BasicMessage) => {
   } = props;
   
   return (
-    <Box display={'flex'}>
+    <Box display={'flex'} alignItems={'flex-end'}>
       <Typography variant={'subtitle1'}>
         {content}
       </Typography>
-      <Typography variant={'body1'}>
+      <Typography variant={'body1'} color={'textSecondary'}>
         {createdAt}
       </Typography>
     </Box>
