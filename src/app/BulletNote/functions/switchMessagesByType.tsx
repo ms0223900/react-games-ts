@@ -1,6 +1,6 @@
 import React from 'react';
 import TodoMessageItem from '../components/TodoMessageItem';
-import { MessageItem, MESSAGE_TYPE } from 'app/BulletNote/types';
+import { MessageItem, MESSAGE_TYPE } from '../types';
 
 const switchMessagesByType = (messageItem: MessageItem, index: number) => {
   switch (messageItem.type) {

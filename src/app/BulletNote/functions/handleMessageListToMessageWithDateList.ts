@@ -1,4 +1,4 @@
-import { MessageList, NoteBlockItemProps } from "bullet-note";
+import { MessageList, NoteBlockItemProps } from "../types";
 
 class HandleMessageList {
   static regDateToString(date: Date | string) {

@@ -1,11 +1,12 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
-import { ToDoMessageItemProps } from 'bullet-note';
+import { Box, Checkbox } from '@material-ui/core';
+import { ToDoMessageItemProps } from '../types';
 import BasicMessageItem from './MessageItem';
 
 const TodoMessageItem = (props: ToDoMessageItemProps) => {
   return (
-    <Box>
+    <Box display={'flex'} alignItems={'center'}>
+      <Checkbox />
       <BasicMessageItem
         {...props.message} />
     </Box>

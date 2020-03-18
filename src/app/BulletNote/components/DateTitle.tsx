@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
-import { DateTitleProps } from 'bullet-note';
+import { DateTitleProps } from '../types';
 
 const DateTitle = (props: DateTitleProps) => {
   const dateTitle = (new Date(props.date)).toLocaleDateString();

@@ -1,63 +1,75 @@
-export enum MESSAGE_TYPE {
-  'URGENT' = 'URGENT',
-  'TODO' = 'TODO',
-  'REVIEW' = 'REVIEW',
-}
+import { ID } from "common-types";
+
+export enum MESSAGE_TYPE  {
+    'URGENT' = 'URGENT',
+    'TODO' = 'TODO',
+    'REVIEW' = 'REVIEW',
+  }
 
 export interface TagItem {
+    id: ID
+    name: string
+  }
 
+export interface BulletTagItemProps {
+  tagName: string
+}
+
+export interface BulletTagListProps {
+  tagList: TagItem[]
 }
 
 export interface DateTagItem {
-  date: Date
-}
+    date: Date
+  }
 
 export interface UrgentMessageStatus {
-  dueTime: Date
-  urgentLevel: number
-  name: string
-}
+    dueTime: Date
+    urgentLevel: number
+    name: string
+  }
 
 export interface TodoMessageStatus {
-  name: string
-  isDone?: boolean
-  dueTime?: Date | string
-}
+    name: string
+    isDone?: boolean
+    dueTime?: Date | string
+  }
 
 export interface BasicMessage {
-  content: string
-  tagList: TagItem[]
-  createdAt: Date | string
-  dateTagList: DateTagItem[]
-}
+    content: string
+    tagList: TagItem[]
+    createdAt: Date | string
+    dateTagList: DateTagItem[]
+  }
 
 export interface ToDoMessageItemProps {
-  type: MESSAGE_TYPE.TODO
-  status: TodoMessageStatus
-  message: BasicMessage
-}
+    type: MESSAGE_TYPE.TODO
+    status: TodoMessageStatus
+    message: BasicMessage
+  }
 
 export interface UrgentMessageItemProps {
-  type: MESSAGE_TYPE.URGENT
-  status: UrgentMessageStatus
-  message: BasicMessage
-}
+    type: MESSAGE_TYPE.URGENT
+    status: UrgentMessageStatus
+    message: BasicMessage
+  }
 
 export type MessageItem =  ToDoMessageItemProps | UrgentMessageItemProps
 export type MessageList = MessageItem[]
 
 export interface MessageListWithDate {
-  date: Date | string
-  messageList: MessageList
-}
+    date: Date | string
+    messageList: MessageList
+  }
 
 export interface NoteBlockItemProps extends MessageListWithDate {
+  selected?: boolean
 }
 
 export interface NoteBlockListProps {
-  messageList: MessageList
-}
+    messageList: MessageList
+  }
 
 export interface DateTitleProps {
-  date: Date | string
-}
+    date: Date | string
+  }
