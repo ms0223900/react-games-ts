@@ -66,6 +66,20 @@ export interface NoteBlockItemProps extends MessageListWithDate {
   selected?: boolean
 }
 
+export interface TagNoteBlockItem {
+  tagTitle: string
+  messageList: MessageList
+}
+export type TagNoteBlockList = TagNoteBlockItem[]
+export interface TagNoteBlockObj {
+  [x: string]: TagNoteBlockItem
+}
+
+export interface TagNoteBlockItemProps extends TagNoteBlockItem {}
+export interface TagNoteBlockListProps {
+  tagNoteBlockList: TagNoteBlockList
+}
+
 export interface NoteBlockListProps {
     messageList: MessageList
   }

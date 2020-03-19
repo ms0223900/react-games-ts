@@ -3,12 +3,17 @@ import { Box } from '@material-ui/core';
 import { NoteBlockItemProps } from '../types';
 import switchMessagesByType from '../functions/switchMessagesByType';
 import DateTitle from './DateTitle';
+import HandleTagSortMessage from '../functions/handleTagSortMessage';
+import TagNoteBlockItem from './TagNoteBlockItem';
 
 const NoteBlockItem = (props: NoteBlockItemProps) => {
   const {
     date,
     messageList,
   } = props;
+
+  const tagNoteBlockObj = HandleTagSortMessage.getTagNoteBlockObj(messageList);
+  const tags = Object.keys(tagNoteBlockObj);
   
   return (
     <>
@@ -20,7 +25,11 @@ const NoteBlockItem = (props: NoteBlockItemProps) => {
           <DateTitle
             date={date} />
         </Box>
-        {messageList.map(switchMessagesByType)}
+        {tags.map((t, i) => (
+          <TagNoteBlockItem
+            key={i}
+            {...tagNoteBlockObj[t]} />
+        ))}
       </Box>
       {/* <hr /> */}
     </>
