@@ -3,22 +3,27 @@ import { Box, Typography } from '@material-ui/core';
 import { BasicMessage } from '../types';
 import BulletTagList from './BullteTagList';
 
+const regDateToString = (date: Date | string) => {
+  if(typeof date === 'string') return date;
+  return date.toLocaleDateString();
+};
+
 const BasicMessageItem = (props: BasicMessage) => {
   const {
     content,
     // dateTagList,
     createdAt,
   } = props;
-  
+
   return (
-    <Box display={'flex'} alignItems={'flex-end'}>
+    <Box display={'flex'} alignItems={'center'}>
       <Typography variant={'subtitle1'} contentEditable={true}>
         {content}
       </Typography>
       <BulletTagList
         tagList={props.tagList} />
       <Typography variant={'body1'} color={'textSecondary'}>
-        {createdAt}
+        {regDateToString(createdAt)}
       </Typography>
     </Box>
   );

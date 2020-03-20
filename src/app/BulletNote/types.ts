@@ -1,15 +1,16 @@
 import { ID } from "common-types";
 
 export enum MESSAGE_TYPE  {
-    'URGENT' = 'URGENT',
-    'TODO' = 'TODO',
-    'REVIEW' = 'REVIEW',
-  }
+  'DEFAULT' = 'DEFAULT',
+  'URGENT' = 'URGENT',
+  'TODO' = 'TODO',
+  'REVIEW' = 'REVIEW',
+}
 
 export interface TagItem {
-    id: ID
-    name: string
-  }
+  id: ID
+  name: string
+}
 
 export interface BulletTagItemProps {
   tagName: string
@@ -42,6 +43,12 @@ export interface BasicMessage {
     dateTagList: DateTagItem[]
   }
 
+export interface DefaultMessageItemProps {
+  type: MESSAGE_TYPE.DEFAULT
+  status: {}
+  message: BasicMessage
+}
+
 export interface ToDoMessageItemProps {
     type: MESSAGE_TYPE.TODO
     status: TodoMessageStatus
@@ -54,7 +61,7 @@ export interface UrgentMessageItemProps {
     message: BasicMessage
   }
 
-export type MessageItem =  ToDoMessageItemProps | UrgentMessageItemProps
+export type MessageItem =  ToDoMessageItemProps | UrgentMessageItemProps | DefaultMessageItemProps
 export type MessageList = MessageItem[]
 
 export interface MessageListWithDate {
