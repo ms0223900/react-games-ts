@@ -6,11 +6,15 @@ import HandleParseMessage from "../functions/handleParseMessage";
 const inputPartReducers = (state: BulletNoteState, action: InputPartActions): BulletNoteState['messageList'] => {
   switch (action.type) {
   case BulletNoteActionTypes.ADD_MESSAGE: {
-    const handledMessage = HandleParseMessage.convertRawMessageToMessageItem(action.payload.rawMessage);
+    const newId = String(state.messageList.length);
+    const handledMessage = HandleParseMessage.convertRawMessageToMessageItem(newId, action.payload.rawMessage);
     return [
       ...state.messageList,
       handledMessage,
     ];
+  }
+  case BulletNoteActionTypes.SET_MESSAGE_FROM_DB: {
+    return [];
   }
   default:
     return state.messageList;

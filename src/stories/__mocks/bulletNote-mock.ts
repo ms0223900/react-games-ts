@@ -6,6 +6,7 @@ export const tagItem: TagItem = {
 };
 
 export const basicMessage: BasicMessage = {
+  rawMessage: 'PlayStation 官方 Twitter 今（17）日亦宣布，研發中新一代主機「PlayStation 5（PS5）」',
   content: 'PlayStation 官方 Twitter 今（17）日亦宣布，研發中新一代主機「PlayStation 5（PS5）」',
   tagList: [tagItem],
   createdAt: '2020-03-16 23:20',
@@ -13,6 +14,7 @@ export const basicMessage: BasicMessage = {
 };
 
 export const todoMessageItemProps: ToDoMessageItemProps = {
+  id: '0',
   type: MESSAGE_TYPE.TODO,
   status: {
     name: '',
@@ -26,6 +28,7 @@ export const messageList: MessageList = [
   todoMessageItemProps,
   {
     ...todoMessageItemProps,
+    id: '1',
     message: {
       ...todoMessageItemProps.message,
       tagList: [{
@@ -40,6 +43,7 @@ export const messageList: MessageList = [
   },
   {
     ...todoMessageItemProps,
+    id: '2',
     message: {
       ...todoMessageItemProps.message,
       content: '《在狹窄空間打鬥》是款擁有獨特美術風格的回合制策略遊戲，融入了多部經典電影中的戰鬥動作，而玩家要善用這些動作擊退敵人。',
@@ -47,6 +51,7 @@ export const messageList: MessageList = [
   },
   {
     ...todoMessageItemProps,
+    id: '3',
     message: {
       ...todoMessageItemProps.message,
       tagList: [{
@@ -58,6 +63,7 @@ export const messageList: MessageList = [
   },
   {
     ...todoMessageItemProps,
+    id: '4',
     message: {
       ...todoMessageItemProps.message,
       createdAt: '2020-03-18 11:20',
@@ -65,6 +71,7 @@ export const messageList: MessageList = [
   },
   {
     ...todoMessageItemProps,
+    id: '5',
     message: {
       ...todoMessageItemProps.message,
       createdAt: '2020-03-23 09:20',

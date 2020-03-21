@@ -7,6 +7,7 @@ import { InputPartContainerProps } from '../types';
 import { addMessage } from 'app/BulletNote/actions/inputPart-actions';
 import { connectCtx } from 'react-function-helpers';
 import { ContextStore } from '../../constants/context';
+import { useFnsByKeyCode } from 'react-function-helpers/lib/lib/customHooks/useFnsByKeyCode';
 
 const InputPartContainer = (props: InputPartContainerProps) => {
   const {
@@ -19,6 +20,12 @@ const InputPartContainer = (props: InputPartContainerProps) => {
     props.addMessageFn(value);
     setVal('');
   }, [props, setVal, value]);
+
+  useFnsByKeyCode({
+    lastIndex: 0,
+    confirmFn: handleSendMessage,
+    escapeFn: () => {}
+  }); 
 
   return (
     <InputPart

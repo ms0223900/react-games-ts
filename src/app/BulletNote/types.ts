@@ -37,28 +37,28 @@ export interface TodoMessageStatus {
   }
 
 export interface BasicMessage {
-    content: string
-    tagList: TagItem[]
-    createdAt: Date | string
-    dateTagList: DateTagItem[]
-  }
+  rawMessage: string
+  content: string
+  tagList: TagItem[]
+  createdAt: Date | string
+  dateTagList: DateTagItem[]
+}
 
 export interface DefaultMessageItemProps {
+  id: string
   type: MESSAGE_TYPE.DEFAULT
   status: {}
   message: BasicMessage
 }
 
-export interface ToDoMessageItemProps {
-    type: MESSAGE_TYPE.TODO
-    status: TodoMessageStatus
-    message: BasicMessage
-  }
+export interface ToDoMessageItemProps extends Omit<DefaultMessageItemProps, 'type'> {
+  type: MESSAGE_TYPE.TODO
+  status: TodoMessageStatus
+}
 
-export interface UrgentMessageItemProps {
+export interface UrgentMessageItemProps extends Omit<DefaultMessageItemProps, 'type'> {
     type: MESSAGE_TYPE.URGENT
     status: UrgentMessageStatus
-    message: BasicMessage
   }
 
 export type MessageItem =  ToDoMessageItemProps | UrgentMessageItemProps | DefaultMessageItemProps

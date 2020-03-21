@@ -4,11 +4,31 @@ class HandleParseMessage {
   static todoReg = /(\[\]\s)?/
   static reviewReg = /(\*(\s)?)?/g
   static tagReg = /#\w+(\s)?/g
+  static defaultTag: TagItem = {
+    id: 'notDefinedTag',
+    name: '未分類'
+  }
 
-  static makeBasicMessage(content: string, tagList: TagItem[]): BasicMessage {
+  static removeSpaceInStr(str: string) {
+    return str.replace(/\s/g, '');
+  }
+
+  static makeBasicMessage({
+    content,
+    tagList,
+    rawMessage,
+  }: {
+    content: string, tagList: TagItem[], rawMessage: string
+  }): BasicMessage {
+    let handledTagList = tagList;
+    if(tagList.length === 0) {
+      handledTagList = [this.defaultTag];
+    }
+
     return ({
+      rawMessage,
       content,
-      tagList,
+      tagList: handledTagList,
       createdAt: new Date(),
       dateTagList: [],
     });
@@ -22,7 +42,8 @@ class HandleParseMessage {
     });
   }
 
-  static getTagItem(tagName: string): TagItem {
+  static getTagItem(_tagName: string): TagItem {
+    const tagName = this.removeSpaceInStr(_tagName);
     return ({
       id: tagName,
       name: tagName,
@@ -57,16 +78,21 @@ class HandleParseMessage {
     return res;
   }
 
-  static convertRawMessageToMessageItem(rawMessage: string): MessageItem {
+  static convertRawMessageToMessageItem(id: string, rawMessage: string): MessageItem {
     const messageType = this.getMessageType(rawMessage);
     const tagList = this.getTagListFromRawMessage(rawMessage);
     const content = this.getRemovedTypeAndTagsMessage(rawMessage);
-    const message = this.makeBasicMessage(content, tagList);
+    const message = this.makeBasicMessage({
+      content,
+      tagList,
+      rawMessage,
+    });
 
     switch (messageType) {
     case MESSAGE_TYPE.TODO: {
       const status = this.makeTodoStatus();
       return ({
+        id,
         type: MESSAGE_TYPE.TODO,
         status,
         message,
@@ -74,6 +100,7 @@ class HandleParseMessage {
     }
     default:
       return ({
+        id,
         type: MESSAGE_TYPE.DEFAULT,
         status: {},
         message,
