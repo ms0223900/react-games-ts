@@ -1,30 +1,38 @@
 import React from 'react';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, makeStyles } from '@material-ui/core';
 import { BasicMessage } from '../types';
 import BulletTagList from './BullteTagList';
+import { BasicMessageItemProps } from './types';
+import MessageItemButtons from './MessageItemButtons';
 
 const regDateToString = (date: Date | string) => {
   if(typeof date === 'string') return date;
   return date.toLocaleDateString();
 };
 
-const BasicMessageItem = (props: BasicMessage) => {
+const BasicMessageItem = (props: BasicMessageItemProps) => {
   const {
     content,
     // dateTagList,
+    tagList,
     createdAt,
-  } = props;
+  } = props.message;
 
   return (
-    <Box display={'flex'} alignItems={'center'}>
+    <Box 
+      display={'flex'} 
+      alignItems={'center'} 
+    >
       <Typography variant={'subtitle1'} contentEditable={true}>
         {content}
       </Typography>
       <BulletTagList
-        tagList={props.tagList} />
+        tagList={tagList} />
       <Typography variant={'body1'} color={'textSecondary'}>
         {regDateToString(createdAt)}
       </Typography>
+      <MessageItemButtons
+        onDelete={props.onDelete} />
     </Box>
   );
 };

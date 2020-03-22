@@ -19,7 +19,8 @@ const NoteBlockItem = (props: NoteBlockItemProps) => {
     <>
       <Box padding={0.5} paddingBottom={2} style={{
         borderRadius: 4,
-        backgroundColor: props.selected ? '#eee' : '#fff'
+        border: '2px solid #ddd',
+        // backgroundColor: props.selected ? '#eee' : '#fff'
       }}>
         <Box paddingBottom={1}>
           <DateTitle

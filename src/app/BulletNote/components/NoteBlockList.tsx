@@ -1,13 +1,25 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { NoteBlockListProps } from '../types';
 import HandleMessageList from '../functions/handleMessageListToMessageWithDateList';
 import NoteBlockItem from './NoteBlockItem';
 import checkDateIsToday from '../functions/checkDateIsToday';
 
 const NoteBlockList = (props: NoteBlockListProps) => {
-  console.log(props.messageList);
-  const messageListWithDate = HandleMessageList.convertToMessageWithDateList(props.messageList);
+  const {
+    messageList
+  } = props;
+
+  if(messageList.length === 0) {
+    return (
+      <Typography variant={'h5'} color={'textSecondary'}>
+        {'No notes yet :>'}
+      </Typography>
+    );
+  }
+
+  const messageListWithDate = HandleMessageList
+    .convertToMessageWithDateList(messageList);
   return (
     <Box>
       {messageListWithDate.map((m, i) => (

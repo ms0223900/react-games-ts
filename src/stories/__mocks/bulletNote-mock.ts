@@ -1,4 +1,5 @@
-import { BasicMessage, ToDoMessageItemProps, MESSAGE_TYPE, TagItem, MessageList } from "app/BulletNote/types";
+import { BasicMessage, MESSAGE_TYPE, TagItem, MessageList } from "app/BulletNote/types";
+import { ToDoMessageItemProps } from "app/BulletNote/components/types";
 
 export const tagItem: TagItem = {
   id: 0,
@@ -6,6 +7,7 @@ export const tagItem: TagItem = {
 };
 
 export const basicMessage: BasicMessage = {
+  id: '0',
   rawMessage: 'PlayStation 官方 Twitter 今（17）日亦宣布，研發中新一代主機「PlayStation 5（PS5）」',
   content: 'PlayStation 官方 Twitter 今（17）日亦宣布，研發中新一代主機「PlayStation 5（PS5）」',
   tagList: [tagItem],
@@ -14,7 +16,6 @@ export const basicMessage: BasicMessage = {
 };
 
 export const todoMessageItemProps: ToDoMessageItemProps = {
-  id: '0',
   type: MESSAGE_TYPE.TODO,
   status: {
     name: '',
@@ -28,9 +29,9 @@ export const messageList: MessageList = [
   todoMessageItemProps,
   {
     ...todoMessageItemProps,
-    id: '1',
     message: {
       ...todoMessageItemProps.message,
+      id: '1',
       tagList: [{
         id: 'news',
         name: '#news',
@@ -43,17 +44,17 @@ export const messageList: MessageList = [
   },
   {
     ...todoMessageItemProps,
-    id: '2',
     message: {
       ...todoMessageItemProps.message,
+      id: '2',
       content: '《在狹窄空間打鬥》是款擁有獨特美術風格的回合制策略遊戲，融入了多部經典電影中的戰鬥動作，而玩家要善用這些動作擊退敵人。',
     }
   },
   {
     ...todoMessageItemProps,
-    id: '3',
     message: {
       ...todoMessageItemProps.message,
+      id: '3',
       tagList: [{
         id: 'news',
         name: '#news',
@@ -63,17 +64,17 @@ export const messageList: MessageList = [
   },
   {
     ...todoMessageItemProps,
-    id: '4',
     message: {
       ...todoMessageItemProps.message,
+      id: '4',
       createdAt: '2020-03-18 11:20',
     }
   },
   {
     ...todoMessageItemProps,
-    id: '5',
     message: {
       ...todoMessageItemProps.message,
+      id: '5',
       createdAt: '2020-03-23 09:20',
     }
   },

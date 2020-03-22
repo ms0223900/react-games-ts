@@ -5,7 +5,7 @@ const messageListLS = 'messageListLS';
 class HandleDataInLocalStorage {
   static convertMessageListToRawMessageList(messageList: MessageList): SingleRawMessageFromDB[] {
     return messageList.map(m => ({
-      id: m.id,
+      id: m.message.id,
       rawMessage: m.message.rawMessage,
     }));
   }

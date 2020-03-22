@@ -5,7 +5,7 @@ import { BulletNoteState, ContextStore } from 'app/BulletNote/constants/context'
 import { MapStateToProps, MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { connectCtx } from 'react-function-helpers';
 import HandleDataInLocalStorage from 'app/BulletNote/functions/HandleDataInLocalStorage';
-import { setMessageFromDB } from 'app/BulletNote/actions/inputPart-actions';
+import { setMessageFromDB } from 'app/BulletNote/actions/message-actions';
 import { NotePartProps } from 'app/BulletNote/components/types';
 
 const NotePartContainer = (props: NotePartProps) => {

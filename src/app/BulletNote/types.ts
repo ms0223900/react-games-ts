@@ -1,4 +1,5 @@
 import { ID } from "common-types";
+import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps } from "./components/types";
 
 type RawMessage = string
 
@@ -44,6 +45,7 @@ export interface SingleRawMessageFromDB {
 }
 
 export interface BasicMessage {
+  id: string
   rawMessage: RawMessage
   content: string
   tagList: TagItem[]
@@ -51,24 +53,11 @@ export interface BasicMessage {
   dateTagList: DateTagItem[]
 }
 
-export interface DefaultMessageItemProps {
-  id: string
-  type: MESSAGE_TYPE.DEFAULT
-  status: {}
-  message: BasicMessage
-}
+export type MessageItem = 
+  ToDoMessageItemProps | 
+  UrgentMessageItemProps | 
+  DefaultMessageItemProps
 
-export interface ToDoMessageItemProps extends Omit<DefaultMessageItemProps, 'type'> {
-  type: MESSAGE_TYPE.TODO
-  status: TodoMessageStatus
-}
-
-export interface UrgentMessageItemProps extends Omit<DefaultMessageItemProps, 'type'> {
-    type: MESSAGE_TYPE.URGENT
-    status: UrgentMessageStatus
-  }
-
-export type MessageItem =  ToDoMessageItemProps | UrgentMessageItemProps | DefaultMessageItemProps
 export type MessageList = MessageItem[]
 
 export interface MessageListWithDate {

@@ -1,15 +1,14 @@
 import React from 'react';
-import { Box, Checkbox } from '@material-ui/core';
-import { ToDoMessageItemProps } from '../types';
-import BasicMessageItem from './MessageItem';
+import { Checkbox } from '@material-ui/core';
+import { ToDoMessageItemProps } from './types';
+import MessageItemWrapperContainerWithCtx from '../containers/wrappers/MessageItemWrapperContainer';
 
 const TodoMessageItem = (props: ToDoMessageItemProps) => {
   return (
-    <Box display={'flex'} alignItems={'center'}>
+    <MessageItemWrapperContainerWithCtx
+      {...props}>
       <Checkbox />
-      <BasicMessageItem
-        {...props.message} />
-    </Box>
+    </MessageItemWrapperContainerWithCtx>
   );
 };
 

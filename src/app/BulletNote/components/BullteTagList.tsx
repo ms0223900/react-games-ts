@@ -5,7 +5,7 @@ import BulletTagItem from './BulletTagItem';
 
 const BulletTagList = (props: BulletTagListProps) => {
   return (
-    <Box display={'flex'}>
+    <Box display={'flex'} paddingLeft={0.5}>
       {props.tagList.map((t, i) => (
         <Box paddingRight={0.5}>
           <BulletTagItem 

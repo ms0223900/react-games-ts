@@ -4,7 +4,7 @@ import useInput from 'lib/customHooks/useInput';
 import InputPart from 'app/BulletNote/components/InputPart/InputPart';
 import { MapDispatchToProps } from 'react-function-helpers/lib/functions/mapContextToProps';
 import { InputPartContainerProps } from '../types';
-import { addMessage } from 'app/BulletNote/actions/inputPart-actions';
+import { addMessage } from 'app/BulletNote/actions/message-actions';
 import { connectCtx } from 'react-function-helpers';
 import { ContextStore } from '../../constants/context';
 import { useFnsByKeyCode } from 'react-function-helpers/lib/lib/customHooks/useFnsByKeyCode';

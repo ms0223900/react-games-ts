@@ -14,11 +14,12 @@ class HandleParseMessage {
   }
 
   static makeBasicMessage({
+    id,
     content,
     tagList,
     rawMessage,
   }: {
-    content: string, tagList: TagItem[], rawMessage: string
+    id: string, content: string, tagList: TagItem[], rawMessage: string
   }): BasicMessage {
     let handledTagList = tagList;
     if(tagList.length === 0) {
@@ -26,6 +27,7 @@ class HandleParseMessage {
     }
 
     return ({
+      id,
       rawMessage,
       content,
       tagList: handledTagList,
@@ -83,6 +85,7 @@ class HandleParseMessage {
     const tagList = this.getTagListFromRawMessage(rawMessage);
     const content = this.getRemovedTypeAndTagsMessage(rawMessage);
     const message = this.makeBasicMessage({
+      id,
       content,
       tagList,
       rawMessage,
@@ -92,7 +95,6 @@ class HandleParseMessage {
     case MESSAGE_TYPE.TODO: {
       const status = this.makeTodoStatus();
       return ({
-        id,
         type: MESSAGE_TYPE.TODO,
         status,
         message,
@@ -100,7 +102,6 @@ class HandleParseMessage {
     }
     default:
       return ({
-        id,
         type: MESSAGE_TYPE.DEFAULT,
         status: {},
         message,

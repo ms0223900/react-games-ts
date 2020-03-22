@@ -1,1 +1,1 @@
-export const tabSpace = 2;
+export const tabSpace = 1.5;

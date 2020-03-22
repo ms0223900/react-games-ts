@@ -10,7 +10,7 @@ const InputPart = (props: InputPartProps) => {
   } = props;
 
   return (
-    <Box display={'flex'}>
+    <Box display={'flex'} paddingTop={1}>
       <TextField
         variant={'outlined'}
         fullWidth={true}
