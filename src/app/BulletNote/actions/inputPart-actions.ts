@@ -1,11 +1,12 @@
 import { BulletNoteActionTypes } from ".";
+import { SingleRawMessageFromDB } from "../types";
 
 interface AddMessageActionPayload {
   rawMessage: string
 }
 
 interface SetMessageFromDB {
-  rawMessageList: string[]
+  rawMessageFromDBList: SingleRawMessageFromDB[]
 }
 
 interface AddMessageAction {
@@ -25,10 +26,10 @@ export const addMessage = (rawMessage: string): AddMessageAction => ({
   }
 });
 
-export const setMessageFromDB = (rawMessageList: string[]): SetMessageFromDBAction => ({
+export const setMessageFromDB = (rawMessageFromDBList: SingleRawMessageFromDB[]): SetMessageFromDBAction => ({
   type: BulletNoteActionTypes.SET_MESSAGE_FROM_DB,
   payload: {
-    rawMessageList,
+    rawMessageFromDBList,
   }
 });
 

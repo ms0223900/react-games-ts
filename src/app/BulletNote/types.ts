@@ -1,5 +1,7 @@
 import { ID } from "common-types";
 
+type RawMessage = string
+
 export enum MESSAGE_TYPE  {
   'DEFAULT' = 'DEFAULT',
   'URGENT' = 'URGENT',
@@ -31,13 +33,18 @@ export interface UrgentMessageStatus {
   }
 
 export interface TodoMessageStatus {
-    name: string
-    isDone?: boolean
-    dueTime?: Date | string
-  }
+  name: string
+  isDone?: boolean
+  dueTime?: Date | string
+}
+
+export interface SingleRawMessageFromDB {
+  id: string
+  rawMessage: RawMessage
+}
 
 export interface BasicMessage {
-  rawMessage: string
+  rawMessage: RawMessage
   content: string
   tagList: TagItem[]
   createdAt: Date | string
@@ -94,3 +101,4 @@ export interface NoteBlockListProps {
 export interface DateTitleProps {
     date: Date | string
   }
+
