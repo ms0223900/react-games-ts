@@ -12,6 +12,7 @@ const InputPart = (props: InputPartProps) => {
   return (
     <Box display={'flex'} paddingTop={1}>
       <TextField
+        autoFocus={true}
         variant={'outlined'}
         fullWidth={true}
         value={value}
