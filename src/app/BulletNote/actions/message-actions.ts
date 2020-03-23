@@ -10,6 +10,10 @@ interface SetMessageFromDB {
 interface DeleteMessageActionPayload {
   id: string
 }
+interface ToggleMessageIsDonePayload {
+  id: string
+  isDone: boolean
+}
 
 interface DeleteMessageAction {
   type: BulletNoteActionTypes.DELETE_MESSAGE,
@@ -22,6 +26,10 @@ interface AddMessageAction {
 interface SetMessageFromDBAction {
   type: BulletNoteActionTypes.SET_MESSAGE_FROM_DB,
   payload: SetMessageFromDB
+}
+interface ToggleMessageIsDone {
+  type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISDONE,
+  payload: ToggleMessageIsDonePayload
 }
 
 export const addMessage = (rawMessage: string): AddMessageAction => ({
@@ -43,6 +51,14 @@ export const deleteMessage = (id: string): DeleteMessageAction => ({
   payload: { id }
 });
 
-type InputPartActions = AddMessageAction | SetMessageFromDBAction | DeleteMessageAction
+export const toggleMessageIsDone = (id: string, isDone: boolean): ToggleMessageIsDone => ({
+  type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISDONE,
+  payload: {
+    id,
+    isDone,
+  }
+});
+
+type InputPartActions = AddMessageAction | SetMessageFromDBAction | DeleteMessageAction | ToggleMessageIsDone
 
 export default InputPartActions;

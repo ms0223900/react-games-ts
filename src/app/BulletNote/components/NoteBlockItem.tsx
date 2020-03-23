@@ -5,6 +5,7 @@ import switchMessagesByType from '../functions/switchMessagesByType';
 import DateTitle from './DateTitle';
 import HandleTagSortMessage from '../functions/handleTagSortMessage';
 import TagNoteBlockItem from './TagNoteBlockItem';
+import TagNoteBlockItemContainerWithCtx from '../containers/NotePart/TagNoteBlockItemContainer';
 
 const NoteBlockItem = (props: NoteBlockItemProps) => {
   const {
@@ -27,7 +28,7 @@ const NoteBlockItem = (props: NoteBlockItemProps) => {
             date={date} />
         </Box>
         {tags.map((t, i) => (
-          <TagNoteBlockItem
+          <TagNoteBlockItemContainerWithCtx
             key={i}
             {...tagNoteBlockObj[t]} />
         ))}

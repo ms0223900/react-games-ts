@@ -1,4 +1,5 @@
 import { MessageItemWrapperProps } from "../components/types";
+import { TagNoteBlockItemProps } from "../types";
 
 export interface InputPartContainerProps {
   addMessageFn: (rawMessage: string) => any
@@ -11,4 +12,11 @@ export interface MessageItemWrapperContainerProps extends MessageItemWrapperProp
 export interface MessageItemWrapperContainerWithCtxProps extends Omit<
 MessageItemWrapperProps, 'onDelete'> {
   
+}
+
+export interface TagNoteBlockItemContainerProps extends Omit<TagNoteBlockItemProps, 'onToggleTodo'> {
+  toggleTodoAction: (id: string, isDone: boolean) => any
+}
+
+export interface TagNoteBlockItemContainerWithCtxProps extends Omit<TagNoteBlockItemContainerProps, 'toggleTodoAction'> {
 }

@@ -3,6 +3,8 @@ import InputPartActions from "../actions/message-actions";
 import { BulletNoteActionTypes } from "../actions";
 import HandleParseMessage from "../functions/handleParseMessage";
 import HandleDataInLocalStorage from "../functions/HandleDataInLocalStorage";
+import { MESSAGE_TYPE, MessageItem } from "../types";
+import { ToDoMessageItemProps } from "../components/types";
 
 const inputPartReducers = (state: BulletNoteState, action: InputPartActions): BulletNoteState['messageList'] => {
   switch (action.type) {
@@ -16,7 +18,10 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
     const newId = String(lastMessageId + 1);
     
     const handledMessage = HandleParseMessage
-      .convertRawMessageToMessageItem(newId, action.payload.rawMessage);
+      .convertRawMessageToMessageItem({
+        id: newId,
+        rawMessage: action.payload.rawMessage
+      });
     const newMessageList = [
       ...state.messageList,
       handledMessage,
@@ -30,7 +35,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
       rawMessageFromDBList
     } = action.payload;
     const messageList = rawMessageFromDBList.map((r) => (
-      HandleParseMessage.convertRawMessageToMessageItem(r.id, r.rawMessage)
+      HandleParseMessage.convertRawMessageToMessageItem(r)
     ));
     return messageList;
   }
@@ -42,6 +47,28 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
     const newMessageList = state.messageList.filter(m => {
       return id !== m.message.id;
     });
+    HandleDataInLocalStorage.setData(newMessageList);
+    return newMessageList;
+  }
+
+  case BulletNoteActionTypes.TOGGLE_MESSAGE_ISDONE: {
+    const {
+      id,
+      isDone
+    } = action.payload;
+    let newMessageList = [...state.messageList];
+    const index = newMessageList.findIndex((m) => m.message.id === id);
+    if(index !== -1) {
+      if(newMessageList[index].type === MESSAGE_TYPE.TODO) {
+        newMessageList[index] = {
+          ...newMessageList[index],
+          status: {
+            ...newMessageList[index].status,
+            isDone: isDone,
+          }
+        } as ToDoMessageItemProps;
+      }
+    }
     HandleDataInLocalStorage.setData(newMessageList);
     return newMessageList;
   }

@@ -1,4 +1,4 @@
-import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem } from "../types";
+import { MESSAGE_TYPE, TagItem, BasicMessage, TodoMessageStatus, MessageItem, SingleRawMessageFromDB } from "../types";
 
 class HandleParseMessage {
   static todoReg = /(\[\]\s)?/
@@ -36,11 +36,9 @@ class HandleParseMessage {
     });
   }
 
-  static makeTodoStatus(): TodoMessageStatus {
+  static makeTodoStatus(todoMessageStatus: TodoMessageStatus): TodoMessageStatus {
     return ({
-      name: '',
-      isDone: false,
-      dueTime: undefined,
+      ...todoMessageStatus
     });
   }
 
@@ -80,7 +78,12 @@ class HandleParseMessage {
     return res;
   }
 
-  static convertRawMessageToMessageItem(id: string, rawMessage: string): MessageItem {
+  static convertRawMessageToMessageItem(singleRawMessageFromDB: SingleRawMessageFromDB): MessageItem {
+    const {
+      id,
+      isDone,
+      rawMessage,
+    } = singleRawMessageFromDB;
     const messageType = this.getMessageType(rawMessage);
     const tagList = this.getTagListFromRawMessage(rawMessage);
     const content = this.getRemovedTypeAndTagsMessage(rawMessage);
@@ -93,7 +96,10 @@ class HandleParseMessage {
 
     switch (messageType) {
     case MESSAGE_TYPE.TODO: {
-      const status = this.makeTodoStatus();
+      const status = this.makeTodoStatus({
+        name: '',
+        isDone,
+      });
       return ({
         type: MESSAGE_TYPE.TODO,
         status,

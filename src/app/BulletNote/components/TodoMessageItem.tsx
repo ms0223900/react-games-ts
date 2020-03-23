@@ -7,7 +7,10 @@ const TodoMessageItem = (props: ToDoMessageItemProps) => {
   return (
     <MessageItemWrapperContainerWithCtx
       {...props}>
-      <Checkbox />
+      <Checkbox
+        color={'primary'}
+        onChange={props.onToggleTodo}
+        checked={!!props.status.isDone} />
     </MessageItemWrapperContainerWithCtx>
   );
 };

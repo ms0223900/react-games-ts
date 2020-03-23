@@ -1,13 +1,20 @@
-import { MessageList, SingleRawMessageFromDB } from "../types";
+import { MessageList, SingleRawMessageFromDB, MESSAGE_TYPE } from "../types";
 
 const messageListLS = 'messageListLS';
 
 class HandleDataInLocalStorage {
   static convertMessageListToRawMessageList(messageList: MessageList): SingleRawMessageFromDB[] {
-    return messageList.map(m => ({
-      id: m.message.id,
-      rawMessage: m.message.rawMessage,
-    }));
+    return messageList.map(m => {
+      let isDone = undefined;
+      if(m.type === MESSAGE_TYPE.TODO) {
+        isDone = m.status.isDone;
+      }
+      return ({
+        id: m.message.id,
+        isDone,
+        rawMessage: m.message.rawMessage,
+      });
+    });
   }
 
   static setData(messageList: MessageList) {

@@ -11,7 +11,13 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
         {props.tagTitle}
       </Typography>
       <Box paddingLeft={tabSpace}>
-        {props.messageList.map(switchMessagesByType)}
+        {props.messageList.map((messageItemProps, index) => (
+          switchMessagesByType({
+            index,
+            messageItemProps,
+            onToggleTodo: props.onToggleTodo,
+          })
+        ))}
       </Box>
     </Box>
   );

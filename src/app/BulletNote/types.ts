@@ -1,5 +1,5 @@
 import { ID } from "common-types";
-import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps } from "./components/types";
+import { ToDoMessageItemProps, UrgentMessageItemProps, DefaultMessageItemProps, ToggleTodoFn } from "./components/types";
 
 type RawMessage = string
 
@@ -41,6 +41,7 @@ export interface TodoMessageStatus {
 
 export interface SingleRawMessageFromDB {
   id: string
+  isDone?: boolean
   rawMessage: RawMessage
 }
 
@@ -72,6 +73,9 @@ export interface NoteBlockItemProps extends MessageListWithDate {
 export interface TagNoteBlockItem {
   tagTitle: string
   messageList: MessageList
+}
+export interface TagNoteBlockItemProps extends TagNoteBlockItem {
+  onToggleTodo: (id: string) => ToggleTodoFn
 }
 export type TagNoteBlockList = TagNoteBlockItem[]
 export interface TagNoteBlockObj {
