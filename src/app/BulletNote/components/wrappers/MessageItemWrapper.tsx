@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { MessageItemWrapperProps } from '../types';
 import BasicMessageItem from '../BasicMessageItem';
+import BasicMessageItemContainerWithCtx from 'app/BulletNote/containers/BasicMessageItemContainer';
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,7 +24,7 @@ const MessageItemWrapper = (props: MessageItemWrapperProps) => {
       className={classes.root}
     >
       {props.children}
-      <BasicMessageItem
+      <BasicMessageItemContainerWithCtx
         {...props} />
     </Box>
   );

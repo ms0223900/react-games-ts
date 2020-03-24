@@ -31,7 +31,6 @@ class HandleMessageList {
         date = createdAt;
         noteBlockIndex += 1;
       }
-      console.log(messageItem);
       messageWithDateList[noteBlockIndex] = {
         date,
         messageList: [

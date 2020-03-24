@@ -7,6 +7,8 @@ import { MESSAGE_TYPE, MessageItem } from "../types";
 import { ToDoMessageItemProps } from "../components/types";
 
 const inputPartReducers = (state: BulletNoteState, action: InputPartActions): BulletNoteState['messageList'] => {
+  let newMessageList = [...state.messageList];
+
   switch (action.type) {
   case BulletNoteActionTypes.ADD_MESSAGE: {
     const {
@@ -22,12 +24,11 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
         id: newId,
         rawMessage: action.payload.rawMessage
       });
-    const newMessageList = [
+    newMessageList = [
       ...state.messageList,
       handledMessage,
     ];
-    HandleDataInLocalStorage.setData(newMessageList);
-    return newMessageList;
+    break;
   }
 
   case BulletNoteActionTypes.SET_MESSAGE_FROM_DB: {
@@ -37,18 +38,18 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
     const messageList = rawMessageFromDBList.map((r) => (
       HandleParseMessage.convertRawMessageToMessageItem(r)
     ));
-    return messageList;
+    newMessageList = messageList;
+    break;
   }
 
   case BulletNoteActionTypes.DELETE_MESSAGE: {
     const {
       id
     } = action.payload;
-    const newMessageList = state.messageList.filter(m => {
+    newMessageList = state.messageList.filter(m => {
       return id !== m.message.id;
     });
-    HandleDataInLocalStorage.setData(newMessageList);
-    return newMessageList;
+    break;
   }
 
   case BulletNoteActionTypes.TOGGLE_MESSAGE_ISDONE: {
@@ -56,7 +57,7 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
       id,
       isDone
     } = action.payload;
-    let newMessageList = [...state.messageList];
+
     const index = newMessageList.findIndex((m) => m.message.id === id);
     if(index !== -1) {
       if(newMessageList[index].type === MESSAGE_TYPE.TODO) {
@@ -69,13 +70,40 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
         } as ToDoMessageItemProps;
       }
     }
-    HandleDataInLocalStorage.setData(newMessageList);
-    return newMessageList;
+    break;
   }
   
-  default:
-    return state.messageList;
+  case BulletNoteActionTypes.EDIT_MESSAGE: {
+    const {
+      id,
+      newMessage
+    } = action.payload;
+
+    const index = newMessageList.findIndex((m) => m.message.id === id);
+    if(index !== -1) {
+      const tagsStr = newMessageList[index].message.tagList.map(t => {
+        if(t.id === HandleParseMessage.defaultTag.id) return '';
+        return t.name;
+      }).join(' ');
+      newMessageList[index] = {
+        ...newMessageList[index],
+        message: {
+          ...newMessageList[index].message,
+          rawMessage: newMessage + ' ' + tagsStr,
+        }
+      };
+        
+      console.log(newMessageList[index].message.tagList);
+    }
+    break;
   }
+
+  default:
+    break;
+  }
+  
+  HandleDataInLocalStorage.setData(newMessageList);
+  return newMessageList;
 };
 
 export default inputPartReducers;

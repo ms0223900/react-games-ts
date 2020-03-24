@@ -1,6 +1,6 @@
 import { MessageList, BasicMessage, MESSAGE_TYPE, TodoMessageStatus, UrgentMessageStatus } from "../types";
 import { Callback } from "common-types";
-import { ReactNode } from "react";
+import { ReactNode, ChangeEvent } from "react";
 
 export interface NotePartProps {
   messageList: MessageList
@@ -13,6 +13,7 @@ export interface MessageItemButtonsProps {
 
 export interface BasicMessageItemProps extends MessageItemButtonsProps {
   message: BasicMessage
+  onEditMessage?: (e: ChangeEvent<HTMLElement>) => any
 }
 
 export interface DefaultMessageItemProps extends Omit<BasicMessageItemProps, 'onDelete'>{

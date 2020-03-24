@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Box, Typography, makeStyles } from '@material-ui/core';
 import { BasicMessage } from '../types';
 import BulletTagList from './BullteTagList';
@@ -26,7 +26,11 @@ const BasicMessageItem = (props: BasicMessageItemProps) => {
       display={'flex'} 
       alignItems={'center'} 
     >
-      <Typography variant={'subtitle1'} contentEditable={true}>
+      <Typography 
+        variant={'subtitle1'} 
+        contentEditable={true}
+        onInput={props.onEditMessage}
+      >
         {content}
       </Typography>
       <BulletTagList

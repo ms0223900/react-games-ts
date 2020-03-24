@@ -6,7 +6,7 @@ class HandleParseMessage {
   static tagReg = /#\w+(\s)?/g
   static defaultTag: TagItem = {
     id: 'notDefinedTag',
-    name: '未分類'
+    name: '#未分類'
   }
 
   static removeSpaceInStr(str: string) {
