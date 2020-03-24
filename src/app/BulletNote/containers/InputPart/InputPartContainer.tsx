@@ -17,8 +17,10 @@ const InputPartContainer = (props: InputPartContainerProps) => {
   } = useInput();
 
   const handleSendMessage = useCallback(() => {
-    props.addMessageFn(value);
-    setVal('');
+    if(value.length > 0) {
+      props.addMessageFn(value);
+      setVal('');
+    }
   }, [props, setVal, value]);
 
   useFnsByKeyCode({
