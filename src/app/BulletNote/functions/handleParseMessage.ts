@@ -18,10 +18,16 @@ class HandleParseMessage {
     content,
     tagList,
     rawMessage,
+    createdAt,
   }: {
-    id: string, content: string, tagList: TagItem[], rawMessage: string
+    id: string, 
+    content: string, 
+    tagList: TagItem[], 
+    rawMessage: string
+    createdAt?: Date | string
   }): BasicMessage {
     let handledTagList = tagList;
+    const createdAtTime = createdAt ? new Date(createdAt) : new Date();
     if(tagList.length === 0) {
       handledTagList = [this.defaultTag];
     }
@@ -31,7 +37,7 @@ class HandleParseMessage {
       rawMessage,
       content,
       tagList: handledTagList,
-      createdAt: new Date(),
+      createdAt: createdAtTime,
       dateTagList: [],
     });
   }
@@ -83,7 +89,9 @@ class HandleParseMessage {
       id,
       isDone,
       rawMessage,
+      createdAt,
     } = singleRawMessageFromDB;
+
     const messageType = this.getMessageType(rawMessage);
     const tagList = this.getTagListFromRawMessage(rawMessage);
     const content = this.getRemovedTypeAndTagsMessage(rawMessage);
@@ -92,6 +100,7 @@ class HandleParseMessage {
       content,
       tagList,
       rawMessage,
+      createdAt,
     });
 
     switch (messageType) {

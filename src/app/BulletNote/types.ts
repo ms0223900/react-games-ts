@@ -43,6 +43,7 @@ export interface SingleRawMessageFromDB {
   id: string
   isDone?: boolean
   rawMessage: RawMessage
+  createdAt?: string | Date
 }
 
 export interface BasicMessage {

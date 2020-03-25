@@ -13,6 +13,7 @@ class HandleDataInLocalStorage {
         id: m.message.id,
         isDone,
         rawMessage: m.message.rawMessage,
+        createdAt: new Date(m.message.createdAt),
       });
     });
   }

@@ -9,8 +9,8 @@ const regDateToString = (date: Date | string) => {
   if(typeof date === 'string') return date;
   const hour = date.getHours();
   const min = date.getMinutes();
-  return '';
-  // return `${hour} : ${min}`;
+  // return '';
+  return `${hour}:${min}`;
 };
 
 const BasicMessageItem = (props: BasicMessageItemProps) => {
