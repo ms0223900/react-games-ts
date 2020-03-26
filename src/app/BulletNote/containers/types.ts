@@ -23,7 +23,13 @@ export interface TagNoteBlockItemContainerWithCtxProps extends Omit<TagNoteBlock
 
 export interface BasicMessageItemContainerProps extends Omit<BasicMessageItemProps, 'onEditMessage'> {
   editActionFn: (id: string, newMessage: string) => any
+  starActionFn: (id: string, isStar?: boolean) => any
 }
-export interface BasicMessageItemContainerWithCtxProps extends Omit<BasicMessageItemContainerProps, 'editActionFn'> {
+export interface BasicMessageItemContainerWithCtxProps extends Omit<BasicMessageItemContainerProps, 'editActionFn' | 'starActionFn'> {
   
+}
+
+export interface StarItemContainerProps {
+  isStared?: boolean
+  onChange?: (isStar?: boolean) => any
 }

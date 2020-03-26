@@ -42,12 +42,14 @@ export interface TodoMessageStatus {
 export interface SingleRawMessageFromDB {
   id: string
   isDone?: boolean
+  isStared?: boolean
   rawMessage: RawMessage
   createdAt?: string | Date
 }
 
 export interface BasicMessage {
   id: string
+  isStared?: boolean
   rawMessage: RawMessage
   content: string
   tagList: TagItem[]

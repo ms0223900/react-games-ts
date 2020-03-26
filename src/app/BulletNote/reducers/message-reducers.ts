@@ -72,6 +72,29 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
     }
     break;
   }
+
+  case BulletNoteActionTypes.TOGGLE_MESSAGE_ISSTAR: {
+    const {
+      id,
+      isStar
+    } = action.payload;
+    console.log(id,
+      isStar);
+
+    const index = newMessageList.findIndex((m) => m.message.id === id);
+    if(index !== -1) {
+      if(newMessageList[index].type === MESSAGE_TYPE.TODO) {
+        newMessageList[index] = {
+          ...newMessageList[index],
+          message: {
+            ...newMessageList[index].message,
+            isStared: isStar
+          }
+        };
+      }
+    }
+    break;
+  }
   
   case BulletNoteActionTypes.EDIT_MESSAGE: {
     const {

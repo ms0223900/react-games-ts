@@ -19,9 +19,11 @@ class HandleParseMessage {
     tagList,
     rawMessage,
     createdAt,
+    isStared
   }: {
     id: string, 
     content: string, 
+    isStared: boolean | undefined,
     tagList: TagItem[], 
     rawMessage: string
     createdAt?: Date | string
@@ -36,6 +38,7 @@ class HandleParseMessage {
       id,
       rawMessage,
       content,
+      isStared,
       tagList: handledTagList,
       createdAt: createdAtTime,
       dateTagList: [],
@@ -90,6 +93,7 @@ class HandleParseMessage {
       isDone,
       rawMessage,
       createdAt,
+      isStared,
     } = singleRawMessageFromDB;
 
     const messageType = this.getMessageType(rawMessage);
@@ -98,6 +102,7 @@ class HandleParseMessage {
     const message = this.makeBasicMessage({
       id,
       content,
+      isStared,
       tagList,
       rawMessage,
       createdAt,

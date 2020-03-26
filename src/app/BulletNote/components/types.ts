@@ -13,6 +13,7 @@ export interface MessageItemButtonsProps {
 
 export interface BasicMessageItemProps extends MessageItemButtonsProps {
   message: BasicMessage
+  onStarMessage?: (isStar?: boolean) => any
   onEditMessage?: (e: ChangeEvent<HTMLElement>) => any
 }
 

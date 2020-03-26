@@ -8,7 +8,7 @@ import NotePartContainerWithCtx from './containers/NotePart/NotePartContainer';
 const BulletNote = () => {
   return (
     <ContextWrapper customInitState={{
-      messageList: messageList
+      // messageList: messageList
     }}>
       <NotePartContainerWithCtx />
       <InputPartContainerWithCtx />

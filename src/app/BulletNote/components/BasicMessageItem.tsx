@@ -4,6 +4,7 @@ import { BasicMessage } from '../types';
 import BulletTagList from './BullteTagList';
 import { BasicMessageItemProps } from './types';
 import MessageItemButtons from './MessageItemButtons';
+import StarItemContainer from '../containers/NotePart/StarItemContainer';
 
 const regDateToString = (date: Date | string) => {
   if(typeof date === 'string') return date;
@@ -17,6 +18,7 @@ const BasicMessageItem = (props: BasicMessageItemProps) => {
   const {
     content,
     // dateTagList,
+    isStared,
     tagList,
     createdAt,
   } = props.message;
@@ -38,6 +40,9 @@ const BasicMessageItem = (props: BasicMessageItemProps) => {
       <Typography variant={'body1'} color={'textSecondary'}>
         {regDateToString(createdAt)}
       </Typography>
+      <StarItemContainer
+        isStared={isStared}
+        onChange={props.onStarMessage} />
       <MessageItemButtons
         onDelete={props.onDelete} />
     </Box>

@@ -14,6 +14,12 @@ interface ToggleMessageIsDonePayload {
   id: string
   isDone: boolean
 }
+
+interface ToggleMessageIsStarPayload {
+  id: string
+  isStar: boolean | undefined
+}
+
 interface EditMessageActionPayload {
   id: string
   newMessage: string
@@ -34,6 +40,10 @@ interface SetMessageFromDBAction {
 interface ToggleMessageIsDone {
   type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISDONE,
   payload: ToggleMessageIsDonePayload
+}
+interface ToggleMessageIsStar {
+  type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISSTAR,
+  payload: ToggleMessageIsStarPayload
 }
 interface EditMessageAction {
   type: BulletNoteActionTypes.EDIT_MESSAGE,
@@ -67,6 +77,14 @@ export const toggleMessageIsDone = (id: string, isDone: boolean): ToggleMessageI
   }
 });
 
+export const toggleMessageIsStar = (id: string, isStar?: boolean): ToggleMessageIsStar => ({
+  type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISSTAR,
+  payload: {
+    id,
+    isStar,
+  }
+});
+
 export const editMessage = (id: string, newMessage: string): EditMessageAction => ({
   type: BulletNoteActionTypes.EDIT_MESSAGE,
   payload: { 
@@ -75,6 +93,12 @@ export const editMessage = (id: string, newMessage: string): EditMessageAction =
   },
 });
 
-type InputPartActions = AddMessageAction | SetMessageFromDBAction | DeleteMessageAction | ToggleMessageIsDone | EditMessageAction
+type InputPartActions = 
+  AddMessageAction | 
+  SetMessageFromDBAction | 
+  DeleteMessageAction | 
+  ToggleMessageIsDone | 
+  EditMessageAction | 
+  ToggleMessageIsStar
 
 export default InputPartActions;
