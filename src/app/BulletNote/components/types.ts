@@ -38,3 +38,7 @@ export interface UrgentMessageItemProps extends Omit<DefaultMessageItemProps, 't
 export interface MessageItemWrapperProps extends BasicMessageItemProps {
   children: ReactNode
 }
+
+export interface DownloadMessageListProps {
+  messageList: MessageList
+}
