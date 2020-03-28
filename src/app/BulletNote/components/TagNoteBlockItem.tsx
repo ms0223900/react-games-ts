@@ -15,7 +15,6 @@ const TagNoteBlockItem = (props: TagNoteBlockItemProps) => {
           switchMessagesByType({
             index,
             messageItemProps,
-            onToggleTodo: props.onToggleTodo,
           })
         ))}
       </Box>

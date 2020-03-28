@@ -2,23 +2,16 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Box } from '@material-ui/core';
 import { Star, StarBorder } from '@material-ui/icons';
 import { StarItemContainerProps } from '../types';
+import useToggle from 'app/BulletNote/functions/useToggle';
 
 const StarItemContainer = ({
   onChange,
   isStared,
 }: StarItemContainerProps) => {
-  const [isStar, setStar] = useState(!!isStared);
-
-  const _isStared = typeof isStared !== 'undefined' ? isStared : isStar;
-
-  const handleToggle = useCallback(() => {
-    setStar(s => !s);
-  }, []);
-
-  useEffect(() => {
-    onChange && onChange(isStar);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isStar]);
+  const {
+    toggle: isStar,
+    handleToggle,
+  } = useToggle(isStared, onChange);
 
   return (
     <Box
@@ -27,7 +20,7 @@ const StarItemContainer = ({
       }}
       onClick={handleToggle}
     >
-      {_isStared ? (
+      {isStar ? (
         <Star />
       ) : (
         <StarBorder />

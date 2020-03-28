@@ -14,6 +14,7 @@ export interface MessageItemButtonsProps {
 export interface BasicMessageItemProps extends MessageItemButtonsProps {
   message: BasicMessage
   onStarMessage?: (isStar?: boolean) => any
+  onPinMessage?: (isPin?: boolean) => any
   onEditMessage?: (e: ChangeEvent<HTMLElement>) => any
 }
 
@@ -40,5 +41,9 @@ export interface MessageItemWrapperProps extends BasicMessageItemProps {
 }
 
 export interface DownloadMessageListProps {
+  messageList: MessageList
+}
+
+export interface PinMessageListProps {
   messageList: MessageList
 }

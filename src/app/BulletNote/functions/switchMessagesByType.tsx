@@ -1,24 +1,22 @@
 import React from 'react';
 import TodoMessageItem from '../components/TodoMessageItem';
 import { MessageItem, MESSAGE_TYPE, TagNoteBlockItemProps } from '../types';
+import TodoMessageItemContainerWithCtx from '../containers/NotePart/TodoMessageItemContainer';
 
 const switchMessagesByType = ({
   index, 
   messageItemProps,
-  onToggleTodo,
 }: {
   messageItemProps: MessageItem, 
-  index: number, 
-  onToggleTodo: TagNoteBlockItemProps['onToggleTodo']
+  index: number,
 }) => {
   switch (messageItemProps.type) {
     
   case MESSAGE_TYPE.TODO: {
     return (
-      <TodoMessageItem
+      <TodoMessageItemContainerWithCtx
         key={index}
         {...messageItemProps}
-        onToggleTodo={onToggleTodo(messageItemProps.message.id)}
       />
     );
   }

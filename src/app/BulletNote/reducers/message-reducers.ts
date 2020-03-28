@@ -83,15 +83,32 @@ const inputPartReducers = (state: BulletNoteState, action: InputPartActions): Bu
 
     const index = newMessageList.findIndex((m) => m.message.id === id);
     if(index !== -1) {
-      if(newMessageList[index].type === MESSAGE_TYPE.TODO) {
-        newMessageList[index] = {
-          ...newMessageList[index],
-          message: {
-            ...newMessageList[index].message,
-            isStared: isStar
-          }
-        };
-      }
+      newMessageList[index] = {
+        ...newMessageList[index],
+        message: {
+          ...newMessageList[index].message,
+          isStared: isStar
+        }
+      };
+    }
+    break;
+  }
+
+  case BulletNoteActionTypes.TOGGLE_MESSAGE_ISPIN: {
+    const {
+      id,
+      isPin
+    } = action.payload;
+
+    const index = newMessageList.findIndex((m) => m.message.id === id);
+    if(index !== -1) {
+      newMessageList[index] = {
+        ...newMessageList[index],
+        message: {
+          ...newMessageList[index].message,
+          isPin,
+        }
+      };
     }
     break;
   }

@@ -20,6 +20,11 @@ interface ToggleMessageIsStarPayload {
   isStar: boolean | undefined
 }
 
+interface ToggleMessageIsPinPayload {
+  id: string
+  isPin: boolean | undefined
+}
+
 interface EditMessageActionPayload {
   id: string
   newMessage: string
@@ -45,6 +50,12 @@ interface ToggleMessageIsStar {
   type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISSTAR,
   payload: ToggleMessageIsStarPayload
 }
+
+interface ToggleMessageIsPin {
+  type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISPIN,
+  payload: ToggleMessageIsPinPayload
+}
+
 interface EditMessageAction {
   type: BulletNoteActionTypes.EDIT_MESSAGE,
   payload: EditMessageActionPayload
@@ -85,6 +96,14 @@ export const toggleMessageIsStar = (id: string, isStar?: boolean): ToggleMessage
   }
 });
 
+export const toggleMessageIsPin = (id: string, isPin?: boolean): ToggleMessageIsPin => ({
+  type: BulletNoteActionTypes.TOGGLE_MESSAGE_ISPIN,
+  payload: {
+    id,
+    isPin,
+  }
+});
+
 export const editMessage = (id: string, newMessage: string): EditMessageAction => ({
   type: BulletNoteActionTypes.EDIT_MESSAGE,
   payload: { 
@@ -99,6 +118,7 @@ type InputPartActions =
   DeleteMessageAction | 
   ToggleMessageIsDone | 
   EditMessageAction | 
-  ToggleMessageIsStar
+  ToggleMessageIsStar |
+  ToggleMessageIsPin
 
 export default InputPartActions;

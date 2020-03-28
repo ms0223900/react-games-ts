@@ -13,21 +13,20 @@ class HandleParseMessage {
     return str.replace(/\s/g, '');
   }
 
-  static makeBasicMessage({
-    id,
-    content,
-    tagList,
-    rawMessage,
-    createdAt,
-    isStared
-  }: {
+  static makeBasicMessage(messageParams: {
     id: string, 
     content: string, 
-    isStared: boolean | undefined,
     tagList: TagItem[], 
     rawMessage: string
-    createdAt?: Date | string
+    createdAt?: Date | string,
+    isStared?: boolean,
+    isPin?: boolean,
   }): BasicMessage {
+    const {
+      tagList,
+      createdAt,
+    } = messageParams;
+    
     let handledTagList = tagList;
     const createdAtTime = createdAt ? new Date(createdAt) : new Date();
     if(tagList.length === 0) {
@@ -35,10 +34,7 @@ class HandleParseMessage {
     }
 
     return ({
-      id,
-      rawMessage,
-      content,
-      isStared,
+      ...messageParams,
       tagList: handledTagList,
       createdAt: createdAtTime,
       dateTagList: [],
@@ -87,25 +83,23 @@ class HandleParseMessage {
     return res;
   }
 
-  static convertRawMessageToMessageItem(singleRawMessageFromDB: SingleRawMessageFromDB): MessageItem {
+  static convertRawMessageToMessageItem(
+    singleRawMessageFromDB: SingleRawMessageFromDB
+  ): MessageItem {
     const {
-      id,
       isDone,
+      isPin,
       rawMessage,
-      createdAt,
-      isStared,
     } = singleRawMessageFromDB;
 
     const messageType = this.getMessageType(rawMessage);
     const tagList = this.getTagListFromRawMessage(rawMessage);
     const content = this.getRemovedTypeAndTagsMessage(rawMessage);
     const message = this.makeBasicMessage({
-      id,
-      content,
-      isStared,
+      ...singleRawMessageFromDB,
+      isPin,
       tagList,
-      rawMessage,
-      createdAt,
+      content,
     });
 
     switch (messageType) {

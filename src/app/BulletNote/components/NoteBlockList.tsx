@@ -25,8 +25,8 @@ const NoteBlockList = (props: NoteBlockListProps) => {
       {messageListWithDate.map((m, i) => (
         <NoteBlockItem
           key={i}
-          selected={checkDateIsToday(m.date)}
-          {...m} />
+          {...m}
+          selected={checkDateIsToday(m.date)} />
       ))}
     </Box>
   );

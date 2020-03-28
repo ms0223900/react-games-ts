@@ -42,6 +42,7 @@ export interface TodoMessageStatus {
 export interface SingleRawMessageFromDB {
   id: string
   isDone?: boolean
+  isPin?: boolean
   isStared?: boolean
   rawMessage: RawMessage
   createdAt?: string | Date
@@ -50,6 +51,7 @@ export interface SingleRawMessageFromDB {
 export interface BasicMessage {
   id: string
   isStared?: boolean
+  isPin?: boolean
   rawMessage: RawMessage
   content: string
   tagList: TagItem[]
@@ -78,7 +80,6 @@ export interface TagNoteBlockItem {
   messageList: MessageList
 }
 export interface TagNoteBlockItemProps extends TagNoteBlockItem {
-  onToggleTodo: (id: string) => ToggleTodoFn
 }
 export type TagNoteBlockList = TagNoteBlockItem[]
 export interface TagNoteBlockObj {

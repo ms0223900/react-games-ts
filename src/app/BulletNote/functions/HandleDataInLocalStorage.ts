@@ -15,6 +15,7 @@ class HandleDataInLocalStorage {
         rawMessage: m.message.rawMessage,
         createdAt: new Date(m.message.createdAt),
         isStared: m.message.isStared,
+        isPin: m.message.isPin,
       });
     });
   }
