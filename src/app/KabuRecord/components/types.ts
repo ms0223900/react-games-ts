@@ -1,6 +1,7 @@
 import { InputItemContainerProps, DayAndTime, DayTimeType, SingleOtherDayPrices, OtherDayType } from "../types";
 
 export interface OtherDayKabuItemProps {
+  date?: string
   day: OtherDayType
   dayTimePrices: SingleOtherDayPrices
   onChange?: InputItemContainerProps['onChange']

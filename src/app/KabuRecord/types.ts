@@ -1,4 +1,7 @@
+import { TextFieldProps, BaseTextFieldProps } from "@material-ui/core/TextField";
+
 export type OtherDayType = 
+  'sun' |
   'mon' |
   'tue' |
   'wed' |
@@ -27,7 +30,7 @@ export interface SingleWeekKabuRecord {
 
 export type InputOnChangeFn = (dayAndTime: DayAndTime, value: string) => any
 
-export interface InputItemContainerProps {
+export interface InputItemContainerProps extends BaseTextFieldProps {
   id: string
   day: OtherDayType
   dayTime: DayTimeType

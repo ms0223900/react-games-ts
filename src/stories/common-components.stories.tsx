@@ -9,8 +9,6 @@ import NavBar from 'components/BasicUserWrapper/NavBar';
 import User from 'components/BasicUserWrapper/User';
 import LogInSignIn from 'components/BasicUserWrapper/LogInSignIn';
 import BasicUserWrapper from 'components/BasicUserWrapper/BasicUserWrapper';
-import { ContextWrapper } from 'components/BasicUserWrapper/context';
-
 export default {
   title: 'common components',
   decorators: [

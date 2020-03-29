@@ -20,6 +20,9 @@ const InputItemContainer = (props: InputItemContainerProps) => {
 
   return (
     <TextField
+      {...props}
+      type={'number'}
+      variant={'standard'}
       onChange={handleChange}
       value={value} />
   );

@@ -1,9 +1,13 @@
 import React from 'react';
 import { Box, ListItem, ListItemText } from '@material-ui/core';
+import CommonGridListItemWrapper from 'components/commonComponents/CommonGridListItem/CommonGridListItemWrapper';
+import { otherDayKabuItemWidthRatios } from '../config';
 
 const OtherDayKabuItemHeader = () => {
   return (
-    <ListItem>
+    <CommonGridListItemWrapper
+      widthRatios={otherDayKabuItemWidthRatios}
+    >
       <ListItemText>
         {'日期'}
       </ListItemText>
@@ -13,7 +17,7 @@ const OtherDayKabuItemHeader = () => {
       <ListItemText>
         {'上午(12:00~22:00)'}
       </ListItemText>
-    </ListItem>
+    </CommonGridListItemWrapper>
   );
 };
 

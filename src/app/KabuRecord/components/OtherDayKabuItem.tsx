@@ -1,32 +1,37 @@
 import React from 'react';
-import { Box, ListItem, ListItemText } from '@material-ui/core';
+import { Box, ListItem, ListItemText, Grid } from '@material-ui/core';
 import { OtherDayKabuItemProps } from './types';
 import InputItemContainer from '../containers/InputItemContainer';
+import CommonGridListItemWrapper from 'components/commonComponents/CommonGridListItem/CommonGridListItemWrapper';
+import { otherDayKabuItemWidthRatios } from '../config';
 
 const OtherDayKabuItem = (props: OtherDayKabuItemProps) => {
   const {
-    dayAndTime,
+    date,
+    day,
     dayTimePrices,
   } = props;
 
   return (
-    <ListItem divider={true}>
+    <CommonGridListItemWrapper
+      widthRatios={otherDayKabuItemWidthRatios}
+    >
       <ListItemText>
-        {props.dayAndTime.day}
+        {`${date || ''}(${day})`}
       </ListItemText>
       <InputItemContainer
-        id={`${dayAndTime.day}-${'morning'}`}
-        day={dayAndTime.day}
+        id={`${day}-${'morning'}`}
+        day={day}
         dayTime={'morning'}
         value={String(dayTimePrices.morning)}
         onChange={props.onChange} />
       <InputItemContainer
-        id={`${dayAndTime.day}-${'afternoon'}`}
-        day={dayAndTime.day}
+        id={`${day}-${'afternoon'}`}
+        day={day}
         dayTime={'afternoon'}
         value={String(dayTimePrices.afternoon)}
         onChange={props.onChange} />
-    </ListItem>
+    </CommonGridListItemWrapper>
   );
 };
 

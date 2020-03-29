@@ -1,24 +1,15 @@
-import React, { useState, useCallback } from 'react';
-import { Box } from '@material-ui/core';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Box, Divider, Typography } from '@material-ui/core';
 import OtherDayKabuForm from '../components/OtherDayKabuForm';
 import { DayAndTime, SingleWeekKabuRecord, OtherDayType } from '../types';
+import InputItemContainer from './InputItemContainer';
+import handleCalKabu from '../functions/handleCalKabu';
+import { OtherDayKabuFormContainerProps } from './types';
+import { localStorageKey } from '../config';
 
-export const initDayPrices = {
-  'morning': 0,
-  'afternoon': 0,
-};
-
-export const initOtherDayPrices: SingleWeekKabuRecord['otherDaysPrice'] = {
-  'mon': initDayPrices,
-  'tue': initDayPrices,
-  'wed': initDayPrices,
-  'thu': initDayPrices,
-  'fri': initDayPrices,
-  'sat': initDayPrices,
-};
-
-const OtherDayKabuFormContainer = () => {
-  const [dayPrices, setDayPrices] = useState(initOtherDayPrices);
+const OtherDayKabuFormContainer = (props: OtherDayKabuFormContainerProps) => {
+  let Kabu: number | string = 0;
+  const [dayPrices, setDayPrices] = useState(props.initOtherDayPrices);
 
   const handleChange = useCallback((dayAndTime: DayAndTime, value: string) => {
     setDayPrices(d => ({
@@ -30,16 +21,37 @@ const OtherDayKabuFormContainer = () => {
     }));
   }, []);
 
-  const days = Object.keys(dayPrices) as OtherDayType[];
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, JSON.stringify(dayPrices));
+  }, [dayPrices]);
+
+  //excludes sunday
+  const days = Object.keys(dayPrices).slice(1) as OtherDayType[];
   const otherDayList = days.map(day => ({
     day,
     dayTimePrices: dayPrices[day]
   }));
 
+  Kabu = handleCalKabu(dayPrices.sun.morning, dayPrices.mon.morning);
+
   return (
-    <OtherDayKabuForm
-      otherDayList={otherDayList}
-      onChange={handleChange}  />
+    <>
+      <Typography>{'Sunday price'}</Typography>
+      <InputItemContainer
+        id={'sunday-morning'}
+        day={'sun'}
+        dayTime={'morning'}
+        onChange={handleChange}
+        value={String(dayPrices.sun.morning)} />
+      <Divider />
+      <OtherDayKabuForm
+        otherDayList={otherDayList}
+        onChange={handleChange} />
+      <Divider />
+      <Typography variant={'h5'}>
+        {`Kabu值: ${Kabu}`}
+      </Typography>
+    </>
   );
 };
 
