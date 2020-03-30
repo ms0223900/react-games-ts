@@ -6,6 +6,8 @@ import InputItemContainer from './InputItemContainer';
 import handleCalKabu from '../functions/handleCalKabu';
 import { OtherDayKabuFormContainerProps } from './types';
 import { localStorageKey } from '../config';
+import KabuTrendTypePrediction from '../components/KabuTrendTypePrediction';
+import HandleKabuTrends from '../functions/HandleKabuTrend';
 
 const OtherDayKabuFormContainer = (props: OtherDayKabuFormContainerProps) => {
   let Kabu: number | string = 0;
@@ -33,6 +35,7 @@ const OtherDayKabuFormContainer = (props: OtherDayKabuFormContainerProps) => {
   }));
 
   Kabu = handleCalKabu(dayPrices.sun.morning, dayPrices.mon.morning);
+  const kabuTrendTypesNow = HandleKabuTrends.getKabuTrendPredictionsFromKabuValue(Kabu);
 
   return (
     <>
@@ -49,8 +52,10 @@ const OtherDayKabuFormContainer = (props: OtherDayKabuFormContainerProps) => {
         onChange={handleChange} />
       <Divider />
       <Typography variant={'h5'}>
-        {`Kabu值: ${Kabu}`}
+        {`Kabu值(%): ${Kabu}`}
       </Typography>
+      <KabuTrendTypePrediction
+        kabuTrendTypes={kabuTrendTypesNow} />
     </>
   );
 };

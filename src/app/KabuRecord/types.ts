@@ -8,8 +8,9 @@ export type OtherDayType =
   'thu' |
   'fri' |
   'sat'
-
 export type DayTimeType = 'morning' | 'afternoon'
+
+export type KabuTrendType = 'wave' | 'decrement' | 'third' | 'forth' 
 
 export type SingleOtherDayPrices = {
   [dayTime in DayTimeType]: number

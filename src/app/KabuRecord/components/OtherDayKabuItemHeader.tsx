@@ -15,7 +15,7 @@ const OtherDayKabuItemHeader = () => {
         {'上午(8:00~11:59)'}
       </ListItemText>
       <ListItemText>
-        {'上午(12:00~22:00)'}
+        {'下午(12:00~22:00)'}
       </ListItemText>
     </CommonGridListItemWrapper>
   );

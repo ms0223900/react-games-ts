@@ -1,4 +1,4 @@
-import { InputItemContainerProps, DayAndTime, DayTimeType, SingleOtherDayPrices, OtherDayType } from "../types";
+import { InputItemContainerProps, DayAndTime, DayTimeType, SingleOtherDayPrices, OtherDayType, KabuTrendType } from "../types";
 
 export interface OtherDayKabuItemProps {
   date?: string
@@ -10,4 +10,8 @@ export interface OtherDayKabuItemProps {
 export interface OtherDayKabuFormProps {
   onChange?: InputItemContainerProps['onChange']
   otherDayList: OtherDayKabuItemProps[]
+}
+
+export interface KabuTrendTypePredictionProps {
+  kabuTrendTypes: KabuTrendType[]
 }
