@@ -201,16 +201,25 @@ class HandleKabuTrends {
       typesFromKabuValue.includes('forth');
 
     if(isThirdOrForth) {
-      if(secondPeriodPriceMulti < reboundTrendSeperatingMulti) {
+      if(reboundPosition !== -1) {
+        if(secondPeriodPriceMulti > 1) {
+          if(secondPeriodPriceMulti < reboundTrendSeperatingMulti) {
+            return ({
+              kabuTrendTypes: ['forth'],
+              highestPricePosition: forthPeriodHighestPricePosition
+            });
+          } else {
+            return ({
+              kabuTrendTypes: ['third'],
+              highestPricePosition: thirdPeriodHighestPricePosition
+            });
+          }
+        }
         return ({
-          kabuTrendTypes: ['forth'],
-          highestPricePosition: forthPeriodHighestPricePosition
+          kabuTrendTypes: ['third', 'forth'],
+          highestPricePosition: undefined
         });
       }
-      return ({
-        kabuTrendTypes: ['third'],
-        highestPricePosition: thirdPeriodHighestPricePosition
-      });
     }
 
     //last get types from KabuValue
