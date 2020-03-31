@@ -10,7 +10,12 @@ export type OtherDayType =
   'sat'
 export type DayTimeType = 'morning' | 'afternoon'
 
-export type KabuTrendType = 'wave' | 'decrement' | 'third' | 'forth' 
+export type KabuTrendType = 'notDefined' | 'wave' | 'decrement' | 'third' | 'forth' 
+
+export interface KabuTrendsAndHighestPricePosition {
+  kabuTrendTypes: KabuTrendType[]
+  highestPricePosition: number | undefined
+}
 
 export type SingleOtherDayPrices = {
   [dayTime in DayTimeType]: number

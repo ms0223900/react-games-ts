@@ -1,4 +1,4 @@
-import { InputItemContainerProps, DayAndTime, DayTimeType, SingleOtherDayPrices, OtherDayType, KabuTrendType } from "../types";
+import { InputItemContainerProps, DayAndTime, DayTimeType, SingleOtherDayPrices, OtherDayType, KabuTrendType, KabuTrendsAndHighestPricePosition } from "../types";
 
 export interface OtherDayKabuItemProps {
   date?: string
@@ -12,6 +12,5 @@ export interface OtherDayKabuFormProps {
   otherDayList: OtherDayKabuItemProps[]
 }
 
-export interface KabuTrendTypePredictionProps {
-  kabuTrendTypes: KabuTrendType[]
+export interface KabuTrendTypePredictionProps extends KabuTrendsAndHighestPricePosition {
 }

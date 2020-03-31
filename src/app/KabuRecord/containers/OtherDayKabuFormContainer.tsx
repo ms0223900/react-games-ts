@@ -35,7 +35,8 @@ const OtherDayKabuFormContainer = (props: OtherDayKabuFormContainerProps) => {
   }));
 
   Kabu = handleCalKabu(dayPrices.sun.morning, dayPrices.mon.morning);
-  const kabuTrendTypesNow = HandleKabuTrends.getKabuTrendPredictionsFromKabuValue(Kabu);
+  const prices = HandleKabuTrends.getThisWeekPrices(dayPrices);
+  const kabuTrendTypesAndPricePosition = HandleKabuTrends.getPresiceTrendType(prices);
 
   return (
     <>
@@ -55,7 +56,7 @@ const OtherDayKabuFormContainer = (props: OtherDayKabuFormContainerProps) => {
         {`Kabu值(%): ${Kabu}`}
       </Typography>
       <KabuTrendTypePrediction
-        kabuTrendTypes={kabuTrendTypesNow} />
+        {...kabuTrendTypesAndPricePosition} />
     </>
   );
 };

@@ -1,20 +1,30 @@
 import React from 'react';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, Divider } from '@material-ui/core';
 import { KabuTrendTypePredictionProps } from './types';
-import { kabuTrends } from '../config';
+import { kabuTrends, highestPositionToText, getHighestPositionText } from '../config';
 
 const KabuTrendTypePrediction = (props: KabuTrendTypePredictionProps) => {
   const trendsStr = props.kabuTrendTypes.map(
     trend => kabuTrends[trend]
   ).join(' / ');
+
+  console.log(props.highestPricePosition);
   
   return (
-    <Box display={'flex'} alignItems={'center'}>
+    <Box>
+      <Box display={'flex'} alignItems={'center'}>
+        <Typography>
+          {'目前可能趨勢: '}
+        </Typography>
+        <Typography variant={'h6'}>
+          {`${trendsStr}`}
+        </Typography>
+      </Box>
+      <Divider />
       <Typography>
-        {'目前可能趨勢: '}
-      </Typography>
-      <Typography variant={'h6'}>
-        {`${trendsStr}`}
+        {`價格最大值時間: ${
+          getHighestPositionText(props.highestPricePosition)
+        }`}
       </Typography>
     </Box>
   );
