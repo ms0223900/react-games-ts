@@ -20,7 +20,7 @@
     "enzyme": "^3.10.0",
     "googleapis": "^39.2.0",
     "graphql": "^14.5.8",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "node-sass": "^4.12.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
